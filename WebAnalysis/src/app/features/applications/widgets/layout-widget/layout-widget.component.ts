@@ -15,11 +15,15 @@ import { MonitoringService } from '@fusion/services/monitoring.service';
 import { BaseWidgetComponent } from '@fusion/components/base-widget/basewidget.component';
 import { WidgetAnalyze } from '@fusion/models/enums/analyze-widget';
 import { GridsterItemFusion } from '@fusion/models/gridster-item-fusion';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-layout-widget[type][resizeEvent]',
   templateUrl: './layout-widget.component.html',
   styleUrls: ['./layout-widget.component.scss'],
+  imports: [
+    NgIf
+  ],
   standalone: true
 })
 export class LayoutWidgetComponent implements OnInit, OnDestroy {
