@@ -1,0 +1,41 @@
+//#e-item-tab_default_0 .e-icons.e-close-icon { display:none !important;}
+
+.e-tab .e-tab-header .e-toolbar-item:nth-child(2) .e-icons.e-close-icon {
+  display: none !important;
+}
+.top-panel {
+  background-color: #334f4e;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-content {
+  margin-top: 20px;
+}
+
+.p-menuitem-text {
+  text-transform: capitalize;
+}
+
+.custom-sidebar {
+  width: 250px;
+  background-color: #f4f4f4;
+  border-right: 1px solid #ccc;
+  position: relative; /* Sidebar should push content, not float over */
+  height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  transition: margin-left 0.3s ease; /* Smooth transition for resizing content */
+}
+
+.main-content.expanded {
+  margin-left: 0px;
+  width: 100%;
+  transition: margin-left 0.3s ease; /* Smooth transition for resizing content */
+}

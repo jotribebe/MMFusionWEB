@@ -1,0 +1,27 @@
+<div class="h-full px-2 pb-2">
+  <ag-grid-angular
+    class="ag-theme-alpine w-full h-full"
+    [columnDefs]="columnDefs"
+    [components]="components"
+    [defaultColDef]="defaultColDef"
+    (filterChanged)="onFilterChanged($event)"
+    (displayedColumnsChanged)="onDisplayedColumnsChanged($event)"
+    (cellValueChanged)="onCellValueChanged($event)"
+    [rowModelType]="'serverSide'"
+    [rowData]="rowData"
+    [getRowStyle]="getRowStyle"
+    [rowSelection]="'multiple'"
+    (gridReady)="onGridReady($event)"
+    [cacheBlockSize]="cacheBlockSize"
+    (selectionChanged)="onSelectionChanged()"
+    [sideBar]="sideBar"
+    [getRowId]="getRowId">
+  </ag-grid-angular>
+
+  <!-- [maxBlocksInCache]="maxBlocksInCache" -->
+  <!--
+    <ng-template #detailTemplate let-data>
+      <div class="w-full">[{{ data.groupType === 4 ? data.content : '' }}]</div>
+    </ng-template>
+ -->
+</div>

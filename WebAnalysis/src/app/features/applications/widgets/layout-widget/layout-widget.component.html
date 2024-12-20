@@ -1,0 +1,25 @@
+<div class="h-full flex flex-col">
+  <div
+    class="bg-skin-header flex items-center font-bold text-skin-inverted px-2 z-[3]"
+    [style.height.px]="height">
+    <div>{{ title }}</div>
+    <div class="gridster-item-header flex-1 h-full"></div>
+    <button *ngIf="closable" (click)="closeWidget($event)">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6 stroke-white/75 hover:stroke-white hover:scale-110 duration-150">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <div class="content gridster-item-content flex-1 overflow-auto h-full">
+    <ng-template #viewContainerRef></ng-template>
+  </div>
+</div>

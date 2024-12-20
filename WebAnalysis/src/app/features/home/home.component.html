@@ -1,0 +1,80 @@
+<div class="flex flex-col h-screen">
+  <!-- Top Panel -->
+  <div class="top-panel" role="banner">
+    <button type="button" (click)="toggleSidePanel()" label="Toggle Sidebar">
+      <i class="pi pi-bars"></i>
+    </button>
+
+    <p-chip styleClass="pl-0 pr-3 h-6" (click)="openSettings()">
+      <span
+        class="rounded-full w-6 h-6 px-1 bg-black text-white hover:bg-stone-800 text-center"
+      >
+        <i class="pi pi-user text-sm"></i>
+      </span>
+      <span class="ml-2 text-sm">
+        {{ initial }}
+      </span>
+    </p-chip>
+  </div>
+
+  <!-- Main Content: Sidebar + Main Panel -->
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <app-default
+      *ngIf="showSidePanel"
+      (openTab)="openTab($event)"
+    ></app-default>
+
+
+    <!-- Main Panel -->
+    <div class="flex-1 bg-white my-4" role="main">
+        <p-tabView>
+          @for (tab of tabs; track $index ) {
+            <p-tabPanel
+            [header]="tab.tabName"
+            >
+            <ng-template pTemplate="header">
+              <span>{{ tab.tabName }}</span>
+              <button *ngIf="$index !== 0" (click)="removeTab($index)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="ml-2 h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </ng-template>
+            </p-tabPanel>
+          }
+        </p-tabView>
+
+      <app-breadcrumb></app-breadcrumb>
+      <ndc-dynamic
+        [ndcDynamicComponent]="tab!.selector"
+        [ndcDynamicInputs]="tab!.inputs"
+        [ndcDynamicOutputs]="tab!.outputs"
+      >
+      </ndc-dynamic>
+    </div>
+
+
+
+
+  </div>
+  <!-- <footer
+  class="h-12 overflow-hidden bg-skin-inverted border-t border-t-gray-400 flex items-center place-content-end gap-x-3 px-2">
+  <button class="hover:text-orange-400">SPEECH</button>
+  <button class="hover:text-orange-400">LIVE</button>
+  <button
+    class="rounded-full w-6 bg-skin-sidebar text-center text-white hover:bg-orange-400"
+    (click)="openSettings()">
+    {{ initial }}
+  </button>
+</footer> -->
+</div>
