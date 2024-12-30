@@ -20,9 +20,9 @@ import { AppFusion, IContextApp } from "@fusion/models/context-app";
 import { AppNameService } from "@fusion/models/enums/app-name-service";
 
 @Component({
-  selector: "app-default",
-  templateUrl: "default.component.html",
-  styleUrls: ["default.component.scss"],
+  selector: "app-sidebar",
+  templateUrl: "sidebar.component.html",
+  styleUrls: ["sidebar.component.scss"],
   standalone: true,
   imports: [
     NgFor,
@@ -35,7 +35,7 @@ import { AppNameService } from "@fusion/models/enums/app-name-service";
   ],
   providers: [ConfirmationService],
 })
-export class DefaultComponent
+export class SidebarComponent
   extends BaseAppComponent
   implements OnInit, OnDestroy
 {

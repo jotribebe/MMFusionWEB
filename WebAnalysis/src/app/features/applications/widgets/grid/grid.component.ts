@@ -20,6 +20,7 @@ import {
   SetFilterValuesFuncParams,
   CellClassParams,
   CellStyle,
+  RowModelType,
 } from 'ag-grid-community';
 import { ExportToolPanelComponent } from './export-tool-panel/export-tool-panel.component';
 import { EventType } from '@angular/router';
@@ -333,6 +334,7 @@ export class GridComponent
       },
     ],
   };
+  rowModelType: RowModelType = "serverSide";
   //public maxBlocksInCache = 2;
   //public height = 460;
   private destroy$ = new Subject<void>();

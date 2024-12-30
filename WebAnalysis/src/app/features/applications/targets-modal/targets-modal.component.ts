@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ColDef, FirstDataRenderedEvent, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { ColDef, FirstDataRenderedEvent, GridApi, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
 import { Target } from '@fusion/models/target';
 import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
@@ -66,7 +66,7 @@ export class TargetsModalComponent implements OnInit {
     },
   ];
 
-  public defaultColDef: ColDef = {
+    public defaultColDef: ColDef = {
     flex: 1,
     minWidth: 90,
     sortable: false,
@@ -85,13 +85,20 @@ export class TargetsModalComponent implements OnInit {
     },
   ];
   private gridApi!: GridApi<Target>;
+  data?: { name: string; targetsSelected?: string[] };
+  // public cdr = inject(ChangeDetectorRef);
+  // public dialogRef = inject(DynamicDialogRef);
+  // public dialogConfig = inject(DynamicDialogConfig);
+  // public fb = inject(FormBuilder);
+  // public data?: { name: string; targetsSelected?: string[] }
 
   constructor(
     private dialogRef: DynamicDialogRef,
     private dialogConfig: DynamicDialogConfig,
-    // private authSrv: AuthService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
+    // Initialize the form with the name and targets fields
     this.analyzeForm = this.fb.group({
       name: this.fb.control<string>('', {
         nonNullable: true,
@@ -102,31 +109,44 @@ export class TargetsModalComponent implements OnInit {
       }),
     });
   }
+  
+
 
   ngOnInit(): void {
-    const data = this.dialogConfig.data; // PrimeNG DynamicDialog data injection
-    this.analyzeForm.patchValue({ name: data?.name || '' });
+    this.data = this.dialogConfig.data;
+  
+    this.analyzeForm.patchValue({ name: this.data?.name || '' });
+  
+    const targetsArray = this.analyzeForm.get('targets') as FormArray;
+    targetsArray.clear();
+  
+    (this.data?.targetsSelected || []).forEach((target: string) => {
+      targetsArray.push(this.fb.control(target, Validators.required));
+    });
+  
+    console.log('ngOnInit', this.data);
   }
 
   public onGridReady(params: GridReadyEvent<Target>): void {
     this.gridApi = params.api;
-    // Initialize Grid API for further interactions
+    console.log("gridrdy", this.rowData)
+    // this.rowData = this.authSrv.currentTargets || [];
   }
 
   public onFirstDataRendered(params: FirstDataRenderedEvent<Target>): void {
-    const data = this.dialogConfig.data; // Accessing data injected into the dialog
+    this.data = this.dialogConfig.data;
     params.api.forEachNode(node =>
       node.setSelected(
         !!node.data &&
-        !!data &&
-        !!data.targetsSelected &&
-        data.targetsSelected.some((p: string | undefined) => p === node.data?.liid)
+          !!this.data &&
+        !!this.data.targetsSelected &&
+        this.data.targetsSelected.some((p: string | undefined) => p === node.data?.liid)
       )
     );
   }
 
   public onSelectionChanged(): void {
-    this.analyzeForm.controls.targets.clear(); 
+    this.analyzeForm.controls.targets.clear();
     this.gridApi
       .getSelectedRows()
       .forEach(row =>
@@ -138,13 +158,13 @@ export class TargetsModalComponent implements OnInit {
 
   launchAnalyze(): void {
     if (this.analyzeForm.valid) {
-      this.dialogRef.close(this.analyzeForm.value); 
+      this.dialogRef.close(this.analyzeForm.value);
     } else {
-      this.dialogRef.close('ko'); 
+      this.dialogRef.close('ko');
     }
   }
 
   close(): void {
-    this.dialogRef.close('ko'); 
+    this.dialogRef.close('ko');
   }
 }

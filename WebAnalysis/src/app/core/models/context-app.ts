@@ -10,6 +10,17 @@ export interface AppFusion {
   icon: string;
 }
 
+export interface ITabFusion {
+  tabName?: string;
+  selector?: any;
+  inputs: {
+    isActive: boolean;
+    context?: IContextApp;
+    closing?: boolean;
+  };
+  outputs: any;
+}
+
 export interface IContextApp {
   name: string;
   targets: Array<string>;

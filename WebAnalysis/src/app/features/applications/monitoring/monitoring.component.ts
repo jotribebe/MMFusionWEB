@@ -1,9 +1,12 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   HostListener,
+  inject,
   OnDestroy,
   OnInit,
+  signal,
   ViewEncapsulation,
 } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -13,12 +16,15 @@ import { environment } from '@environments/environment';
 import { BaseAppComponent } from '@fusion/components/base-app/base-app.component';
 import { WidgetAnalyze } from '@fusion/models/enums/analyze-widget';
 import { GridsterItemFusion } from '@fusion/models/gridster-item-fusion';
-import { IContextApp } from '@fusion/models/context-app';
+import { AppFusion, IContextApp, ITabFusion } from '@fusion/models/context-app';
 import { MonitoringService } from '@fusion/services/monitoring.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { LayoutWidgetComponent } from '../widgets/layout-widget/layout-widget.component';
+import { AppNameService } from '@fusion/models/enums/app-name-service';
+import { TabViewCloseEvent } from 'primeng/tabview';
+import { LandingComponent } from '../../home/landing/landing.component';
 
 @Component({
   selector: 'app-monitoring',
@@ -119,7 +125,6 @@ export class MonitoringComponent
         enabled: true,
       },
       initCallback: () => {
-        console.log('je suis init frister');
         this.options.itemResizeCallback = (item, itemComponent) => {
           this.resizeEvent.emit({
             ...item,
@@ -184,5 +189,103 @@ export class MonitoringComponent
         }
       }
     });
+  }
+
+  // The following is the tabs
+  public changeDetectorRef = inject(ChangeDetectorRef);
+  selected = new UntypedFormControl(0);
+  activeIndex = signal(0);
+  tabs: Array<ITabFusion> = [
+    {
+      tabName: 'Analyse',
+      selector: LandingComponent, // TODO: change to the landing page
+      inputs: { isActive: true },
+      outputs: {
+        openApp: (app: AppFusion): void => {
+          this.openTab(app);
+        },
+        openNewApp: (app: AppFusion): void => {
+          this.openTab(app);
+        },
+        openSavedApp: (contextApp: IContextApp): void => {
+          const app = Object.values(environment.apps).find(
+            (p) => <AppNameService>p.type === contextApp.type
+          );
+          if (app) {
+            this.openTab(app as AppFusion, contextApp);
+          }
+        },
+      },
+    },
+  ];
+  public tab: ITabFusion | undefined = this.tabs[0];
+
+  public openTab(app: AppFusion, contextApp?: IContextApp): void {
+    // TODO: add a unique id for each component, and delete relative to this id
+    if (
+      contextApp &&
+      this.tabs.some(
+        (p) => p.inputs.context && p.inputs.context.id === contextApp.id
+      )
+    ) {
+      this.selected.setValue(
+        this.tabs.findIndex(
+          (p) => p.inputs.context && p.inputs.context.id === contextApp.id
+        )
+      );
+    } else {
+      switch (app.type) {
+        case AppNameService.ANALYZE:
+          this.tab = this.getModelTabAnalyse(app);
+          break;
+      }
+      if (this.tab) {
+        this.tabs.push(this.tab);
+        setTimeout(() => {
+          this.activeIndex.update(() => this.tabs.length - 1);
+        }, 5);
+        //this.selected.setValue(this.tabs.length - 1);
+      }
+    }
+  }
+
+  public removeTab(index: number): void {
+    //TODO: ne plus supprimer par index mais par ID
+    //this.tabs[index].inputs.closing = true;
+    this.tabs.splice(index, 1);
+    this.changeDetectorRef.detectChanges();
+    this.activeIndex.update(() => 0);
+  }
+
+  private getModelTabAnalyse(app: AppFusion): ITabFusion {
+    const tab: ITabFusion = {
+      tabName: app.tabName,
+      selector: MonitoringComponent,
+      inputs: {
+        isActive: false,
+      },
+      outputs: {
+        closeApp: () => {
+          this.removeTab(this.tabs.length - 1);
+        },
+        setName: (name: string) => {
+          tab.tabName = name;
+        },
+        setContext: (context: IContextApp) => {
+          tab.inputs.context = context;
+        },
+      },
+    };
+    return tab;
+  }
+
+  onCloseTab(event: TabViewCloseEvent): void {
+    this.tabs.splice(event.index, 1);
+    this.changeDetectorRef.detectChanges();
+    this.activeIndex.update(() => 0);
+  }
+
+  setSelectedTabIndex(i: number): void {
+    this.activeIndex.update(() => i);
   }
 }

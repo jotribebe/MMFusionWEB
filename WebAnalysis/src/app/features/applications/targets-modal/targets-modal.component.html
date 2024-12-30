@@ -17,6 +17,7 @@
         <label for="name">Analyze Name</label>
       </div>
       <div class="flex-1">
+        <!-- (firstDataRendered)="onFirstDataRendered($event)" -->
         <ag-grid-angular
           class="ag-theme-alpine w-full h-full"
           [columnDefs]="columnDefs"
@@ -25,7 +26,6 @@
           [rowSelection]="'multiple'"
           [rowMultiSelectWithClick]="true"
           (gridReady)="onGridReady($event)"
-          (firstDataRendered)="onFirstDataRendered($event)"
           (selectionChanged)="onSelectionChanged()"
         ></ag-grid-angular>
       </div>

@@ -20,14 +20,20 @@
   <!-- Main Content: Sidebar + Main Panel -->
   <div class="flex flex-1 overflow-hidden">
     <!-- Sidebar -->
-    <app-default
+    <app-sidebar
       *ngIf="showSidePanel"
       (openTab)="openTab($event)"
-    ></app-default>
+    ></app-sidebar>
 
 
     <!-- Main Panel -->
-    <div class="flex-1 bg-white my-4" role="main">
+    <div class="flex-1 bg-white" role="main">
+    <!-- <app-breadcrumb></app-breadcrumb> -->
+    <app-landing></app-landing>
+  </div>
+  
+  <!-- The follwoing should be displayed when cerate analyze is clicked -->
+    <!-- <div class="flex-1 bg-white" role="main">
         <p-tabView>
           @for (tab of tabs; track $index ) {
             <p-tabPanel
@@ -54,14 +60,13 @@
           }
         </p-tabView>
 
-      <app-breadcrumb></app-breadcrumb>
       <ndc-dynamic
         [ndcDynamicComponent]="tab!.selector"
         [ndcDynamicInputs]="tab!.inputs"
         [ndcDynamicOutputs]="tab!.outputs"
       >
       </ndc-dynamic>
-    </div>
+    </div> -->
 
 
 

@@ -53,7 +53,6 @@ export class MonitoringService implements OnDestroy {
     // private handlerAudioSrv: HandlerAudioService,
     // private authSrv: AuthService
   ) {
-    console.log('[CONSTRUCTOR]: MonitoringService');
     this.context = {
       id: v4(),
       globalSearch: '',
@@ -64,7 +63,6 @@ export class MonitoringService implements OnDestroy {
       dateCreated: new Date(),
       dateLastActivity: new Date(),
     };
-    console.log('id service', this.context.id);
     this.windowClose$ = fromEvent(window, 'beforeunload')
       .pipe(tap(() => this.updateContextDb()))
       .subscribe();
