@@ -23,37 +23,40 @@ module.exports = {
     },
     extend: {
       colors: {
-        green: {
-          700: "#243939",
-          600: "#107f39",
+        teal: {
+          600: "#243939",
           500: "#334f4e",
           400: "#3d6c6b",
           300: "#177876",
-          200: "#2f8333",
-          50: "#a4ed06",
+        },
+        green: {
+          400: "#107f39",
+          300: "#2f8333",
+        },
+        lime: {
+          300: "#a4ed06",
         },
         onyx: {
-          700: "#000000",
           600: "#12110f",
           500: "#2c2a26",
           400: "#252c1a",
           300: "#60684c",
         },
         gray: {
-          700: "#181818",
-          600: "#363636",
-          500: "#4c4c4c",
+          600: "#181818",
+          500: "#363636",
+          400: "#4c4c4c",
           300: "#bbbdbe",
           200: "#eeefe2",
           100: "#f4f4f1",
-          50: "#ffffff",
+          50: "#fdfdfd",
         },
         red: {
           500: "#d32f2f",
           50: "#fff5f5",
         },
         blue: {
-          500: "#0095e7",
+          500: "#1b7db1",
         },
         orange: {
           400: "#ff9800",
@@ -61,11 +64,9 @@ module.exports = {
         brown: {
           500: "#986801",
         },
-        custom: {
-          grayblue: "#BBBDBE",
-        },
       },
       fontFamily: {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         sans: ['"Segoe UI"', ...defaultTheme.fontFamily.sans],
       },
       textColor: {

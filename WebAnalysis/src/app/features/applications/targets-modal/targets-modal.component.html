@@ -4,17 +4,16 @@
     [formGroup]="analyzeForm"
     (ngSubmit)="launchAnalyze()"
   >
-    <h2 class="font-bold text-xl pb-2">Create Analyze</h2>
     <div class="flex-1 flex flex-col">
       <div class="form-group">
+        <h4>NEW QUERY</h4>
         <input
           autocomplete="off"
           type="text"
           id="name"
-          placeholder=" "
+          placeholder="Enter query name"
           formControlName="name"
         />
-        <label for="name">Analyze Name</label>
       </div>
       <div class="flex-1">
         <!-- (firstDataRendered)="onFirstDataRendered($event)" -->

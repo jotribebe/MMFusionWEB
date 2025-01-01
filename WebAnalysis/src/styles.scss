@@ -158,26 +158,26 @@ h5 {
   }
 
   button.btn-icon {
-    @apply bg-white text-gray-50 px-1 py-1 flex items-center justify-center rounded-lg border border-slate-300 text-sm/tight font-bold hover:bg-gray-100 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-600 gap-x-2;
+    @apply bg-white text-gray-50 px-1 py-1 flex items-center justify-center rounded-lg border border-slate-300 text-sm/tight font-bold hover:bg-gray-100 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.btn-primary-xs {
-    @apply bg-green-400 text-gray-50 px-2 py-1 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-green-500 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:bg-gray-600 gap-x-2;
+    @apply bg-teal-400 text-gray-50 px-2 py-1 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-teal-500 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:bg-gray-500 gap-x-2;
   }
 
   button.cfm-btn-primary-small {
-    @apply bg-green-400 text-gray-50 px-8 py-2 inline-flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-green-500 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-600;
+    @apply bg-teal-400 text-gray-50 px-8 py-2 inline-flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-teal-500 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500;
   }
 
   button.btn-primary-small {
-    @apply bg-green-400 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-green-500 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-600 gap-x-2;
+    @apply my-2 bg-teal-400 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-teal-500 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.btn-dialog-primary {
-    @apply bg-green-400 text-gray-50 w-full h-10 flex items-center justify-center rounded-lg text-sm/tight font-bold min-h-[36px]
-    hover:bg-green-300 hover:text-white cursor-pointer select-none shadow-md uppercase 
-    disabled:bg-white disabled:text-green-400 disabled:border-green-400 disabled:border disabled:cursor-not-allowed 
-    disabled:hover:text-green-400 disabled:hover:bg-white gap-x-2;
+    @apply bg-teal-400 text-gray-50 w-full h-10 flex items-center justify-center rounded-lg text-sm/tight font-bold min-h-[36px]
+    hover:bg-teal-300 hover:text-white cursor-pointer select-none shadow-md uppercase 
+    disabled:bg-white disabled:text-teal-400 disabled:border-teal-400 disabled:border disabled:cursor-not-allowed 
+    disabled:hover:text-teal-400 disabled:hover:bg-white gap-x-2;
   }
 
   button.btn-dialog-secondary {
@@ -188,31 +188,31 @@ h5 {
   }
 
   button.btn-primary {
-    @apply bg-green-400 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-green-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-600 gap-x-2;
+    @apply bg-teal-400 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-teal-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.btn-secondary-small {
-    @apply bg-onyx-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-600 gap-x-2;
+    @apply my-2 bg-onyx-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.btn-secondary {
-    @apply bg-onyx-600 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-600 gap-x-2;
+    @apply bg-onyx-600 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.cfm-btn-danger-small {
-    @apply bg-red-600 text-gray-50 px-8 py-2 inline-flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-600;
+    @apply bg-red-600 text-gray-50 px-8 py-2 inline-flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500;
   }
 
   button.btn-danger-small {
-    @apply bg-red-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-600 gap-x-2;
+    @apply bg-red-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.btn-danger {
-    @apply bg-red-600 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-600 gap-x-2;
+    @apply bg-red-600 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   span.badge-success {
-    @apply bg-green-100 text-green-600 text-base font-semibold me-2 px-2.5 py-0.5 rounded border border-green-600;
+    @apply bg-green-100 text-green-400 text-base font-semibold me-2 px-2.5 py-0.5 rounded border border-green-400;
   }
 
   span.badge-warning {
@@ -224,19 +224,19 @@ h5 {
   }
 
   span.badge-disabled {
-    @apply bg-gray-100 text-gray-600 text-base font-semibold me-2 px-2.5 py-0.5 rounded border border-gray-600;
+    @apply bg-gray-100 text-gray-500 text-base font-semibold me-2 px-2.5 py-0.5 rounded border border-gray-500;
   }
 
-  span.badge-secondary {
+  span.badge-danger {
     @apply bg-indigo-100 text-indigo-600 text-base font-semibold me-2 px-2.5 py-0.5 rounded border border-indigo-600;
   }
 
   input[type="radio"].fInput {
-    @apply appearance-none w-6 h-6 relative after:absolute after:h-full after:w-full after:top-0 after:left-0 after:border after:border-onyx-700 after:rounded-full before:hidden checked:before:absolute checked:before:block before:h-4 before:w-4 before:top-1 before:left-1 before:rounded-full before:bg-green-50;
+    @apply appearance-none w-6 h-6 relative after:absolute after:h-full after:w-full after:top-0 after:left-0 after:border after:border-black after:rounded-full before:hidden checked:before:absolute checked:before:block before:h-4 before:w-4 before:top-1 before:left-1 before:rounded-full before:bg-green-50;
   }
 
   button.app-card {
-    @apply shadow-md flex items-center justify-center bg-green-300 text-gray-50 font-bold text-2xl/tight px-2 disabled:bg-gray-200 disabled:hover:transform-none disabled:text-gray-300 hover:scale-110 duration-300 h-28 w-44 rounded-3xl flex-shrink-0 select-none;
+    @apply shadow-md flex items-center justify-center bg-teal-300 text-gray-50 font-bold text-2xl/tight px-2 disabled:bg-gray-200 disabled:hover:transform-none disabled:text-gray-300 hover:scale-110 duration-300 h-28 w-44 rounded-3xl flex-shrink-0 select-none;
   }
 
   .card-status {
@@ -273,7 +273,7 @@ h5 {
   }
 
   .card-last-activities {
-    @apply shadow-md flex flex-col bg-green-300 text-white font-semibold text-lg px-6 py-4 disabled:bg-skin-disabled disabled:hover:transform-none hover:scale-110 duration-300 w-44 rounded-3xl flex-shrink-0 select-none cursor-pointer relative;
+    @apply shadow-md flex flex-col bg-teal-300 text-white font-semibold text-lg px-6 py-4 disabled:bg-skin-disabled disabled:hover:transform-none hover:scale-110 duration-300 w-44 rounded-3xl flex-shrink-0 select-none cursor-pointer relative;
   }
 
   .card-last-activities button.trash {
@@ -285,7 +285,7 @@ h5 {
   }
 
   .whatsup .whatsup--badge {
-    @apply absolute inline-flex items-center justify-center p-[2px] text-sm font-bold text-gray-50 bg-gray-700 rounded-full -top-2 -right-2;
+    @apply absolute inline-flex items-center justify-center p-[2px] text-sm font-bold text-gray-50 bg-gray-600 rounded-full -top-2 -right-2;
   }
 
   textarea {
@@ -340,9 +340,21 @@ h5 {
 
   .p-dropdown,
   .p-multiselect,
-  .p-inputtextarea,
-  .p-inputtext:not(span) {
-    @apply w-full px-3 py-2 border border-gray-100 rounded-lg;
+  .p-inputtextarea {
+    @apply w-full border border-gray-200 rounded-lg my-2;
+  }
+
+  .p-dropdown .p-inputtext:not(span) {
+    @apply w-full border-0 m-0;
+  }
+
+  label {
+    font-weight: 600;
+    width: 100%;
+  }
+
+  input {
+    @apply px-3 py-2 border border-gray-200 rounded-lg w-full my-2;
   }
 
   *:is(.p-inputgroup-addon) {
@@ -383,7 +395,7 @@ h5 {
 }
 
 .toggleButton input ~ .toggle-circle {
-  @apply bg-gray-500 translate-x-0;
+  @apply bg-gray-400 translate-x-0;
   //transform: translateX(100%);
 }
 
@@ -437,7 +449,7 @@ h5 {
 
 //GRID AREA
 .ag-theme-alpine .ag-row-selected {
-  @apply bg-custom-grayblue;
+  @apply bg-gray-300;
 }
 
 .ag-theme-alpine .ag-row,
@@ -527,17 +539,6 @@ h5 {
   text-transform: uppercase;
 }
 
-// .custom-sidebar{
-//   background: no-repeat url('/assets/images/bg-side.jpg');
-//   width: 200px;
-//   font-size:1rem;
-//   color: #ffffff;
-//   // position: absolute;
-//   // top:0;
-//   // left:0;
-//   height: 100vh;
-// }
-
 app-provisioning2 {
   width: 100%;
 }
@@ -578,13 +579,12 @@ app-provisioning2 {
 
 .p-button-label {
   font-weight: 700;
-  padding: 0px 50px;
 }
 
 /* Success Toast - Green */
 .p-toast-message.p-toast-message-success .p-toast-message-content,
 .p-toast-message.p-toast-message-success .p-toast-message-icon {
-  @apply text-green-200;
+  @apply text-green-300;
 }
 
 /* Info Toast - Blue */
@@ -634,5 +634,5 @@ ul.p-treenode-children {
 }
 
 .p-treenode-content.p-treenode-selectable.p-highlight {
-  @apply bg-green-400 text-white;
+  @apply bg-teal-400 text-white;
 }

@@ -126,12 +126,13 @@ export class MonitoringService implements OnDestroy {
   ): any {
     const newRequest = { ...request };
     let targets: string[] = this.context.targets;
-    if (newRequest.filterModel) {
-      if (newRequest.filterModel.liid && newRequest.filterModel.liid.values) {
-        targets = newRequest.filterModel.liid.values;
-        newRequest.filterModel = { ...newRequest.filterModel, liid: undefined };
-      }
-    }
+    console.log("getData", newRequest.filterModel)
+    // if (newRequest.filterModel) {
+    //   if (newRequest.filterModel.liid && newRequest.filterModel.liid.values) {
+    //     targets = newRequest.filterModel.liid.values;
+    //     newRequest.filterModel = { ...newRequest.filterModel, liid: undefined };
+    //   }
+    // }
     var mockIEvent =  [
       {
         id: "event1",

@@ -24,7 +24,6 @@ import { AgGridModule } from 'ag-grid-angular';
 import { LayoutWidgetComponent } from '../widgets/layout-widget/layout-widget.component';
 import { AppNameService } from '@fusion/models/enums/app-name-service';
 import { TabViewCloseEvent } from 'primeng/tabview';
-import { LandingComponent } from '../../home/landing/landing.component';
 
 @Component({
   selector: 'app-monitoring',
@@ -170,7 +169,7 @@ export class MonitoringComponent
 
   private showDialogTarget(): void {
     const ref = this.dialogService.open(TargetsModalComponent, {
-      header: 'Target Selection',
+      header: 'CREATE QUERY',
       width: '500px',
       contentStyle: { height: '500px', overflow: 'auto' },
       data: {
@@ -179,6 +178,7 @@ export class MonitoringComponent
       },
     });
 
+    // when dialog is closed save in context
     ref.onClose.subscribe((val: Pick<IContextApp, 'name' | 'targets'> | string) => {
       if (typeof val === 'object') {
         this.setName.next(val.name);
@@ -198,7 +198,7 @@ export class MonitoringComponent
   tabs: Array<ITabFusion> = [
     {
       tabName: 'Analyse',
-      selector: LandingComponent, // TODO: change to the landing page
+      selector: null, // TODO: change to the landing page
       inputs: { isActive: true },
       outputs: {
         openApp: (app: AppFusion): void => {

@@ -1,12 +1,17 @@
 <div>
-    <button class="btn-primary-small" (click)="openMonitoring()">
-        <img
-          src="/assets/icons/plus-white.svg"
-          alt=""
-          width="24px"
-          height="24px"
-          class="inline"
-        />
-        Create Analyze
-      </button>
+  @if (openCreateQuery) {
+      <app-monitoring></app-monitoring>          
+  }
+  @else {
+    <button class="btn-primary-small" (click)="toggleOpenCreateQuery()">
+      <img
+        src="/assets/icons/plus-white.svg"
+        alt=""
+        width="24px"
+        height="24px"
+        class="inline"
+      />
+      CREATE QUERY
+    </button>
+  }
 </div>

@@ -2,6 +2,7 @@ export class Target {
   public id!: string;
   public liid!: string;
   public targetCode!: string;
+  public requestor!: string;
   public from!: string;
   public to!: string;
   public comment!: string;

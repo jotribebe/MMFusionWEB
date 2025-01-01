@@ -28,6 +28,7 @@ export class TargetsModalComponent implements OnInit {
       id: '1',
       liid: 'LI001',
       targetCode: 'TC001',
+      requestor: 'Requestor 1',
       from: '2024-01-01T00:00:00Z',
       to: '2024-12-31T23:59:59Z',
       comment: 'High priority target.',
@@ -44,6 +45,7 @@ export class TargetsModalComponent implements OnInit {
       id: '2',
       liid: 'LI002',
       targetCode: 'TC002',
+      requestor: 'Requestor 2',
       from: '2024-06-01T00:00:00Z',
       to: '2024-12-01T23:59:59Z',
       comment: 'Routine surveillance.',
@@ -55,6 +57,7 @@ export class TargetsModalComponent implements OnInit {
       id: '3',
       liid: 'LI003',
       targetCode: 'TC003',
+      requestor: 'Requestor 2',
       from: '2024-03-15T08:00:00Z',
       to: '2024-09-15T18:00:00Z',
       comment: 'Low activity observed.',
@@ -74,14 +77,14 @@ export class TargetsModalComponent implements OnInit {
   };
   public columnDefs: Array<ColDef<Target>> = [
     {
-      field: 'liid',
-      headerName: 'LIID',
+      field: 'targetCode',
+      headerName: 'Target Code',
       headerCheckboxSelection: true,
       checkboxSelection: true,
     },
     {
-      field: 'targetCode',
-      headerName: 'Target Code',
+      field: 'requestor',
+      headerName: 'Requestor',
     },
   ];
   private gridApi!: GridApi<Target>;
