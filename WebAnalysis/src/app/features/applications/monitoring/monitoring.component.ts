@@ -198,7 +198,7 @@ export class MonitoringComponent
   tabs: Array<ITabFusion> = [
     {
       tabName: 'Analyse',
-      selector: null, // TODO: change to the landing page
+      selector: MonitoringComponent,
       inputs: { isActive: true },
       outputs: {
         openApp: (app: AppFusion): void => {

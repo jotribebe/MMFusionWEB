@@ -23,19 +23,15 @@ export class CustomDateAgGridComponent implements IDateAngularComp {
   }
   constructor() {}
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnInit(): void {
     //console.log('init my ag date filter', new Date().getTimezoneOffset() / 60);
   }
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnDestroy(): void {
     console.log(`Destroying DateComponent`);
   }
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngAfterViewInit(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.picker = flatpickr(this.flatpickrEl.nativeElement, {
       onChange: this.onDateChanged.bind(this),
       dateFormat: 'd/m/Y H:i:S',
@@ -53,7 +49,6 @@ export class CustomDateAgGridComponent implements IDateAngularComp {
   onDateChanged(selectedDates: Date[]): void {
     this.date = selectedDates.length > 0 ? selectedDates[0] : null;
     this.params.onDateChanged();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     //  const dateFilterComponent = this.params.api.getFilterInstance('dateTime');
     //   console.log('dateFilterComponent', dateFilterComponent);
     //   console.log('this.params.filterParams', this.params.filterParams);
@@ -75,13 +70,11 @@ export class CustomDateAgGridComponent implements IDateAngularComp {
   }
 
   public showB(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
     //(this.eInput.nativeElement as any).showPicker();
   }
 
   setDate(date: Date): void {
     this.date = date || null;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     this.picker.setDate(date);
     /*this.test = this.date ? this.date.toISOString() : '';
     if (this.date) {

@@ -107,14 +107,14 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
       //       MyWidgetComponent
       //     ).instance;
       //   break;
-      // case WidgetAnalyze.IDENTITIES:
-      //   this.title = IdentitiesComponent.title;
-      //   this.closable = IdentitiesComponent.closable;
-      //   this.childComponent =
-      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
-      //       IdentitiesComponent
-      //     ).instance;
-      //   break;
+      case WidgetAnalyze.IDENTITIES:
+        this.title = IdentitiesComponent.title;
+        this.closable = IdentitiesComponent.closable;
+        this.childComponent =
+          this.viewContainerRef.createComponent<BaseWidgetComponent>(
+            IdentitiesComponent
+          ).instance;
+        break;
     }
 
     this.resizeEvent

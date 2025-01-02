@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Subject, take, takeUntil, tap } from 'rxjs';
@@ -84,7 +83,6 @@ export class GridComponent
     //   cellRenderer: LabelCellRendererComponent,
     //   filter: 'agSetColumnFilter',
     //   filterParams: {
-    //     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     //     values: async (params: SetFilterValuesFuncParams) => {
     //       /*const t = await this.labelsSrv.cachedApi$.asObservable().toPromise();
     //       params.success(t!.map(p => p.id));*/
@@ -92,7 +90,6 @@ export class GridComponent
     //         .asObservable()
     //         .pipe(
     //           take(1),
-    //           // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     //           tap(data => params.success(data.map(p => p.id)))
     //         )
     //         .subscribe();
@@ -389,7 +386,6 @@ export class GridComponent
       }
       if (contextGrid.columns) {
         params.api.applyColumnState({
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           state: contextGrid.columns,
           applyOrder: true,
         });
@@ -422,7 +418,6 @@ export class GridComponent
     //     if (
     //       event.newValue.length !== event.oldValue.length ||
     //       !event.newValue.every(id =>
-    //         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     //         event.oldValue.some((p: any) => p === id)
     //       )
     //     ) {

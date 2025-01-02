@@ -419,7 +419,6 @@ export interface IFiltersEventsRequest {
   take: number;
   targets: string[];
   globalSearch?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filterModel: any;
 }
 

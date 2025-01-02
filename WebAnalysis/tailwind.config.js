@@ -66,7 +66,6 @@ module.exports = {
         },
       },
       fontFamily: {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         sans: ['"Segoe UI"', ...defaultTheme.fontFamily.sans],
       },
       textColor: {
