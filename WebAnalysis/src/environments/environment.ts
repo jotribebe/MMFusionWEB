@@ -42,11 +42,11 @@ export const environment = {
   },
   widgets: {
     grid: {
-      title: 'Grid',
+      title: 'Interception',
       closable: false,
     },
-    metas: {
-      title: 'Metas',
+    metadata: {
+      title: 'Metadata',
       closable: true,
     },
     playerAudio: {
@@ -70,7 +70,7 @@ export const environment = {
       title: 'Transcription',
       closable: true,
     },
-    maps: {
+    map: {
       title: 'Maps',
       closable: true,
     },
@@ -78,10 +78,9 @@ export const environment = {
       title: 'Viewer',
       closable: true,
     },
-    mywidget: {
-      // <- new field
-      title: 'My Widget', // property title of the widget
-      closable: true, // true = closable, false: no closable
+    mywidget: {             // To delete
+      title: 'My Widget',
+      closable: true, 
     },
     identities: {
       title: 'Identities',

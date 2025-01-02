@@ -37,12 +37,9 @@ import { LandingComponent } from "./landing/landing.component";
   standalone: true,
   imports: [
     NgIf,
-    DynamicIoDirective,
-    DynamicComponent,
     TabViewModule,
     SidebarComponent,
     ChipModule,
-    BreadcrumbComponent,
     TabViewModule,
     LandingComponent
 ],
@@ -133,7 +130,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public openTab(app: AppFusion, contextApp?: IContextApp): void {
-    // TODO: add a unique id for each component, and delete relative to this id
     if (
       contextApp &&
       this.tabs.some(

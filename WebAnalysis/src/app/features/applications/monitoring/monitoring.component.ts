@@ -23,7 +23,10 @@ import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/f
 import { AgGridModule } from 'ag-grid-angular';
 import { LayoutWidgetComponent } from '../widgets/layout-widget/layout-widget.component';
 import { AppNameService } from '@fusion/models/enums/app-name-service';
-import { TabViewCloseEvent } from 'primeng/tabview';
+import { TabViewCloseEvent, TabViewModule } from 'primeng/tabview';
+import { DynamicComponent, DynamicIoDirective } from 'ng-dynamic-component';
+import { TooltipComponent } from 'ag-grid-community/dist/types/core/components/framework/componentTypes';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-monitoring',
@@ -38,6 +41,7 @@ import { TabViewCloseEvent } from 'primeng/tabview';
     AgGridModule,
     GridsterModule,
     LayoutWidgetComponent,
+    TooltipModule,
 ],
   providers: [MonitoringService, DialogService],
 })
@@ -54,7 +58,7 @@ export class MonitoringComponent
   @HostListener('document:keydown.escape', ['$event'])
   onKeydownHandler(): void {
     if (this.isActive) {
-      this.monitoringSrv.closeSearch();
+      this.monitoringService.closeSearch();
     }
   }
 
@@ -63,7 +67,7 @@ export class MonitoringComponent
     if (this.isActive) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.monitoringSrv.refreshGrid();
+      this.monitoringService.refreshGrid();
     }
   }
 
@@ -72,7 +76,7 @@ export class MonitoringComponent
     if (this.isActive) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.monitoringSrv.eventKeyboardTogglePlay();
+      this.monitoringService.eventKeyboardTogglePlay();
     }
   }
 
@@ -81,7 +85,7 @@ export class MonitoringComponent
     if (this.isActive) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.monitoringSrv.eventKeyboardSkipBackward();
+      this.monitoringService.eventKeyboardSkipBackward();
     }
   }
 
@@ -90,12 +94,12 @@ export class MonitoringComponent
     if (this.isActive) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      this.monitoringSrv.eventKeyboardSkipForward();
+      this.monitoringService.eventKeyboardSkipForward();
     }
   }
 
   public constructor(
-    public monitoringSrv: MonitoringService,
+    public monitoringService: MonitoringService,
     private dialogService: DialogService
   ) {
     super();
@@ -131,16 +135,16 @@ export class MonitoringComponent
           } as GridsterItemFusion);
         };
         this.options.itemChangeCallback = item => {
-          this.monitoringSrv.updateWidget(item as GridsterItemFusion);
+          this.monitoringService.updateWidget(item as GridsterItemFusion);
         };
       },
     };
   }
 
   ngOnInit(): void {
-    this.context = this.monitoringSrv.setContext(this.context);
-    if (this.monitoringSrv.hasContextValid()) {
-      this.monitoringSrv.start();
+    this.context = this.monitoringService.setContext(this.context);
+    if (this.monitoringService.hasContextValid()) {
+      this.monitoringService.start();
     } else {
       this.setContext.emit(this.context);
       this.showDialogTarget();
@@ -156,7 +160,7 @@ export class MonitoringComponent
   }
 
   public openWidget(widget: WidgetAnalyze): void {
-    this.monitoringSrv.addWidget(widget);
+    this.monitoringService.addWidget(widget);
   }
 
   public isWidgetActive(
@@ -173,8 +177,8 @@ export class MonitoringComponent
       width: '500px',
       contentStyle: { height: '500px', overflow: 'auto' },
       data: {
-        targetsSelected: this.monitoringSrv.getTargets(),
-        name: this.monitoringSrv.getName(),
+        targetsSelected: this.monitoringService.getTargets(),
+        name: this.monitoringService.getName(),
       },
     });
 
@@ -182,110 +186,14 @@ export class MonitoringComponent
     ref.onClose.subscribe((val: Pick<IContextApp, 'name' | 'targets'> | string) => {
       if (typeof val === 'object') {
         this.setName.next(val.name);
-        this.monitoringSrv.start(val);
+        this.monitoringService.start(val);
       } else {
-        if (!this.monitoringSrv.hasContextValid()) {
+        if (!this.monitoringService.hasContextValid()) {
           this.closeApp.emit(true);
         }
       }
     });
   }
 
-  // The following is the tabs
-  public changeDetectorRef = inject(ChangeDetectorRef);
-  selected = new UntypedFormControl(0);
-  activeIndex = signal(0);
-  tabs: Array<ITabFusion> = [
-    {
-      tabName: 'Analyse',
-      selector: MonitoringComponent,
-      inputs: { isActive: true },
-      outputs: {
-        openApp: (app: AppFusion): void => {
-          this.openTab(app);
-        },
-        openNewApp: (app: AppFusion): void => {
-          this.openTab(app);
-        },
-        openSavedApp: (contextApp: IContextApp): void => {
-          const app = Object.values(environment.apps).find(
-            (p) => <AppNameService>p.type === contextApp.type
-          );
-          if (app) {
-            this.openTab(app as AppFusion, contextApp);
-          }
-        },
-      },
-    },
-  ];
-  public tab: ITabFusion | undefined = this.tabs[0];
 
-  public openTab(app: AppFusion, contextApp?: IContextApp): void {
-    // TODO: add a unique id for each component, and delete relative to this id
-    if (
-      contextApp &&
-      this.tabs.some(
-        (p) => p.inputs.context && p.inputs.context.id === contextApp.id
-      )
-    ) {
-      this.selected.setValue(
-        this.tabs.findIndex(
-          (p) => p.inputs.context && p.inputs.context.id === contextApp.id
-        )
-      );
-    } else {
-      switch (app.type) {
-        case AppNameService.ANALYZE:
-          this.tab = this.getModelTabAnalyse(app);
-          break;
-      }
-      if (this.tab) {
-        this.tabs.push(this.tab);
-        setTimeout(() => {
-          this.activeIndex.update(() => this.tabs.length - 1);
-        }, 5);
-        //this.selected.setValue(this.tabs.length - 1);
-      }
-    }
-  }
-
-  public removeTab(index: number): void {
-    //TODO: ne plus supprimer par index mais par ID
-    //this.tabs[index].inputs.closing = true;
-    this.tabs.splice(index, 1);
-    this.changeDetectorRef.detectChanges();
-    this.activeIndex.update(() => 0);
-  }
-
-  private getModelTabAnalyse(app: AppFusion): ITabFusion {
-    const tab: ITabFusion = {
-      tabName: app.tabName,
-      selector: MonitoringComponent,
-      inputs: {
-        isActive: false,
-      },
-      outputs: {
-        closeApp: () => {
-          this.removeTab(this.tabs.length - 1);
-        },
-        setName: (name: string) => {
-          tab.tabName = name;
-        },
-        setContext: (context: IContextApp) => {
-          tab.inputs.context = context;
-        },
-      },
-    };
-    return tab;
-  }
-
-  onCloseTab(event: TabViewCloseEvent): void {
-    this.tabs.splice(event.index, 1);
-    this.changeDetectorRef.detectChanges();
-    this.activeIndex.update(() => 0);
-  }
-
-  setSelectedTabIndex(i: number): void {
-    this.activeIndex.update(() => i);
-  }
 }

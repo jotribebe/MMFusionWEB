@@ -11,7 +11,7 @@ export interface IEvents {
   destination?: IProfile;
   connectedTo?: IProfile;
   host?: string;
-  metas: Array<IMetaData>;
+  metadata: Array<IMetaData>;
   content: string;
   // "cin": "string",
   // "caller": {

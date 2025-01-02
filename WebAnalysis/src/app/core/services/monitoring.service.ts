@@ -21,11 +21,61 @@ import { AppNameService } from '@fusion/models/enums/app-name-service';
 
 @Injectable()
 export class MonitoringService implements OnDestroy {
+  mockIEvent : any =  [
+    {
+      id: "event1",
+      priority: 5,
+      note: "This is a sample note",
+      transcription: "Sample transcription text",
+      translation: "Sample translation text",
+      liid: "liid1",
+      targetCode: "TC1234",
+      direction: 0,
+      source: { id: "profile1", name: "John Doe", email: "johndoe@example.com" },
+      destination: { id: "profile2", name: "Jane Smith", email: "janesmith@example.com" },
+      connectedTo: { id: "profile3", name: "Alice Johnson" },
+      host: "host1.example.com",
+      metadata: [
+        { key: "metaKey1", value: "metaValue1" },
+        { key: "metaKey2", value: "metaValue2" },
+      ],
+      content: "This is the content for event1",
+      labels: ["urgent", "review"],
+    },
+    {
+      id: "event2",
+      priority: 2,
+      liid: "liid2",
+      targetCode: "TC5678",
+      direction: 1,
+      source: { id: "profile4", name: "Bob Brown", email: "bobbrown@example.com" },
+      destination: { id: "profile5", name: "Charlie Davis" },
+      metadata: [
+        { key: "metaKeyA", value: "metaValueA" },
+        { key: "metaKeyB", value: "metaValueB" },
+      ],
+      content: "This is the content for event2",
+    },
+    {
+      id: "event3",
+      priority: 8,
+      note: "High priority event",
+      liid: "liid3",
+      targetCode: "TC9012",
+      direction: 0,
+      host: "host2.example.com",
+      metadata: [{ key: "metaKeyX", value: "metaValueX" }],
+      content: "This is the content for event3",
+      labels: ["important"],
+    },
+  ];
+
   private _isLoadTarget = new BehaviorSubject<boolean>(false);
   public isLoadTarget$ = this._isLoadTarget.asObservable();
 
   private _eventsSelected = new BehaviorSubject<Array<IEvents>>([]);
-  public eventsSelected$ = this._eventsSelected.asObservable();
+  // public eventsSelected$ = this._eventsSelected.asObservable();
+  public eventsSelected$ = this.mockIEvent;
 
   public eventUpdated$ = new Subject<IEvents>();
 
@@ -133,55 +183,8 @@ export class MonitoringService implements OnDestroy {
     //     newRequest.filterModel = { ...newRequest.filterModel, liid: undefined };
     //   }
     // }
-    var mockIEvent =  [
-      {
-        id: "event1",
-        priority: 5,
-        note: "This is a sample note",
-        transcription: "Sample transcription text",
-        translation: "Sample translation text",
-        liid: "liid1",
-        targetCode: "TC1234",
-        direction: 0,
-        source: { id: "profile1", name: "John Doe", email: "johndoe@example.com" },
-        destination: { id: "profile2", name: "Jane Smith", email: "janesmith@example.com" },
-        connectedTo: { id: "profile3", name: "Alice Johnson" },
-        host: "host1.example.com",
-        metas: [
-          { key: "metaKey1", value: "metaValue1" },
-          { key: "metaKey2", value: "metaValue2" },
-        ],
-        content: "This is the content for event1",
-        labels: ["urgent", "review"],
-      },
-      {
-        id: "event2",
-        priority: 2,
-        liid: "liid2",
-        targetCode: "TC5678",
-        direction: 1,
-        source: { id: "profile4", name: "Bob Brown", email: "bobbrown@example.com" },
-        destination: { id: "profile5", name: "Charlie Davis" },
-        metas: [
-          { key: "metaKeyA", value: "metaValueA" },
-          { key: "metaKeyB", value: "metaValueB" },
-        ],
-        content: "This is the content for event2",
-      },
-      {
-        id: "event3",
-        priority: 8,
-        note: "High priority event",
-        liid: "liid3",
-        targetCode: "TC9012",
-        direction: 0,
-        host: "host2.example.com",
-        metas: [{ key: "metaKeyX", value: "metaValueX" }],
-        content: "This is the content for event3",
-        labels: ["important"],
-      },
-    ];
-    return mockIEvent;
+
+    return this.mockIEvent;
     // return this.apiSrv.filterEvents(
     //   newRequest,
     //   targets,
@@ -217,7 +220,7 @@ export class MonitoringService implements OnDestroy {
       w => w.type === WidgetAnalyze.PLAYER_AUDIO
     );
     switch (widget) {
-      case WidgetAnalyze.METAS:
+      case WidgetAnalyze.METADATA:
         widgets.push({
           cols: 3,
           rows: 5,
@@ -231,73 +234,73 @@ export class MonitoringService implements OnDestroy {
         });
         this._widgets.next(widgets);
         break;
-      case WidgetAnalyze.VIEWER_PDF:
-        widgets.push({
-          cols: 3,
-          rows: 5,
-          y: 0,
-          x: widgets
-            .filter(w => w.y === 0)
-            .reduce((acc, wid) => {
-              return acc + wid.cols;
-            }, 0),
-          type: widget,
-        });
-        this._widgets.next(widgets);
-        break;
-      case WidgetAnalyze.NOTE:
-        widgets.push({
-          cols: 4,
-          rows: 3,
-          y: widgetPlayer ? widgetPlayer.y + widgetPlayer.rows : 0,
-          x: widgetPlayer
-            ? widgets
-                .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
-                .reduce((acc, wid) => {
-                  return acc + wid.cols;
-                }, 0)
-            : 0,
-          type: widget,
-          minItemRows: 2,
-        });
-        this._widgets.next(widgets);
-        break;
-      case WidgetAnalyze.TRANSCRIPTION:
-        widgets.push({
-          cols: 5,
-          rows: 3,
-          y: widgetPlayer ? widgetPlayer.y + widgetPlayer.rows : 0,
-          x: widgetPlayer
-            ? widgets
-                .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
-                .reduce((acc, wid) => {
-                  return acc + wid.cols;
-                }, 0)
-            : 0,
-          type: widget,
-        });
-        this._widgets.next(widgets);
-        break;
-      case WidgetAnalyze.MAPS:
-        widgets.push({
-          cols: 6,
-          rows: 5,
-          y:
-            widgetPlayer && widgetPlayer.x === 0
-              ? widgetPlayer.y + widgetPlayer.rows
-              : 0,
-          x:
-            widgetPlayer && widgetPlayer.x === 0
-              ? widgets
-                  .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
-                  .reduce((acc, wid) => {
-                    return acc + wid.cols;
-                  }, 0)
-              : 0,
-          type: widget,
-        });
-        this._widgets.next(widgets);
-        break;
+      // case WidgetAnalyze.VIEWER_PDF:
+      //   widgets.push({
+      //     cols: 3,
+      //     rows: 5,
+      //     y: 0,
+      //     x: widgets
+      //       .filter(w => w.y === 0)
+      //       .reduce((acc, wid) => {
+      //         return acc + wid.cols;
+      //       }, 0),
+      //     type: widget,
+      //   });
+      //   this._widgets.next(widgets);
+      //   break;
+      // case WidgetAnalyze.NOTE:
+      //   widgets.push({
+      //     cols: 4,
+      //     rows: 3,
+      //     y: widgetPlayer ? widgetPlayer.y + widgetPlayer.rows : 0,
+      //     x: widgetPlayer
+      //       ? widgets
+      //           .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
+      //           .reduce((acc, wid) => {
+      //             return acc + wid.cols;
+      //           }, 0)
+      //       : 0,
+      //     type: widget,
+      //     minItemRows: 2,
+      //   });
+      //   this._widgets.next(widgets);
+      //   break;
+      // case WidgetAnalyze.TRANSCRIPTION:
+      //   widgets.push({
+      //     cols: 5,
+      //     rows: 3,
+      //     y: widgetPlayer ? widgetPlayer.y + widgetPlayer.rows : 0,
+      //     x: widgetPlayer
+      //       ? widgets
+      //           .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
+      //           .reduce((acc, wid) => {
+      //             return acc + wid.cols;
+      //           }, 0)
+      //       : 0,
+      //     type: widget,
+      //   });
+      //   this._widgets.next(widgets);
+      //   break;
+      // case WidgetAnalyze.MAP:
+        // widgets.push({
+        //   cols: 6,
+        //   rows: 5,
+        //   y:
+        //     widgetPlayer && widgetPlayer.x === 0
+        //       ? widgetPlayer.y + widgetPlayer.rows
+        //       : 0,
+        //   x:
+        //     widgetPlayer && widgetPlayer.x === 0
+        //       ? widgets
+        //           .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
+        //           .reduce((acc, wid) => {
+        //             return acc + wid.cols;
+        //           }, 0)
+        //       : 0,
+        //   type: widget,
+        // });
+        // this._widgets.next(widgets);
+        // break;
       case WidgetAnalyze.IDENTITIES:
         widgets.push({
           cols: 4,
@@ -314,26 +317,26 @@ export class MonitoringService implements OnDestroy {
         });
         this._widgets.next(widgets);
         break;
-      case WidgetAnalyze.MY_WIDGET:
-        widgets.push({
-          cols: 4,
-          rows: 3,
-          y:
-            widgetPlayer && widgetPlayer.x === 0
-              ? widgetPlayer.y + widgetPlayer.rows
-              : 0,
-          x:
-            widgetPlayer && widgetPlayer.x === 0
-              ? widgets
-                  .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
-                  .reduce((acc, wid) => {
-                    return acc + wid.cols;
-                  }, 0)
-              : 0,
-          type: widget,
-        });
-        this._widgets.next(widgets);
-        break;
+      // case WidgetAnalyze.MY_WIDGET:
+      //   widgets.push({
+      //     cols: 4,
+      //     rows: 3,
+      //     y:
+      //       widgetPlayer && widgetPlayer.x === 0
+      //         ? widgetPlayer.y + widgetPlayer.rows
+      //         : 0,
+      //     x:
+      //       widgetPlayer && widgetPlayer.x === 0
+      //         ? widgets
+      //             .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
+      //             .reduce((acc, wid) => {
+      //               return acc + wid.cols;
+      //             }, 0)
+      //         : 0,
+      //     type: widget,
+      //   });
+      //   this._widgets.next(widgets);
+      //   break;
       default:
         break;
     }
@@ -415,26 +418,26 @@ export class MonitoringService implements OnDestroy {
   private getDefaultGridster(): Array<GridsterItemFusion> {
     return [
       { cols: 9, rows: 5, y: 0, x: 0, type: WidgetAnalyze.GRID },
-      {
-        cols: 9,
-        rows: 2,
-        y: 5,
-        x: 0,
-        type: WidgetAnalyze.PLAYER_AUDIO,
-        minItemRows: 2,
-        maxItemRows: 2,
-      },
-      {
-        cols: 4,
-        rows: 3,
-        y: 7,
-        x: 0,
-        minItemRows: 2,
-        type: WidgetAnalyze.NOTE,
-      },
-      { cols: 5, rows: 3, y: 7, x: 4, type: WidgetAnalyze.TRANSCRIPTION },
-      { cols: 3, rows: 5, y: 0, x: 9, type: WidgetAnalyze.METAS },
-      { cols: 3, rows: 5, y: 0, x: 12, type: WidgetAnalyze.VIEWER_PDF },
+      // {
+      //   cols: 9,
+      //   rows: 2,
+      //   y: 5,
+      //   x: 0,
+      //   type: WidgetAnalyze.PLAYER_AUDIO,
+      //   minItemRows: 2,
+      //   maxItemRows: 2,
+      // },
+      // {
+      //   cols: 4,
+      //   rows: 3,
+      //   y: 7,
+      //   x: 0,
+      //   minItemRows: 2,
+      //   type: WidgetAnalyze.NOTE,
+      // },
+      // { cols: 5, rows: 3, y: 7, x: 4, type: WidgetAnalyze.TRANSCRIPTION },
+      { cols: 3, rows: 5, y: 0, x: 9, type: WidgetAnalyze.METADATA },
+      // { cols: 3, rows: 5, y: 0, x: 12, type: WidgetAnalyze.VIEWER_PDF },
     ];
   }
 
@@ -458,7 +461,6 @@ export class MonitoringService implements OnDestroy {
 
   private updateContextDb(): void {
     if (this.hasContextValid()) {
-      console.log('je veux update db context');
       this.context.gridster = this._widgets.getValue();
       this.context.globalSearch = this._search.getValue();
       this.context.grid = this._gridModel.getValue();

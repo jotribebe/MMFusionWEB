@@ -26,7 +26,7 @@ export class ExportToolPanelComponent
   constructor(
     // public apiSrv: ApiService,
     public fb: FormBuilder,
-    public monitoringSrv: MonitoringService
+    public monitoringService: MonitoringService
   ) {
     this.exportForm = this.fb.group({
       type: this.fb.control<string>('', {
@@ -68,7 +68,7 @@ export class ExportToolPanelComponent
     //         ? this.params.api.getSelectedRows().map((p: IEvents) => p.id)
     //         : null,
     //       this.exportForm.value.type === 'allRow'
-    //         ? this.monitoringSrv.getTargets()
+    //         ? this.monitoringService.getTargets()
     //         : null
     //     )
     //     .pipe(

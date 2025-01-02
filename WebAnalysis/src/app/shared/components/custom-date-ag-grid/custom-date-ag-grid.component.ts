@@ -41,8 +41,6 @@ export class CustomDateAgGridComponent implements IDateAngularComp {
       wrap: true,
     });
 
-    console.log('this.picker', this.picker);
-
     this.picker.calendarContainer.classList.add('ag-custom-component-popup');
   }
 

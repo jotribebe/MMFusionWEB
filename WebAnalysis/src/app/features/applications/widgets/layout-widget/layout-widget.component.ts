@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   OnDestroy,
   OnInit,
@@ -16,6 +17,7 @@ import { BaseWidgetComponent } from '@fusion/components/base-widget/basewidget.c
 import { WidgetAnalyze } from '@fusion/models/enums/analyze-widget';
 import { GridsterItemFusion } from '@fusion/models/gridster-item-fusion';
 import { NgIf } from '@angular/common';
+import { MetaDataComponent } from '../meta-data/meta-data.component';
 
 @Component({
   selector: 'app-layout-widget[type][resizeEvent]',
@@ -36,7 +38,10 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
   public closable = false;
   public height = environment.widgets.layout.heightToolbar;
   private destroy$ = new Subject<void>();
-  constructor(private monitoringSrv: MonitoringService) {}
+
+  private monitoringService = inject(MonitoringService);
+  
+  constructor() {}
 
   ngOnInit(): void {
     this.viewContainerRef?.clear();
@@ -75,14 +80,14 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
       //       PlayerComponent
       //     ).instance;
       //   break;
-      // case WidgetAnalyze.METAS:
-      //   this.title = MetaDataComponent.title;
-      //   this.closable = MetaDataComponent.closable;
-      //   this.childComponent =
-      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
-      //       MetaDataComponent
-      //     ).instance;
-      //   break;
+      case WidgetAnalyze.METADATA:
+        this.title = MetaDataComponent.title;
+        this.closable = MetaDataComponent.closable;
+        this.childComponent =
+          this.viewContainerRef.createComponent<BaseWidgetComponent>(
+            MetaDataComponent
+          ).instance;
+        break;
       // case WidgetAnalyze.VIEWER_PDF:
       //   this.title = ViewerPdfComponent.title;
       //   this.closable = ViewerPdfComponent.closable;
@@ -91,7 +96,7 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
       //       ViewerPdfComponent
       //     ).instance;
       //   break;
-      // case WidgetAnalyze.MAPS:
+      // case WidgetAnalyze.MAP:
       //   this.title = MapComponent.title;
       //   this.closable = MapComponent.closable;
       //   this.childComponent =
@@ -141,6 +146,6 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
 
   public closeWidget(event: MouseEvent): void {
     event.stopImmediatePropagation();
-    this.monitoringSrv.removeWidget(this.type);
+    this.monitoringService.removeWidget(this.type);
   }
 }

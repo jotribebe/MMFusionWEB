@@ -1,0 +1,36 @@
+<!-- <div *ngIf="monitoringService.eventsSelected$ | async as events" class="h-full px-2">
+  <div class="h-full pb-[10px]" *ngIf="events.length === 1; else noDisplay">
+    <ag-grid-angular
+      class="ag-theme-alpine w-full h-full ag-thme-no-header"
+      [columnDefs]="columnDefs"
+      [rowData]="events[0].metadata"
+      [groupDisplayType]="'groupRows'"
+      (rowDataUpdated)="onRowDataUpdated($event)"
+      [getContextMenuItems]="getContextMenuItems"
+      [headerHeight]="0">
+    </ag-grid-angular>
+  </div>
+  <ng-template #noDisplay>
+    <div class="flex items-center py-2">
+      <span>To display "METADATA", select one item only</span>
+    </div>
+  </ng-template>
+</div> -->
+<div *ngIf="monitoringService.eventsSelected$ " class="h-full px-2">
+  <div class="h-full pb-[10px]" *ngIf="monitoringService.eventsSelected$.length === 1; else noDisplay">
+    <ag-grid-angular
+      class="ag-theme-alpine w-full h-full ag-thme-no-header"
+      [columnDefs]="columnDefs"
+      [rowData]="monitoringService.eventsSelected$"
+      [groupDisplayType]="'groupRows'"
+      (rowDataUpdated)="onRowDataUpdated($event)"
+      [getContextMenuItems]="getContextMenuItems"
+      [headerHeight]="0">
+    </ag-grid-angular>
+  </div>
+  <ng-template #noDisplay>
+    <div class="flex items-center py-2">
+      <span>To display "METADATA", select one item only</span>
+    </div>
+  </ng-template>
+</div>

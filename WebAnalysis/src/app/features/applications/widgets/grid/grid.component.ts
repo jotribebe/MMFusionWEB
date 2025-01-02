@@ -1,26 +1,7 @@
+import { ServerSideRowModelModule } from '@ag-grid-enterprise/server-side-row-model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Subject, take, takeUntil, tap } from 'rxjs';
-import {
-  CellValueChangedEvent,
-  ColDef,
-  ColGroupDef,
-  DisplayedColumnsChangedEvent,
-  GridReadyEvent,
-  FilterChangedEvent,
-  GridApi,
-  GetRowIdFunc,
-  GetRowIdParams,
-  IServerSideDatasource,
-  SideBarDef,
-  ValueFormatterParams,
-  RowStyle,
-  RowClassParams,
-  SetFilterValuesFuncParams,
-  CellClassParams,
-  CellStyle,
-  RowModelType,
-} from 'ag-grid-community';
 import { ExportToolPanelComponent } from './export-tool-panel/export-tool-panel.component';
 import { EventType } from '@angular/router';
 import { BaseWidgetComponent } from '@fusion/components/base-widget/basewidget.component';
@@ -29,29 +10,48 @@ import { CustomDateAgGridComponent } from '@shared/components/custom-date-ag-gri
 import { EventGroup } from '@fusion/models/enums/event-group';
 import { MonitoringService } from '@fusion/services/monitoring.service';
 import { UtilsService } from '@fusion/services/utils.service';
-import { AgGridModule } from 'ag-grid-angular';
+import { AgGridAngular } from '@ag-grid-community/angular';
+import {
+  CellClassParams,
+  CellStyle,
+  CellValueChangedEvent,
+  ColDef,
+  ColGroupDef,
+  DisplayedColumnsChangedEvent,
+  FilterChangedEvent,
+  GetRowIdFunc,
+  GetRowIdParams,
+  GridApi,
+  GridReadyEvent,
+  IServerSideDatasource,
+  RowClassParams,
+  RowModelType,
+  RowStyle,
+  SideBarDef,
+  ValueFormatterParams,
+} from "@ag-grid-community/core";
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
-  imports: [
-    AgGridModule,
-  ],
-  standalone: true
+  imports: [AgGridAngular],
+  standalone: true,
 })
 export class GridComponent
   extends BaseWidgetComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   static override title = environment.widgets.grid.title;
   static override closable = environment.widgets.grid.closable;
 
   private gridApi!: GridApi<IEvents>;
+  // TODO: the date and time is not used need to use primeNG
   public components = {
     agDateInput: CustomDateAgGridComponent,
   };
   public rowData!: IEvents[];
-  public columnDefs: (ColDef<IEvents> | ColGroupDef<IEvents>)[] = [
+  public columnDefs: Array<ColDef<IEvents> | ColGroupDef<IEvents>> = [
     {
       field: 'dateTime',
       headerName: 'DateTime',
@@ -109,7 +109,7 @@ export class GridComponent
       floatingFilter: true,
       filter: 'agSetColumnFilter',
       filterParams: {
-        values: this.monitoringSrv.getTargets(),
+        values: this.monitoringService.getTargets(),
       },
     },
     // { field: 'targetCode', headerName: 'Target Code' },
@@ -331,13 +331,14 @@ export class GridComponent
       },
     ],
   };
-  rowModelType: RowModelType = "serverSide";
+  modules = [ServerSideRowModelModule];
+  rowModelType: RowModelType = 'serverSide';
   //public maxBlocksInCache = 2;
   //public height = 460;
   private destroy$ = new Subject<void>();
 
   constructor(
-    public monitoringSrv: MonitoringService,
+    public monitoringService: MonitoringService,
     // public enumUtils: EnumUtilsService,
     public utilsSrv: UtilsService,
     // private labelsSrv: LabelsService
@@ -346,24 +347,24 @@ export class GridComponent
   }
 
   ngOnInit(): void {
-    this.monitoringSrv.eventUpdated$
+    this.monitoringService.eventUpdated$
       .pipe(
-        tap(eventUpdated =>
+        tap((eventUpdated) =>
           this.gridApi
             .getRowNode(eventUpdated.id)
-            ?.updateData({ ...eventUpdated })
+            ?.updateData({ ...eventUpdated }),
         ),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe();
 
-    this.monitoringSrv.refreshGrid$
+    this.monitoringService.refreshGrid$
       .pipe(
         tap(() => {
           this.gridApi.deselectAll();
           this.gridApi.refreshServerSide({ purge: true });
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe();
   }
@@ -379,7 +380,7 @@ export class GridComponent
 
   public onGridReady(params: GridReadyEvent<IEvents>): void {
     this.gridApi = params.api;
-    const contextGrid = this.monitoringSrv.getContext().grid;
+    const contextGrid = this.monitoringService.getContext().grid;
     if (contextGrid) {
       if (contextGrid.filters) {
         this.gridApi.setFilterModel(contextGrid.filters);
@@ -393,7 +394,7 @@ export class GridComponent
     }
     const datasource = this.createServerSideDatasource();
     // params.api.setServerSideDatasource(datasource);
-    params.api.setGridOption("serverSideDatasource", datasource);
+    params.api.setGridOption('serverSideDatasource', datasource);
   }
 
   public getRowStyle(params: RowClassParams<IEvents>): RowStyle {
@@ -404,11 +405,11 @@ export class GridComponent
   }
 
   public onSelectionChanged(): void {
-    this.monitoringSrv.changeSelection(this.gridApi.getSelectedRows());
+    this.monitoringService.changeSelection(this.gridApi.getSelectedRows());
   }
 
   public onFilterChanged(event: FilterChangedEvent<IEvents>): void {
-    this.monitoringSrv.setFilterModel(event.api.getFilterModel());
+    this.monitoringService.setFilterModel(event.api.getFilterModel());
   }
 
   public onCellValueChanged(event: CellValueChangedEvent<IEvents>): void {
@@ -421,7 +422,7 @@ export class GridComponent
     //         event.oldValue.some((p: any) => p === id)
     //       )
     //     ) {
-    //       this.monitoringSrv
+    //       this.monitoringService
     //         .linkEventLabels(event.data.id, event.newValue as Array<string>)
     //         .subscribe();
     //     }
@@ -430,9 +431,9 @@ export class GridComponent
   }
 
   public onDisplayedColumnsChanged(
-    event: DisplayedColumnsChangedEvent<IEvents>
+    event: DisplayedColumnsChangedEvent<IEvents>,
   ): void {
-    this.monitoringSrv.setColumnDefs(event.api.getColumnState());
+    this.monitoringService.setColumnDefs(event.api.getColumnState());
   }
 
   public dateFormatter(params: ValueFormatterParams<IEvents>): string {
@@ -456,11 +457,11 @@ export class GridComponent
 
   private createServerSideDatasource(): IServerSideDatasource {
     return {
-      getRows: params => {
+      getRows: (params) => {
         // console.log('[Datasource] - rows requested by grid: ', params.request);
-        this.monitoringSrv.getData(params.request).subscribe({
-          next: (response: { result: any; count: any; }) => {
-            // console.log('response', response);
+        this.monitoringService.getData(params.request).subscribe({
+          next: (response: { result: any; count: any }) => {
+            console.log('getData response', response);
             params.success({
               rowData: response.result,
               rowCount: response.count,

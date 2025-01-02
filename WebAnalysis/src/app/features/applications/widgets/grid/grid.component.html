@@ -1,5 +1,23 @@
 <div class="h-full px-2 pb-2">
   <ag-grid-angular
+  class="ag-theme-alpine w-full h-full"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  (filterChanged)="onFilterChanged($event)"
+  (displayedColumnsChanged)="onDisplayedColumnsChanged($event)"
+  (cellValueChanged)="onCellValueChanged($event)"
+  [modules]="modules"
+  [rowModelType]="rowModelType"
+  [rowData]="rowData"
+  [getRowStyle]="getRowStyle"
+  [rowSelection]="'multiple'"
+  (gridReady)="onGridReady($event)"
+  [cacheBlockSize]="cacheBlockSize"
+  (selectionChanged)="onSelectionChanged()"
+  [sideBar]="sideBar"
+  [getRowId]="getRowId">
+</ag-grid-angular>
+  <!-- <ag-grid-angular
     class="ag-theme-alpine w-full h-full"
     [columnDefs]="columnDefs"
     [components]="components"
@@ -7,6 +25,7 @@
     (filterChanged)="onFilterChanged($event)"
     (displayedColumnsChanged)="onDisplayedColumnsChanged($event)"
     (cellValueChanged)="onCellValueChanged($event)"
+    [modules]="modules"
     [rowModelType]="rowModelType"
     [rowData]="rowData"
     [getRowStyle]="getRowStyle"
@@ -16,7 +35,7 @@
     (selectionChanged)="onSelectionChanged()"
     [sideBar]="sideBar"
     [getRowId]="getRowId">
-  </ag-grid-angular>
+  </ag-grid-angular> -->
 
   <!-- [maxBlocksInCache]="maxBlocksInCache" -->
   <!--

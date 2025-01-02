@@ -1,16 +1,35 @@
 <div class="flex-1 h-full w-full">
   @if (openCreateQuery) {
-      <app-monitoring></app-monitoring>          
+    <div class="flex-1 h-full w-full bg-white">
+      <p-tabView>
+        @for (tab of tabs; track $index ) {
+          <p-tabPanel
+          >
+          <ng-template pTemplate="header">
+            <div class="flex gap-x-2 place-content-center">
+            <span>{{ tab.tabName }}</span>
+            <button (click)="removeTab($index)">
+              <span class="pi pi-times hover:text-red-500" 
+              ></span>
+            </button>
+          </div>
+          </ng-template>
+          </p-tabPanel>
+        }
+      </p-tabView>
+
+    <ndc-dynamic
+      [ndcDynamicComponent]="tab!.selector"
+      [ndcDynamicInputs]="tab!.inputs"
+      [ndcDynamicOutputs]="tab!.outputs"
+    >
+    </ndc-dynamic>
+  </div>
+      <!-- <app-monitoring></app-monitoring>           -->
   }
   @else {
     <button class="btn-primary-small" (click)="toggleOpenCreateQuery()">
-      <img
-        src="/assets/icons/plus-white.svg"
-        alt=""
-        width="24px"
-        height="24px"
-        class="inline"
-      />
+      <span class="pi pi-chart-bar text-xl"></span>
       CREATE QUERY
     </button>
   }

@@ -3,10 +3,10 @@ export enum WidgetAnalyze {
   PLAYER_AUDIO, //
   NOTE, //
   TRANSCRIPTION, //
-  METAS, //
+  METADATA, //
   VIEWER_PDF,
   PLAYER_VIDEO,
-  MAPS, //
+  MAP, //
   MY_WIDGET, // <- new entry
   IDENTITIES,
   // to add IP Traffic Summary
