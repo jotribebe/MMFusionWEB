@@ -1,36 +1,35 @@
 <div>
-    <p-sidebar
-      [(visible)]="sidebarVisible"
-      dismissible="false"
-      showCloseIcon="false"
-      closeOnEscape="false"
-      [modal]="false"
-      position="left"
-      styleClass="custom-sidebar"
-    >
-      <p-panelMenu [model]="listApps" styleClass="w-full md:w-20rem">
-        <ng-template pTemplate="item" let-item>
-          <span
-            *ngIf="item.items; else noSublink"
+  <p-sidebar
+    [(visible)]="sidebarVisible"
+    dismissible="false"
+    showCloseIcon="false"
+    closeOnEscape="false"
+    [modal]="false"
+    position="left"
+    styleClass="custom-sidebar"
+  >
+    <p-panelMenu [model]="listApps" styleClass="w-full md:w-20rem">
+      <ng-template pTemplate="item" let-item>
+        <span
+          *ngIf="item.items; else noSublink"
+          class="flex align-items-center cursor-pointer text-color px-3 py-2"
+        >
+          <span [class]="'pi ' + item.icon"></span>
+          <span class="ml-2">{{ item.name }}</span>
+          <i class="pi pi-angle-down text-primary ml-auto"></i>
+        </span>
+        <ng-template #noSublink>
+          <a
             class="flex align-items-center cursor-pointer text-color px-3 py-2"
+            (click)="launchApp(item)"
           >
             <span [class]="'pi ' + item.icon"></span>
             <span class="ml-2">{{ item.name }}</span>
-            <i class="pi pi-angle-down text-primary ml-auto"></i>
-          </span>
-          <ng-template #noSublink>
-            <a
-              class="flex align-items-center cursor-pointer text-color px-3 py-2"
-              (click)="launchApp(item)"
-            >
-              <span [class]="'pi ' + item.icon"></span>
-              <span class="ml-2">{{ item.name }}</span>
-            </a>
-          </ng-template>
+          </a>
         </ng-template>
-      </p-panelMenu>
-    </p-sidebar>
-  </div>
-  
-  <p-confirmDialog></p-confirmDialog>
-  
+      </ng-template>
+    </p-panelMenu>
+  </p-sidebar>
+</div>
+
+<p-confirmDialog></p-confirmDialog>

@@ -1,6 +1,6 @@
-import { AppComponent } from "@fusion/components";
-import { bootstrapApplication } from "@angular/platform-browser";
-import { appConfig } from "@shared/app.config";
+import { AppComponent } from '@fusion/components';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from '@shared/app.config';
 
 // if (environment.production) {
 //   enableProdMode();
@@ -11,5 +11,5 @@ import { appConfig } from "@shared/app.config";
 //   .catch(err => console.error(err));
 
 bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err)
+  console.error(err),
 );

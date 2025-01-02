@@ -21,52 +21,64 @@ import { AppNameService } from '@fusion/models/enums/app-name-service';
 
 @Injectable()
 export class MonitoringService implements OnDestroy {
-  mockIEvent : any =  [
+  mockIEvent: any = [
     {
-      id: "event1",
+      id: 'event1',
       priority: 5,
-      note: "This is a sample note",
-      transcription: "Sample transcription text",
-      translation: "Sample translation text",
-      liid: "liid1",
-      targetCode: "TC1234",
+      note: 'This is a sample note',
+      transcription: 'Sample transcription text',
+      translation: 'Sample translation text',
+      liid: 'liid1',
+      targetCode: 'TC1234',
       direction: 0,
-      source: { id: "profile1", name: "John Doe", email: "johndoe@example.com" },
-      destination: { id: "profile2", name: "Jane Smith", email: "janesmith@example.com" },
-      connectedTo: { id: "profile3", name: "Alice Johnson" },
-      host: "host1.example.com",
+      source: {
+        id: 'profile1',
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+      },
+      destination: {
+        id: 'profile2',
+        name: 'Jane Smith',
+        email: 'janesmith@example.com',
+      },
+      connectedTo: { id: 'profile3', name: 'Alice Johnson' },
+      host: 'host1.example.com',
       metadata: [
-        { key: "metaKey1", value: "metaValue1" },
-        { key: "metaKey2", value: "metaValue2" },
+        { key: 'metaKey1', value: 'metaValue1' },
+        { key: 'metaKey2', value: 'metaValue2' },
       ],
-      content: "This is the content for event1",
-      labels: ["urgent", "review"],
+      content: 'This is the content for event1',
+      labels: ['urgent', 'review'],
     },
     {
-      id: "event2",
+      id: 'event2',
       priority: 2,
-      liid: "liid2",
-      targetCode: "TC5678",
+      liid: 'liid2',
+      targetCode: 'TC5678',
       direction: 1,
-      source: { id: "profile4", name: "Bob Brown", email: "bobbrown@example.com" },
-      destination: { id: "profile5", name: "Charlie Davis" },
+      source: {
+        id: 'profile4',
+        name: 'Bob Brown',
+        email: 'bobbrown@example.com',
+      },
+      destination: { id: 'profile5', name: 'Charlie Davis' },
       metadata: [
-        { key: "metaKeyA", value: "metaValueA" },
-        { key: "metaKeyB", value: "metaValueB" },
+        { key: 'metaKeyA', value: 'metaValueA' },
+        { key: 'metaKeyB', value: 'metaValueB' },
       ],
-      content: "This is the content for event2",
+      content: 'This is the content for event2',
     },
     {
-      id: "event3",
+      id: 'event3',
       priority: 8,
-      note: "High priority event",
-      liid: "liid3",
-      targetCode: "TC9012",
+      note: 'High priority event',
+      liid: 'liid3',
+      targetCode: 'TC9012',
       direction: 0,
-      host: "host2.example.com",
-      metadata: [{ key: "metaKeyX", value: "metaValueX" }],
-      content: "This is the content for event3",
-      labels: ["important"],
+      host: 'host2.example.com',
+      metadata: [{ key: 'metaKeyX', value: 'metaValueX' }],
+      content: 'This is the content for event3',
+      labels: ['important'],
     },
   ];
 
@@ -98,11 +110,10 @@ export class MonitoringService implements OnDestroy {
   private windowClose$!: Subscription;
   private context!: IContextApp;
 
-  constructor(
-    // private apiSrv: ApiService,
-    // private handlerAudioSrv: HandlerAudioService,
-    // private authSrv: AuthService
-  ) {
+  constructor() // private apiSrv: ApiService,
+  // private handlerAudioSrv: HandlerAudioService,
+  // private authSrv: AuthService
+  {
     this.context = {
       id: v4(),
       globalSearch: '',
@@ -142,7 +153,7 @@ export class MonitoringService implements OnDestroy {
   public start(context?: Partial<IContextApp>): void {
     this.context = context ? { ...this.context, ...context } : this.context;
 
-    //on send la notif pour que les widgets si existant, se remette 
+    //on send la notif pour que les widgets si existant, se remette
     this._eventsSelected.next([]);
 
     // If first load, init widget observable( for component), init search from context
@@ -165,18 +176,16 @@ export class MonitoringService implements OnDestroy {
         this._widgets.getValue().reduce<GridsterItemFusion[]>((acc, item) => {
           acc.push({ ...item });
           return acc;
-        }, [])
+        }, []),
       );
     }
   }
 
   // edited
-  public getData(
-    request: IServerSideGetRowsRequest
-  ): any {
+  public getData(request: IServerSideGetRowsRequest): any {
     const newRequest = { ...request };
     let targets: string[] = this.context.targets;
-    console.log("getData", newRequest.filterModel)
+    console.log('getData', newRequest.filterModel);
     // if (newRequest.filterModel) {
     //   if (newRequest.filterModel.liid && newRequest.filterModel.liid.values) {
     //     targets = newRequest.filterModel.liid.values;
@@ -215,9 +224,9 @@ export class MonitoringService implements OnDestroy {
 
   public addWidget(widget: WidgetAnalyze): void {
     const widgets = this._widgets.getValue();
-    if (widgets.some(p => p.type === widget)) return;
+    if (widgets.some((p) => p.type === widget)) return;
     const widgetPlayer = widgets.find(
-      w => w.type === WidgetAnalyze.PLAYER_AUDIO
+      (w) => w.type === WidgetAnalyze.PLAYER_AUDIO,
     );
     switch (widget) {
       case WidgetAnalyze.METADATA:
@@ -226,7 +235,7 @@ export class MonitoringService implements OnDestroy {
           rows: 5,
           y: 0,
           x: widgets
-            .filter(w => w.y === 0)
+            .filter((w) => w.y === 0)
             .reduce((acc, wid) => {
               return acc + wid.cols;
             }, 0),
@@ -282,25 +291,25 @@ export class MonitoringService implements OnDestroy {
       //   this._widgets.next(widgets);
       //   break;
       // case WidgetAnalyze.MAP:
-        // widgets.push({
-        //   cols: 6,
-        //   rows: 5,
-        //   y:
-        //     widgetPlayer && widgetPlayer.x === 0
-        //       ? widgetPlayer.y + widgetPlayer.rows
-        //       : 0,
-        //   x:
-        //     widgetPlayer && widgetPlayer.x === 0
-        //       ? widgets
-        //           .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
-        //           .reduce((acc, wid) => {
-        //             return acc + wid.cols;
-        //           }, 0)
-        //       : 0,
-        //   type: widget,
-        // });
-        // this._widgets.next(widgets);
-        // break;
+      // widgets.push({
+      //   cols: 6,
+      //   rows: 5,
+      //   y:
+      //     widgetPlayer && widgetPlayer.x === 0
+      //       ? widgetPlayer.y + widgetPlayer.rows
+      //       : 0,
+      //   x:
+      //     widgetPlayer && widgetPlayer.x === 0
+      //       ? widgets
+      //           .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
+      //           .reduce((acc, wid) => {
+      //             return acc + wid.cols;
+      //           }, 0)
+      //       : 0,
+      //   type: widget,
+      // });
+      // this._widgets.next(widgets);
+      // break;
       case WidgetAnalyze.IDENTITIES:
         widgets.push({
           cols: 4,
@@ -308,7 +317,7 @@ export class MonitoringService implements OnDestroy {
           y: widgetPlayer ? widgetPlayer.y + widgetPlayer.rows : 0,
           x: widgetPlayer
             ? widgets
-                .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
+                .filter((w) => w.y === widgetPlayer.y + widgetPlayer.rows)
                 .reduce((acc, wid) => {
                   return acc + wid.cols;
                 }, 0)
@@ -343,11 +352,13 @@ export class MonitoringService implements OnDestroy {
   }
 
   public removeWidget(widget: WidgetAnalyze): void {
-    this._widgets.next(this._widgets.getValue().filter(p => p.type !== widget));
+    this._widgets.next(
+      this._widgets.getValue().filter((p) => p.type !== widget),
+    );
   }
 
   public updateWidget(item: GridsterItemFusion): void {
-    const widget = this._widgets.getValue().find(w => w.type === item.type);
+    const widget = this._widgets.getValue().find((w) => w.type === item.type);
     if (widget) {
       widget.cols = item.cols;
       widget.rows = item.rows;
@@ -446,8 +457,6 @@ export class MonitoringService implements OnDestroy {
     //   eventsSelected.length === 1 && eventsSelected[0].content !== null &&
     //   (eventsSelected[0].groupType === EventGroup.VOICE ||
     //     eventsSelected[0].groupType === EventGroup.VIDEO);
-
-
     // if (displayPlayer) {
     //   this.handlerAudioSrv.load(
     //     this.context.id,

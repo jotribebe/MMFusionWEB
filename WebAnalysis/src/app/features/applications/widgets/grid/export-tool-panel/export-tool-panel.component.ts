@@ -26,7 +26,7 @@ export class ExportToolPanelComponent
   constructor(
     // public apiSrv: ApiService,
     public fb: FormBuilder,
-    public monitoringService: MonitoringService
+    public monitoringService: MonitoringService,
   ) {
     this.exportForm = this.fb.group({
       type: this.fb.control<string>('', {
@@ -50,7 +50,7 @@ export class ExportToolPanelComponent
     this.destroy$.unsubscribe();
     this.params.api.removeEventListener(
       'selectionChanged',
-      this.selectionChanged
+      this.selectionChanged,
     );
   }
 

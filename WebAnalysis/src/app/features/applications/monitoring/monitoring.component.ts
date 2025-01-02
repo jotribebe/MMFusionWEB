@@ -10,7 +10,12 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
-import { DisplayGrid, GridsterConfig, GridsterModule, GridType } from 'angular-gridster2';
+import {
+  DisplayGrid,
+  GridsterConfig,
+  GridsterModule,
+  GridType,
+} from 'angular-gridster2';
 import { TargetsModalComponent } from '../targets-modal/targets-modal.component';
 import { environment } from '@environments/environment';
 import { BaseAppComponent } from '@fusion/components/base-app/base-app.component';
@@ -19,7 +24,11 @@ import { GridsterItemFusion } from '@fusion/models/gridster-item-fusion';
 import { AppFusion, IContextApp, ITabFusion } from '@fusion/models/context-app';
 import { MonitoringService } from '@fusion/services/monitoring.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormControl,
+} from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { LayoutWidgetComponent } from '../widgets/layout-widget/layout-widget.component';
 import { AppNameService } from '@fusion/models/enums/app-name-service';
@@ -34,7 +43,7 @@ import { TooltipModule } from 'primeng/tooltip';
   styleUrls: ['monitoring.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-    imports: [
+  imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -42,7 +51,7 @@ import { TooltipModule } from 'primeng/tooltip';
     GridsterModule,
     LayoutWidgetComponent,
     TooltipModule,
-],
+  ],
   providers: [MonitoringService, DialogService],
 })
 export class MonitoringComponent
@@ -100,7 +109,7 @@ export class MonitoringComponent
 
   public constructor(
     public monitoringService: MonitoringService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) {
     super();
     console.log('CONSTRUCTOR', this.context);
@@ -134,7 +143,7 @@ export class MonitoringComponent
             ...itemComponent.$item,
           } as GridsterItemFusion);
         };
-        this.options.itemChangeCallback = item => {
+        this.options.itemChangeCallback = (item) => {
           this.monitoringService.updateWidget(item as GridsterItemFusion);
         };
       },
@@ -165,9 +174,9 @@ export class MonitoringComponent
 
   public isWidgetActive(
     widgets: GridsterItemFusion[] | null,
-    widgetType: WidgetAnalyze
+    widgetType: WidgetAnalyze,
   ): boolean {
-    if (widgets && widgets.some(w => w.type === widgetType)) return true;
+    if (widgets && widgets.some((w) => w.type === widgetType)) return true;
     return false;
   }
 
@@ -183,17 +192,17 @@ export class MonitoringComponent
     });
 
     // when dialog is closed save in context
-    ref.onClose.subscribe((val: Pick<IContextApp, 'name' | 'targets'> | string) => {
-      if (typeof val === 'object') {
-        this.setName.next(val.name);
-        this.monitoringService.start(val);
-      } else {
-        if (!this.monitoringService.hasContextValid()) {
-          this.closeApp.emit(true);
+    ref.onClose.subscribe(
+      (val: Pick<IContextApp, 'name' | 'targets'> | string) => {
+        if (typeof val === 'object') {
+          this.setName.next(val.name);
+          this.monitoringService.start(val);
+        } else {
+          if (!this.monitoringService.hasContextValid()) {
+            this.closeApp.emit(true);
+          }
         }
-      }
-    });
+      },
+    );
   }
-
-
 }

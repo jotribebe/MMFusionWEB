@@ -1,7 +1,21 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ColDef, FirstDataRenderedEvent, GridApi, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  ColDef,
+  FirstDataRenderedEvent,
+  GridApi,
+  GridReadyEvent,
+  ModuleRegistry,
+} from 'ag-grid-community';
 import { Target } from '@fusion/models/target';
 import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
@@ -11,12 +25,7 @@ import { AgGridModule } from 'ag-grid-angular';
   templateUrl: './targets-modal.component.html',
   styleUrls: ['./targets-modal.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AgGridModule
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AgGridModule],
 })
 export class TargetsModalComponent implements OnInit {
   analyzeForm!: FormGroup<{
@@ -69,7 +78,7 @@ export class TargetsModalComponent implements OnInit {
     },
   ];
 
-    public defaultColDef: ColDef = {
+  public defaultColDef: ColDef = {
     flex: 1,
     minWidth: 90,
     sortable: false,
@@ -99,7 +108,7 @@ export class TargetsModalComponent implements OnInit {
     private dialogRef: DynamicDialogRef,
     private dialogConfig: DynamicDialogConfig,
     public fb: FormBuilder,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
     // Initialize the form with the name and targets fields
     this.analyzeForm = this.fb.group({
@@ -112,39 +121,39 @@ export class TargetsModalComponent implements OnInit {
       }),
     });
   }
-  
-
 
   ngOnInit(): void {
     this.data = this.dialogConfig.data;
-  
+
     this.analyzeForm.patchValue({ name: this.data?.name || '' });
-  
+
     const targetsArray = this.analyzeForm.get('targets') as FormArray;
     targetsArray.clear();
-  
+
     (this.data?.targetsSelected || []).forEach((target: string) => {
       targetsArray.push(this.fb.control(target, Validators.required));
     });
-  
+
     console.log('ngOnInit', this.data);
   }
 
   public onGridReady(params: GridReadyEvent<Target>): void {
     this.gridApi = params.api;
-    console.log("gridrdy", this.rowData)
+    console.log('gridrdy', this.rowData);
     // this.rowData = this.authSrv.currentTargets || [];
   }
 
   public onFirstDataRendered(params: FirstDataRenderedEvent<Target>): void {
     this.data = this.dialogConfig.data;
-    params.api.forEachNode(node =>
+    params.api.forEachNode((node) =>
       node.setSelected(
         !!node.data &&
           !!this.data &&
-        !!this.data.targetsSelected &&
-        this.data.targetsSelected.some((p: string | undefined) => p === node.data?.liid)
-      )
+          !!this.data.targetsSelected &&
+          this.data.targetsSelected.some(
+            (p: string | undefined) => p === node.data?.liid,
+          ),
+      ),
     );
   }
 
@@ -152,10 +161,10 @@ export class TargetsModalComponent implements OnInit {
     this.analyzeForm.controls.targets.clear();
     this.gridApi
       .getSelectedRows()
-      .forEach(row =>
+      .forEach((row) =>
         this.analyzeForm.controls.targets.push(
-          new FormControl(row.liid, { nonNullable: true })
-        )
+          new FormControl(row.liid, { nonNullable: true }),
+        ),
       );
   }
 

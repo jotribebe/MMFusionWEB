@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { IContextApp } from "@fusion/models/context-app";
-import { Subject } from "rxjs";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IContextApp } from '@fusion/models/context-app';
+import { Subject } from 'rxjs';
 
 @Component({
-  template: "",
+  template: '',
 })
 export abstract class BaseAppComponent {
   public closing$ = new Subject<void>();

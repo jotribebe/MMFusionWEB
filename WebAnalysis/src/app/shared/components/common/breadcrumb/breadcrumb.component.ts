@@ -4,18 +4,18 @@ import {
   effect,
   inject,
   signal,
-} from "@angular/core";
-import { AppFusion } from "@fusion/models/context-app";
-import { BreadcrumbModule } from "primeng/breadcrumb";
-import { BreadcrumbService } from "@fusion/services/breadcrumb.service";
-import { MenuItem } from "primeng/api";
+} from '@angular/core';
+import { AppFusion } from '@fusion/models/context-app';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { BreadcrumbService } from '@fusion/services/breadcrumb.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: "app-breadcrumb",
+  selector: 'app-breadcrumb',
   standalone: true,
   imports: [BreadcrumbModule],
-  templateUrl: "./breadcrumb.component.html",
-  styleUrl: "./breadcrumb.component.scss",
+  templateUrl: './breadcrumb.component.html',
+  styleUrl: './breadcrumb.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BreadcrumbComponent {
@@ -33,7 +33,7 @@ export class BreadcrumbComponent {
           this.breadcrumb.set(items);
         });
       },
-      { allowSignalWrites: true }
+      { allowSignalWrites: true },
     );
   }
 }

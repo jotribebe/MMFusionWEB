@@ -1,9 +1,9 @@
-import { inject, Injectable } from "@angular/core";
-import { ToastType } from "@fusion/models/enums/component-type";
-import { MessageService } from "primeng/api";
+import { inject, Injectable } from '@angular/core';
+import { ToastType } from '@fusion/models/enums/component-type';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ToastService {
   messageService = inject(MessageService);
@@ -15,9 +15,13 @@ export class ToastService {
     summary: string,
     detail?: string,
     life: number = 8000,
-    sticky: boolean = false
+    sticky: boolean = false,
   ): void {
-    setTimeout(() => this.messageService.add({ severity, summary, detail, life, sticky }), 1);
+    setTimeout(
+      () =>
+        this.messageService.add({ severity, summary, detail, life, sticky }),
+      1,
+    );
     // some observable cannot send message
     //this.messageService.add({ severity, summary, detail, life, sticky });
   }
@@ -35,18 +39,26 @@ export class ToastService {
   }
 
   showErrorMessage(message: string, error?: any, sticky?: boolean): void {
-    const errorDetail = error || "An unexpected error occurred.";
+    const errorDetail = error || 'An unexpected error occurred.';
     const formattedDetail = `${message}. ${errorDetail}`;
 
-    this.toastConfig(ToastType.ERROR, "Error", formattedDetail, 8000, sticky);
+    this.toastConfig(ToastType.ERROR, 'Error', formattedDetail, 8000, sticky);
     console.error(message, error);
   }
 
-  showContrastMessage(summary: string, detail?: string, sticky?: boolean): void {
+  showContrastMessage(
+    summary: string,
+    detail?: string,
+    sticky?: boolean,
+  ): void {
     this.toastConfig(ToastType.CONTRAST, summary, detail, 8000, sticky);
   }
 
-  showSecondaryMessage(summary: string, detail?: string, sticky?: boolean): void {
+  showSecondaryMessage(
+    summary: string,
+    detail?: string,
+    sticky?: boolean,
+  ): void {
     this.toastConfig(ToastType.SECONDARY, summary, detail, 8000, sticky);
   }
 

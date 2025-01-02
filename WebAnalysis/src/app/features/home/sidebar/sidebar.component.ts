@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf } from "@angular/common";
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -6,23 +6,23 @@ import {
   OnDestroy,
   OnInit,
   Output,
-} from "@angular/core";
-import { environment } from "@environments/environment";
-import { BaseAppComponent } from "@fusion/components/base-app/base-app.component";
+} from '@angular/core';
+import { environment } from '@environments/environment';
+import { BaseAppComponent } from '@fusion/components/base-app/base-app.component';
 // import { AuthService } from "@fusion/services";
-import { ConfirmDialogModule } from "primeng/confirmdialog";
-import { ConfirmationService } from "primeng/api";
-import { SidebarModule } from "primeng/sidebar";
-import { ButtonModule } from "primeng/button";
-import { PanelMenuModule } from "primeng/panelmenu";
-import { BreadcrumbService } from "@fusion/services/breadcrumb.service";
-import { AppFusion, IContextApp } from "@fusion/models/context-app";
-import { AppNameService } from "@fusion/models/enums/app-name-service";
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { BreadcrumbService } from '@fusion/services/breadcrumb.service';
+import { AppFusion, IContextApp } from '@fusion/models/context-app';
+import { AppNameService } from '@fusion/models/enums/app-name-service';
 
 @Component({
-  selector: "app-sidebar",
-  templateUrl: "sidebar.component.html",
-  styleUrls: ["sidebar.component.scss"],
+  selector: 'app-sidebar',
+  templateUrl: 'sidebar.component.html',
+  styleUrls: ['sidebar.component.scss'],
   standalone: true,
   imports: [
     NgFor,
@@ -70,7 +70,7 @@ export class SidebarComponent
   }
 
   ngOnDestroy(): void {
-    console.log("[DefaultComponent]: Destroy");
+    console.log('[DefaultComponent]: Destroy');
   }
 
   // only using launchApp
@@ -89,12 +89,12 @@ export class SidebarComponent
     event.preventDefault();
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: "Would you like to delete analyse?",
-      header: "Delete analyze",
-      icon: "pi pi-exclamation-triangle icon-warning",
-      acceptIcon: "none",
-      rejectIcon: "none",
-      rejectButtonStyleClass: "p-button-text",
+      message: 'Would you like to delete analyse?',
+      header: 'Delete analyze',
+      icon: 'pi pi-exclamation-triangle icon-warning',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
       accept: () => {
         // this.authSrv.deleteContextApp(contextApp);
       },

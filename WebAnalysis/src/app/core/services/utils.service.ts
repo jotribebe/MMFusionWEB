@@ -1,6 +1,5 @@
-import { Injectable } from "@angular/core";
-import { IEvents, IProfile } from "@fusion/models/ievents";
-
+import { Injectable } from '@angular/core';
+import { IEvents, IProfile } from '@fusion/models/ievents';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +30,7 @@ export class UtilsService {
           profile.mSiSDN.nationalDestinationCode || '',
           profile.mSiSDN.subscriberNumber || '',
         ]
-          .filter(p => p !== '')
+          .filter((p) => p !== '')
           .join('-')
           .toString()
       : '';
@@ -45,7 +44,7 @@ export class UtilsService {
           profile.mSiSDN.nationalDestinationCode || '',
           profile.mSiSDN.subscriberNumber || '',
         ]
-          .filter(p => p !== '')
+          .filter((p) => p !== '')
           .join('-')
           .toString()
       : '';

@@ -23,10 +23,8 @@ import { MetaDataComponent } from '../meta-data/meta-data.component';
   selector: 'app-layout-widget[type][resizeEvent]',
   templateUrl: './layout-widget.component.html',
   styleUrls: ['./layout-widget.component.scss'],
-  imports: [
-    NgIf
-  ],
-  standalone: true
+  imports: [NgIf],
+  standalone: true,
 })
 export class LayoutWidgetComponent implements OnInit, OnDestroy {
   @Input() type!: WidgetAnalyze;
@@ -40,7 +38,7 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   private monitoringService = inject(MonitoringService);
-  
+
   constructor() {}
 
   ngOnInit(): void {
@@ -53,7 +51,7 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
         this.closable = GridComponent.closable;
         this.childComponent =
           this.viewContainerRef.createComponent<BaseWidgetComponent>(
-            GridComponent
+            GridComponent,
           ).instance;
         break;
       // case WidgetAnalyze.NOTE:
@@ -85,7 +83,7 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
         this.closable = MetaDataComponent.closable;
         this.childComponent =
           this.viewContainerRef.createComponent<BaseWidgetComponent>(
-            MetaDataComponent
+            MetaDataComponent,
           ).instance;
         break;
       // case WidgetAnalyze.VIEWER_PDF:
@@ -117,7 +115,7 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
         this.closable = IdentitiesComponent.closable;
         this.childComponent =
           this.viewContainerRef.createComponent<BaseWidgetComponent>(
-            IdentitiesComponent
+            IdentitiesComponent,
           ).instance;
         break;
     }
@@ -125,14 +123,14 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
     this.resizeEvent
       .pipe(
         filter(
-          (eventResize: GridsterItemFusion) => eventResize.type === this.type
+          (eventResize: GridsterItemFusion) => eventResize.type === this.type,
         ),
         tap((eventResize: GridsterItemFusion) => {
           if (this.viewContainerRef.length > 0) {
             this.childComponent?.resizeEvent.next(eventResize);
           }
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe();
   }

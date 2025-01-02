@@ -1,11 +1,11 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from '@angular/core';
 // import { AuthService } from "@fusion/services";
-import { DynamicDialogRef } from "primeng/dynamicdialog";
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
-  selector: "app-users-modal",
-  templateUrl: "./users-modal.component.html",
-  styleUrls: ["./users-modal.component.scss"],
+  selector: 'app-users-modal',
+  templateUrl: './users-modal.component.html',
+  styleUrls: ['./users-modal.component.scss'],
 })
 export class UsersModalComponent implements OnInit {
   dialogRef = inject(DynamicDialogRef<UsersModalComponent>);

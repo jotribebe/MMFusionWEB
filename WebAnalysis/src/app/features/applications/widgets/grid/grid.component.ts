@@ -29,7 +29,7 @@ import {
   RowStyle,
   SideBarDef,
   ValueFormatterParams,
-} from "@ag-grid-community/core";
+} from '@ag-grid-community/core';
 
 @Component({
   selector: 'app-grid',

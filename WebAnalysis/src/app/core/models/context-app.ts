@@ -1,5 +1,5 @@
-import { AppNameService } from "./enums/app-name-service";
-import { GridsterItemFusion } from "./gridster-item-fusion";
+import { AppNameService } from './enums/app-name-service';
+import { GridsterItemFusion } from './gridster-item-fusion';
 
 export interface AppFusion {
   priority: number;

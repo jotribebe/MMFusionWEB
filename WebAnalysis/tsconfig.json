@@ -24,7 +24,7 @@
       "@fusion/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"]
     },
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

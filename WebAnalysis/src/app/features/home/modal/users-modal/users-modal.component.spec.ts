@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsersModalComponent } from "./users-modal.component";
+import { UsersModalComponent } from './users-modal.component';
 
-describe("UsersModalComponent", () => {
+describe('UsersModalComponent', () => {
   let component: UsersModalComponent;
   let fixture: ComponentFixture<UsersModalComponent>;
 
@@ -16,7 +16,7 @@ describe("UsersModalComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
