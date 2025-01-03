@@ -19,8 +19,9 @@
         <!-- (firstDataRendered)="onFirstDataRendered($event)" -->
         <ag-grid-angular
           class="ag-theme-alpine w-full h-full"
-          [columnDefs]="columnDefs"
-          [defaultColDef]="defaultColDef"
+          [columnDefs]="gridOptions.columnDefs"
+          [defaultColDef]="gridOptions.defaultColDef"
+          [rowHeight]="gridOptions.rowHeight"
           [rowData]="rowData"
           [rowSelection]="'multiple'"
           [rowMultiSelectWithClick]="true"

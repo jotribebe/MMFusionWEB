@@ -8,9 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { environment } from '@environments/environment';
-import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TargetsModalComponent } from '../../applications/targets-modal/targets-modal.component';
+import { DialogService } from 'primeng/dynamicdialog';
 import { MonitoringComponent } from '../../applications/monitoring/monitoring.component';
 import { DynamicIoDirective, DynamicComponent } from 'ng-dynamic-component';
 import { TabViewCloseEvent, TabViewModule } from 'primeng/tabview';
@@ -23,6 +21,7 @@ import {
   PopUpType,
 } from '@fusion/models/enums/component-type';
 import { ToastService } from '@fusion/services/toast.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-landing',
@@ -30,8 +29,8 @@ import { ToastService } from '@fusion/services/toast.service';
   imports: [
     DynamicIoDirective,
     DynamicComponent,
-    MonitoringComponent,
     TabViewModule,
+    ConfirmDialogModule,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
@@ -82,6 +81,7 @@ export class LandingComponent implements OnInit {
   public tab: ITabFusion | undefined = this.tabs[0];
 
   public openTab(app: AppFusion, contextApp?: IContextApp): void {
+    console.log('openTab');
     // TODO: add a unique id for each component, and delete relative to this id
     if (
       contextApp &&
@@ -105,7 +105,7 @@ export class LandingComponent implements OnInit {
         setTimeout(() => {
           this.activeIndex.update(() => this.tabs.length - 1);
         }, 5);
-        //this.selected.setValue(this.tabs.length - 1);
+        this.selected.setValue(this.tabs.length - 1);
       }
     }
   }
@@ -113,27 +113,34 @@ export class LandingComponent implements OnInit {
   public removeTab(index: number): void {
     //TODO: ne plus supprimer par index mais par ID
     //this.tabs[index].inputs.closing = true;
-    this.confirmationService.confirm(
-      'Delete Tab',
-      'Proceed to delete tab',
-      PopUpType.WARN,
-      ConfirmationType.PRIMARY,
-      () => {
-        this.tabs.splice(index, 1);
-        this.changeDetectorRef.detectChanges();
-        this.activeIndex.update(() => 0);
-        this.toastService.showSuccessMessage(
-          'Success',
-          'Tab Deletion Successful',
-        );
-      },
-      () => {
-        this.toastService.showErrorMessage('Tab Deletion Canceled');
-      },
-    );
+    console.log('close clicked');
+    this.tabs.splice(index, 1);
+    this.changeDetectorRef.detectChanges();
+    this.activeIndex.update(() => 0);
+    this.toggleOpenCreateQuery();
+    // this.confirmationService.confirm(
+    //   'Delete Tab',
+    //   'Proceed to delete tab',
+    //   PopUpType.WARN,
+    //   ConfirmationType.PRIMARY,
+    //   () => {
+    //     this.tabs.splice(index, 1);
+    //     this.changeDetectorRef.detectChanges();
+    //     this.activeIndex.update(() => 0);
+    //     this.toggleOpenCreateQuery();
+    //     this.toastService.showSuccessMessage(
+    //       'Success',
+    //       'Tab Deletion Successful',
+    //     );
+    //   },
+    //   () => {
+    //     this.toastService.showErrorMessage('Tab Deletion Canceled');
+    //   },
+    // );
   }
 
   private getModelTabAnalyse(app: AppFusion): ITabFusion {
+    console.log('getModelTabAnalyse');
     const tab: ITabFusion = {
       tabName: app.tabName,
       selector: MonitoringComponent,

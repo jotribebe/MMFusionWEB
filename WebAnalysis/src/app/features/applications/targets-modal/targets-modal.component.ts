@@ -9,16 +9,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Target } from '@fusion/models/target';
+import { CommonModule } from '@angular/common';
+import { AgGridModule } from 'ag-grid-angular';
 import {
   ColDef,
   FirstDataRenderedEvent,
   GridApi,
   GridReadyEvent,
-  ModuleRegistry,
+  RowSelectionOptions,
 } from 'ag-grid-community';
-import { Target } from '@fusion/models/target';
-import { CommonModule } from '@angular/common';
-import { AgGridModule } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-targets-modal',
@@ -32,6 +32,8 @@ export class TargetsModalComponent implements OnInit {
     name: FormControl<string>;
     targets: FormArray<FormControl<string>>;
   }>;
+
+  // TODO: put into gridOptions
   public rowData: Target[] = [
     {
       id: '1',
@@ -78,26 +80,40 @@ export class TargetsModalComponent implements OnInit {
     },
   ];
 
-  public defaultColDef: ColDef = {
-    flex: 1,
-    minWidth: 90,
-    sortable: false,
-    resizable: true,
+  gridOptions = {
+    rowHeight: 40,
+
+    defaultColDef: {
+      // width: 100,
+      flex: 1,
+      minWidth: 100,
+      sortable: false,
+      resizable: true,
+    } as ColDef,
+
+    selection: {
+      mode: 'singleRow',
+      checkboxes: false,
+      enableClickSelection: true,
+    } as RowSelectionOptions,
+
+    columnDefs: [
+      {
+        field: 'targetCode',
+        headerName: 'Target Code',
+        headerCheckboxSelection: true,
+        checkboxSelection: true,
+      },
+      {
+        field: 'requestor',
+        headerName: 'Requestor',
+      },
+    ] as ColDef<Target>[],
   };
-  public columnDefs: Array<ColDef<Target>> = [
-    {
-      field: 'targetCode',
-      headerName: 'Target Code',
-      headerCheckboxSelection: true,
-      checkboxSelection: true,
-    },
-    {
-      field: 'requestor',
-      headerName: 'Requestor',
-    },
-  ];
+
   private gridApi!: GridApi<Target>;
   data?: { name: string; targetsSelected?: string[] };
+
   // public cdr = inject(ChangeDetectorRef);
   // public dialogRef = inject(DynamicDialogRef);
   // public dialogConfig = inject(DynamicDialogConfig);

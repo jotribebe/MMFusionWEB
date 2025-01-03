@@ -156,16 +156,12 @@ export class MonitoringComponent
       this.monitoringService.start();
     } else {
       this.setContext.emit(this.context);
-      this.showDialogTarget();
+      this.showQueryDialog();
     }
   }
 
   ngOnDestroy(): void {
     console.log('[DESTROY]: AnalyzeComponent');
-  }
-
-  public openTargetModal(): void {
-    this.showDialogTarget();
   }
 
   public openWidget(widget: WidgetAnalyze): void {
@@ -180,7 +176,7 @@ export class MonitoringComponent
     return false;
   }
 
-  private showDialogTarget(): void {
+  showQueryDialog(): void {
     const ref = this.dialogService.open(TargetsModalComponent, {
       header: 'CREATE QUERY',
       width: '500px',
