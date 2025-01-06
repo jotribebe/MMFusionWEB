@@ -191,7 +191,7 @@ export class TargetsModalComponent implements OnInit {
       const newTabData = {
         formData: this.analyzeForm.value,
         tabData: {
-          tabName: 'New Tab Name',
+          tabName: this.analyzeForm.value.name,
           selector: MonitoringComponent,
           inputs: { isActive: true },
           outputs: {},

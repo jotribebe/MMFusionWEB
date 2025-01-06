@@ -6,6 +6,7 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  Output,
   signal,
   ViewEncapsulation,
 } from '@angular/core';
@@ -60,6 +61,9 @@ export class MonitoringComponent
   implements OnInit, OnDestroy
 {
   private tabService = inject(TabService);
+
+  @Output()
+  openApp = new EventEmitter<AppNameService>();
 
   options!: GridsterConfig;
   resizeEvent: EventEmitter<GridsterItemFusion> =
@@ -166,6 +170,7 @@ export class MonitoringComponent
           // Handle tab data
           if (result.tabData) {
             this.tabService.openTab(result.tabData);
+            this.openApp.emit(result.tabData);
           }
         } else if (result === 'ko') {
           // Handle invalid form case
