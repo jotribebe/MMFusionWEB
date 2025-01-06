@@ -110,9 +110,8 @@ export class MonitoringService implements OnDestroy {
   private windowClose$!: Subscription;
   private context!: IContextApp;
 
-  constructor() // private handlerAudioSrv: HandlerAudioService, // private apiSrv: ApiService,
-  // private authSrv: AuthService
-  {
+  constructor() {
+    // private authSrv: AuthService // private handlerAudioSrv: HandlerAudioService, // private apiSrv: ApiService,
     this.context = {
       id: v4(),
       globalSearch: '',

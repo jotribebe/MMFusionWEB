@@ -36,6 +36,7 @@ import { TabViewCloseEvent, TabViewModule } from 'primeng/tabview';
 import { DynamicComponent, DynamicIoDirective } from 'ng-dynamic-component';
 import { TooltipComponent } from 'ag-grid-community/dist/types/core/components/framework/componentTypes';
 import { TooltipModule } from 'primeng/tooltip';
+import { TabService } from '@fusion/services/tabservice.service';
 
 @Component({
   selector: 'app-monitoring',
@@ -58,54 +59,15 @@ export class MonitoringComponent
   extends BaseAppComponent
   implements OnInit, OnDestroy
 {
+  private tabService = inject(TabService);
+
   options!: GridsterConfig;
   resizeEvent: EventEmitter<GridsterItemFusion> =
     new EventEmitter<GridsterItemFusion>();
 
   public widgetAnalyze = WidgetAnalyze;
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onKeydownHandler(): void {
-    if (this.isActive) {
-      this.monitoringService.closeSearch();
-    }
-  }
-
-  @HostListener('document:keydown.f5', ['$event'])
-  onKeydownHandlerRefresh(event: KeyboardEvent): void {
-    if (this.isActive) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      this.monitoringService.refreshGrid();
-    }
-  }
-
-  @HostListener('document:keydown.f8', ['$event'])
-  onKeydownHandlerPlayPause(event: KeyboardEvent): void {
-    if (this.isActive) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      this.monitoringService.eventKeyboardTogglePlay();
-    }
-  }
-
-  @HostListener('document:keydown.f7', ['$event'])
-  onKeydownHandlerSkipBackward(event: KeyboardEvent): void {
-    if (this.isActive) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      this.monitoringService.eventKeyboardSkipBackward();
-    }
-  }
-
-  @HostListener('document:keydown.f9', ['$event'])
-  onKeydownHandlerSkipForward(event: KeyboardEvent): void {
-    if (this.isActive) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      this.monitoringService.eventKeyboardSkipForward();
-    }
-  }
+  // TODO: add hostlistener codes
 
   public constructor(
     public monitoringService: MonitoringService,
@@ -187,13 +149,26 @@ export class MonitoringComponent
       },
     });
 
-    // when dialog is closed save in context
+    // When dialog is closed, handle the emitted data
     ref.onClose.subscribe(
-      (val: Pick<IContextApp, 'name' | 'targets'> | string) => {
-        if (typeof val === 'object') {
-          this.setName.next(val.name);
-          this.monitoringService.start(val);
-        } else {
+      (
+        result:
+          | { formData?: Pick<IContextApp, 'name' | 'targets'>; tabData?: any }
+          | string,
+      ) => {
+        if (typeof result === 'object') {
+          // Handle form data
+          if (result.formData) {
+            this.setName.next(result.formData.name);
+            this.monitoringService.start(result.formData);
+          }
+
+          // Handle tab data
+          if (result.tabData) {
+            this.tabService.openTab(result.tabData);
+          }
+        } else if (result === 'ko') {
+          // Handle invalid form case
           if (!this.monitoringService.hasContextValid()) {
             this.closeApp.emit(true);
           }

@@ -19,6 +19,7 @@ import {
   GridReadyEvent,
   RowSelectionOptions,
 } from 'ag-grid-community';
+import { MonitoringComponent } from '../monitoring/monitoring.component';
 
 @Component({
   selector: 'app-targets-modal',
@@ -186,7 +187,21 @@ export class TargetsModalComponent implements OnInit {
 
   launchAnalyze(): void {
     if (this.analyzeForm.valid) {
-      this.dialogRef.close(this.analyzeForm.value);
+      // TODO: need to use ITabFusion datatype
+      const newTabData = {
+        formData: this.analyzeForm.value,
+        tabData: {
+          tabName: 'New Tab Name',
+          selector: MonitoringComponent,
+          inputs: { isActive: true },
+          outputs: {},
+        },
+      };
+
+      console.log('launchAnalyze is clicked');
+
+      // Emit data to parent
+      this.dialogRef.close(newTabData);
     } else {
       this.dialogRef.close('ko');
     }

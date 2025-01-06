@@ -134,6 +134,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         (p) => p.inputs.context && p.inputs.context.id === contextApp.id,
       )
     ) {
+      console.log('openTab landing is exist ');
+
       this.selected.setValue(
         this.tabs.findIndex(
           (p) => p.inputs.context && p.inputs.context.id === contextApp.id,
