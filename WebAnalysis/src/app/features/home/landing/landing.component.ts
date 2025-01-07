@@ -59,15 +59,4 @@ export class LandingComponent implements OnInit {
   launchAnalyze(): void {
     this.openApp.emit(AppNameService.ANALYZE);
   }
-
-  // launchAnalyze(): void {
-  //   this.openApp.emit(
-  //     {
-  //       tabName: "Analyze",
-  //       selector: MonitoringComponent,
-  //       inputs: { isActive: true },
-  //       outputs: {},
-  //     }
-  //   );
-  // }
 }
