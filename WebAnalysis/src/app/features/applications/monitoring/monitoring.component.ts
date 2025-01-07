@@ -37,7 +37,6 @@ import { TabViewCloseEvent, TabViewModule } from 'primeng/tabview';
 import { DynamicComponent, DynamicIoDirective } from 'ng-dynamic-component';
 import { TooltipComponent } from 'ag-grid-community/dist/types/core/components/framework/componentTypes';
 import { TooltipModule } from 'primeng/tooltip';
-import { TabService } from '@fusion/services/tabservice.service';
 
 @Component({
   selector: 'app-monitoring',
@@ -60,8 +59,6 @@ export class MonitoringComponent
   extends BaseAppComponent
   implements OnInit, OnDestroy
 {
-  private tabService = inject(TabService);
-
   @Output()
   openApp = new EventEmitter<AppNameService>();
 
@@ -169,7 +166,6 @@ export class MonitoringComponent
 
           // Handle tab data
           if (result.tabData) {
-            // this.tabService.openTab(result.tabData);
             this.openApp.emit(result.tabData);
           }
         } else if (result === 'ko') {

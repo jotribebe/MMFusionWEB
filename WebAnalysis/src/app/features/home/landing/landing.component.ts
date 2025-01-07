@@ -22,7 +22,6 @@ import {
 } from '@fusion/models/enums/component-type';
 import { ToastService } from '@fusion/services/toast.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { TabService } from '@fusion/services/tabservice.service';
 import { Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
@@ -45,16 +44,12 @@ export class LandingComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private confirmationService = inject(ConfirmationService);
   private toastService = inject(ToastService);
-  private tabService = inject(TabService);
   private destroy$ = new Subject<void>();
 
   openCreateQuery: boolean = false;
   constructor() {}
 
   ngOnInit(): void {
-    // this.tabService.tab$.subscribe((tabData) => {
-    //   this.openTab(tabData);
-    // });
     this.selected.valueChanges
       .pipe(
         tap((i: number) => {
@@ -111,13 +106,8 @@ export class LandingComponent implements OnInit {
         },
       },
     };
-    console.log(this.tabs[0]);
-    if (this.tabs.length == 1) {
-      // this.tabService.removeTab(1);
-    }
     if (tab) {
       this.tabs.push(tab);
-      // this.tabService.openTab(tab);
       this.selected.setValue(this.tabs.length - 1);
     }
     this.changeDetectorRef.detectChanges();
@@ -194,40 +184,12 @@ export class LandingComponent implements OnInit {
   //   }
   // }
 
-  // public removeTab(index: number): void {
-  //   this.tabService.removeTab(index);
-  //   if (this.tabs.length > 0) {
-  //     this.activeIndex.update(() => 0);
-  //   }
-  //   // this.toggleOpenCreateQuery();
-  // }
-
   public removeTab(index: number): void {
-    //this.tabs[index].inputs.closing = true;
+    //this.tabs[index].inputs.activeIndex = true;
     console.log('close clicked');
     this.tabs.splice(index, 1);
     this.changeDetectorRef.detectChanges();
     this.activeIndex.update(() => 0);
-    // this.toggleOpenCreateQuery();
-    // this.confirmationService.confirm(
-    //   'Delete Tab',
-    //   'Proceed to delete tab',
-    //   PopUpType.WARN,
-    //   ConfirmationType.PRIMARY,
-    //   () => {
-    //     this.tabs.splice(index, 1);
-    //     this.changeDetectorRef.detectChanges();
-    //     this.activeIndex.update(() => 0);
-    //     this.toggleOpenCreateQuery();
-    //     this.toastService.showSuccessMessage(
-    //       'Success',
-    //       'Tab Deletion Successful',
-    //     );
-    //   },
-    //   () => {
-    //     this.toastService.showErrorMessage('Tab Deletion Canceled');
-    //   },
-    // );
   }
   onCloseTab(event: TabViewCloseEvent): void {
     this.tabs.splice(event.index, 1);
