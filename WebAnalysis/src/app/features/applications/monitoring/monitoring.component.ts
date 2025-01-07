@@ -169,7 +169,7 @@ export class MonitoringComponent
 
           // Handle tab data
           if (result.tabData) {
-            this.tabService.openTab(result.tabData);
+            // this.tabService.openTab(result.tabData);
             this.openApp.emit(result.tabData);
           }
         } else if (result === 'ko') {

@@ -10,17 +10,16 @@ export class TabService {
 
   constructor() {}
 
-  openTab(tabData: any): void {
-    // this.tabs.next(tabData);
-    const currentTabs = this.tabs.value;
-    currentTabs.push(tabData);
-    this.tabs.next(currentTabs);
-    console.log('oo', this.tabs);
-  }
+  // openTab(tabData: any): void {
+  //   // this.tabs.next(tabData);
+  //   const currentTabs = this.tabs.value;
+  //   currentTabs.push(tabData);
+  //   this.tabs.next(currentTabs);
+  // }
 
-  removeTab(index: number): void {
-    const currentTabs = this.tabs.value;
-    currentTabs.splice(index, 1);
-    this.tabs.next(currentTabs);
-  }
+  // removeTab(index: number): void {
+  //   const currentTabs = this.tabs.value;
+  //   currentTabs.splice(index, 1);
+  //   this.tabs.next(currentTabs);
+  // }
 }

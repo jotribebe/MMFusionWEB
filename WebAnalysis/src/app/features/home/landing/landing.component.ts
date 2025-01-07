@@ -111,11 +111,16 @@ export class LandingComponent implements OnInit {
         },
       },
     };
+    console.log(this.tabs[0]);
+    if (this.tabs.length == 1) {
+      // this.tabService.removeTab(1);
+    }
     if (tab) {
       this.tabs.push(tab);
-      this.tabService.openTab(tab);
+      // this.tabService.openTab(tab);
       this.selected.setValue(this.tabs.length - 1);
     }
+    this.changeDetectorRef.detectChanges();
   }
 
   // openTab(tabData: any, contextApp?: IContextApp): void {
@@ -224,30 +229,6 @@ export class LandingComponent implements OnInit {
     //   },
     // );
   }
-
-  private getModelTabAnalyse(): ITabFusion {
-    console.log('getModelTabAnalyse');
-    const tab: ITabFusion = {
-      tabName: 'Analyze',
-      selector: MonitoringComponent,
-      inputs: {
-        isActive: false,
-      },
-      outputs: {
-        closeApp: () => {
-          this.removeTab(this.tabs.length - 1);
-        },
-        setName: (name: string) => {
-          tab.tabName = name;
-        },
-        setContext: (context: IContextApp) => {
-          tab.inputs.context = context;
-        },
-      },
-    };
-    return tab;
-  }
-
   onCloseTab(event: TabViewCloseEvent): void {
     this.tabs.splice(event.index, 1);
     this.changeDetectorRef.detectChanges();
