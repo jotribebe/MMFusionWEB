@@ -4,8 +4,10 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
+  EventEmitter,
   inject,
   OnInit,
+  Output,
   signal,
 } from '@angular/core';
 import { environment } from '@environments/environment';
@@ -39,7 +41,7 @@ import { Subject, takeUntil, tap } from 'rxjs';
   styleUrl: './landing.component.scss',
   providers: [DialogService, ConfirmationService, ToastService],
 })
-export class LandingComponent implements OnInit, AfterViewInit {
+export class LandingComponent implements OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private dialog = inject(DialogService);
   private destroyRef = inject(DestroyRef);
@@ -47,164 +49,25 @@ export class LandingComponent implements OnInit, AfterViewInit {
   private toastService = inject(ToastService);
   private destroy$ = new Subject<void>();
 
-  openCreateQuery: boolean = false;
+  @Output()
+  openApp = new EventEmitter<AppNameService>();
+
   constructor() {}
 
-  ngOnInit(): void {
-    this.selected.valueChanges
-      .pipe(
-        tap((i: number) => {
-          this.tabs.forEach((tab) => (tab.inputs.isActive = false));
-          this.tabs[i].inputs.isActive = true;
-        }),
-        takeUntil(this.destroy$),
-      )
-      .subscribe();
+  ngOnInit(): void {}
 
-    this.tabs = [
-      {
-        tabName: 'Home',
-        selector: MonitoringComponent,
-        inputs: { isActive: true },
-        outputs: {
-          openApp: (tabData: any): void => {
-            this.openTab(tabData);
-          },
-        },
-      },
-    ];
-
-    this.tab = this.tabs[0];
+  launchAnalyze(): void {
+    this.openApp.emit(AppNameService.ANALYZE);
   }
 
-  ngAfterViewInit(): void {
-    if (this.tabs.length == 0) {
-      this.toggleOpenCreateQuery();
-    }
-  }
-
-  toggleOpenCreateQuery(): void {
-    this.openCreateQuery = !this.openCreateQuery;
-  }
-
-  // The following is the tabs
-  selected = new UntypedFormControl(0);
-  activeIndex = signal(0);
-  tabs: Array<ITabFusion> = [];
-  tab: ITabFusion | undefined;
-
-  public openTab(tabData: any, contextApp?: IContextApp): void {
-    console.log('openTab,');
-    const tab: ITabFusion = {
-      tabName: tabData.tabName,
-      selector: tabData.selector,
-      inputs: {
-        isActive: false,
-      },
-      outputs: {
-        closeApp: () => {
-          this.removeTab(this.tabs.length - 1);
-        },
-        setName: (name: string) => {
-          tab.tabName = name;
-        },
-        setContext: (context: IContextApp) => {
-          tab.inputs.context = context;
-        },
-      },
-    };
-    if (tab) {
-      this.tabs.push(tab);
-      this.selected.setValue(this.tabs.length - 1);
-    }
-    this.changeDetectorRef.detectChanges();
-  }
-
-  // openTab(tabData: any, contextApp?: IContextApp): void {
-  //   if (this.tabs.length == 0) {
-  //     this.tab = {
-  //       tabName: 'Analyse',
+  // launchAnalyze(): void {
+  //   this.openApp.emit(
+  //     {
+  //       tabName: "Analyze",
   //       selector: MonitoringComponent,
   //       inputs: { isActive: true },
-  //       outputs: {
-  //         openApp: (app: AppFusion): void => {
-  //           this.openTab(app);
-  //         },
-  //         openNewApp: (app: AppFusion): void => {
-  //           this.openTab(app);
-  //         },
-  //         openSavedApp: (contextApp: IContextApp): void => {
-  //           const app = Object.values(environment.apps).find(
-  //             (p) => <AppNameService>p.type === contextApp.type,
-  //           );
-  //           if (app) {
-  //             this.openTab(app as AppFusion, contextApp);
-  //           }
-  //         },
-  //       },
-  //     };
-  //     this.tabs.push(this.tab);
-  //   }
-  //   const newTab = {
-  //     tabName: tabData.tabName,
-  //     selector: tabData.selector,
-  //     inputs: tabData.inputs || {},
-  //     outputs: tabData.outputs || {},
-  //   };
-
-  //   this.tabs.push(newTab);
-  //   console.log('opentab1');
-
-  //   setTimeout(() => {
-  //     this.activeIndex.update(() => this.tabs.length - 1);
-  //   }, 5);
-  //   this.selected.setValue(this.tabs.length - 1);
-  // }
-
-  // public openTab(app: AppFusion, contextApp?: IContextApp): void {
-  //   console.log('openTab');
-  //   // TODO: add a unique id for each component, and delete relative to this id
-  //   if (
-  //     contextApp &&
-  //     this.tabs.some(
-  //       (p) => p.inputs.context && p.inputs.context.id === contextApp.id,
-  //     )
-  //   ) {
-  //     this.selected.setValue(
-  //       this.tabs.findIndex(
-  //         (p) => p.inputs.context && p.inputs.context.id === contextApp.id,
-  //       ),
-  //     );
-  //   } else {
-  //     switch (app.type) {
-  //       case AppNameService.ANALYZE:
-  //         this.tab = this.getModelTabAnalyse(app);
-  //         break
+  //       outputs: {},
   //     }
-  //     if (this.tab) {
-  //       this.tabs.push(this.tab);
-  //       setTimeout(() => {
-  //         this.activeIndex.update(() => this.tabs.length - 1);
-  //       }, 5);
-  //       this.selected.setValue(this.tabs.length - 1);
-  //     }
-  //   }
+  //   );
   // }
-
-  public removeTab(index: number): void {
-    //this.tabs[index].inputs.activeIndex = true;
-    console.log('close clicked');
-    this.tabs.splice(index, 1);
-    this.changeDetectorRef.detectChanges();
-    this.activeIndex.update(() => 0);
-  }
-  onCloseTab(event: TabViewCloseEvent): void {
-    this.tabs.splice(event.index, 1);
-    this.changeDetectorRef.detectChanges();
-    this.activeIndex.update(() => 0);
-  }
-
-  setSelectedTabIndex(i: number): void {
-    this.activeIndex.update(() => i);
-  }
 }

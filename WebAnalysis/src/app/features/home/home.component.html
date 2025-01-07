@@ -12,7 +12,8 @@
         <i class="pi pi-user text-sm"></i>
       </span>
       <span class="ml-2 text-sm">
-        {{ initial }}
+        <!-- {{ initial }} -->
+        name
       </span>
     </p-chip>
   </div>
@@ -23,13 +24,37 @@
     <!-- TODO need to edit sidebar -->
     <app-sidebar
       *ngIf="showSidePanel"
-      (openTab)="openTab($event)"
+      (openTab)="openTab($event.type)"
     ></app-sidebar>
 
     <!-- Main Panel -->
     <div class="flex-1 bg-white" role="main">
       <!-- <app-breadcrumb></app-breadcrumb> -->
-      <app-landing></app-landing>
+      <div class="flex-1 h-full w-full bg-white">
+        <!-- <p-tabView [activeIndex]="activeIndex()" (onClose)="onCloseTab($event)"> -->
+        <p-tabView (onClose)="onCloseTab($event)">
+          @for (tab of tabs; track $index) {
+            <p-tabPanel>
+              <ng-template pTemplate="header">
+                <div class="flex gap-x-2 place-content-center">
+                  <span>{{ tab.tabName }}</span>
+                  @if ($index != 0) {
+                    <button (click)="removeTab($index)">
+                      <span class="pi pi-times hover:text-red-500"></span>
+                    </button>
+                  }
+                </div>
+              </ng-template>
+              <ndc-dynamic
+                [ndcDynamicComponent]="tab!.selector"
+                [ndcDynamicInputs]="tab!.inputs"
+                [ndcDynamicOutputs]="tab!.outputs"
+              >
+              </ndc-dynamic>
+            </p-tabPanel>
+          }
+        </p-tabView>
+      </div>
     </div>
 
     <!-- The follwoing should be displayed when cerate analyze is clicked -->

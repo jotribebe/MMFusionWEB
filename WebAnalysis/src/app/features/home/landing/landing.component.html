@@ -2,35 +2,8 @@
 <p-confirmDialog key="secondary" />
 
 <div class="flex-1 h-full w-full">
-  @if (tabs.length > 0 && openCreateQuery) {
-    <div class="flex-1 h-full w-full bg-white">
-      <p-tabView [activeIndex]="activeIndex()" (onClose)="onCloseTab($event)">
-        @for (tab of tabs; track $index) {
-          <p-tabPanel>
-            <ng-template pTemplate="header">
-              <div class="flex gap-x-2 place-content-center">
-                <span>{{ tab.tabName }}</span>
-                <button (click)="removeTab($index)">
-                  <span class="pi pi-times hover:text-red-500"></span>
-                </button>
-              </div>
-            </ng-template>
-          </p-tabPanel>
-        }
-      </p-tabView>
-
-      <ndc-dynamic
-        [ndcDynamicComponent]="tab!.selector"
-        [ndcDynamicInputs]="tab!.inputs"
-        [ndcDynamicOutputs]="tab!.outputs"
-      >
-      </ndc-dynamic>
-    </div>
-    <!-- <app-monitoring></app-monitoring>           -->
-  } @else {
-    <button class="btn-primary-small" (click)="toggleOpenCreateQuery()">
-      <span class="pi pi-chart-bar text-xl"></span>
-      CREATE QUERY
-    </button>
-  }
+  <button class="btn-primary-small" (click)="launchAnalyze()">
+    <span class="pi pi-chart-bar text-xl"></span>
+    CREATE QUERY
+  </button>
 </div>

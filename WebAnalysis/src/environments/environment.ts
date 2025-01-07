@@ -51,7 +51,7 @@ export const environment = {
     },
     playerAudio: {
       title: 'Audio Player',
-      closable: false,
+      closable: true,
       skipLength: 3,
       timeLine: {
         height: 20,

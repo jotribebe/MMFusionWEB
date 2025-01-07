@@ -151,26 +151,12 @@ export class MonitoringComponent
       },
     });
 
-    // When dialog is closed, handle the emitted data
     ref.onClose.subscribe(
-      (
-        result:
-          | { formData?: Pick<IContextApp, 'name' | 'targets'>; tabData?: any }
-          | string,
-      ) => {
-        if (typeof result === 'object') {
-          // Handle form data
-          if (result.formData) {
-            this.setName.next(result.formData.name);
-            this.monitoringService.start(result.formData);
-          }
-
-          // Handle tab data
-          if (result.tabData) {
-            this.openApp.emit(result.tabData);
-          }
-        } else if (result === 'ko') {
-          // Handle invalid form case
+      (val: Pick<IContextApp, 'name' | 'targets'> | string) => {
+        if (typeof val === 'object') {
+          this.setName.next(val.name);
+          this.monitoringService.start(val);
+        } else {
           if (!this.monitoringService.hasContextValid()) {
             this.closeApp.emit(true);
           }

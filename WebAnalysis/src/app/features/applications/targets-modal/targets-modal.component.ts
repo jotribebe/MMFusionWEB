@@ -187,21 +187,7 @@ export class TargetsModalComponent implements OnInit {
 
   launchAnalyze(): void {
     if (this.analyzeForm.valid) {
-      // TODO: need to use ITabFusion datatype
-      const newTabData = {
-        formData: this.analyzeForm.value,
-        tabData: {
-          tabName: this.analyzeForm.value.name,
-          selector: MonitoringComponent,
-          inputs: { isActive: true },
-          outputs: {},
-        },
-      };
-
-      console.log('launchAnalyze is clicked');
-
-      // Emit data to parent
-      this.dialogRef.close(newTabData);
+      this.dialogRef.close(this.analyzeForm.value);
     } else {
       this.dialogRef.close('ko');
     }
