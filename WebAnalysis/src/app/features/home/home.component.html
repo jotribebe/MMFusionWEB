@@ -31,8 +31,8 @@
     <div class="flex-1 bg-white" role="main">
       <!-- <app-breadcrumb></app-breadcrumb> -->
       <div class="flex-1 h-full w-full bg-white">
-        <!-- <p-tabView [activeIndex]="activeIndex()" (onClose)="onCloseTab($event)"> -->
-        <p-tabView (onClose)="onCloseTab($event)">
+        <p-tabView [activeIndex]="activeIndex()" (onClose)="onCloseTab($event)">
+          <!-- <p-tabView (onClose)="onCloseTab($event)"> -->
           @for (tab of tabs; track $index) {
             <p-tabPanel>
               <ng-template pTemplate="header">

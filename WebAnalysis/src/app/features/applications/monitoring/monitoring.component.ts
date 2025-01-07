@@ -1,14 +1,9 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
-  HostListener,
-  inject,
   OnDestroy,
   OnInit,
   Output,
-  signal,
   ViewEncapsulation,
 } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -23,20 +18,13 @@ import { environment } from '@environments/environment';
 import { BaseAppComponent } from '@fusion/components/base-app/base-app.component';
 import { WidgetAnalyze } from '@fusion/models/enums/analyze-widget';
 import { GridsterItemFusion } from '@fusion/models/gridster-item-fusion';
-import { AppFusion, IContextApp, ITabFusion } from '@fusion/models/context-app';
+import { IContextApp } from '@fusion/models/context-app';
 import { MonitoringService } from '@fusion/services/monitoring.service';
 import { CommonModule } from '@angular/common';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  UntypedFormControl,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { LayoutWidgetComponent } from '../widgets/layout-widget/layout-widget.component';
 import { AppNameService } from '@fusion/models/enums/app-name-service';
-import { TabViewCloseEvent, TabViewModule } from 'primeng/tabview';
-import { DynamicComponent, DynamicIoDirective } from 'ng-dynamic-component';
-import { TooltipComponent } from 'ag-grid-community/dist/types/core/components/framework/componentTypes';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({

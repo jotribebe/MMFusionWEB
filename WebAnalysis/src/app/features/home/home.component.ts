@@ -5,6 +5,7 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  signal,
   ViewEncapsulation,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
@@ -43,7 +44,8 @@ import { LandingComponent } from './landing/landing.component';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   tabs: Array<ITabFusion> = [];
-  tab: ITabFusion | undefined;
+  // tab: ITabFusion | undefined;
+  activeIndex = signal(0);
 
   selected = new UntypedFormControl(0);
   public initial!: string;
@@ -82,8 +84,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe();
-
-    this.tab = this.tabs[0];
   }
 
   public ngOnDestroy(): void {
@@ -99,15 +99,19 @@ export class HomeComponent implements OnInit, OnDestroy {
         break;
     }
     if (tab) {
-      console.log('enter', this.tabs);
       this.tabs.push(tab);
-      this.tab = tab;
+      setTimeout(() => {
+        this.activeIndex.update(() => this.tabs.length - 1);
+      }, 5);
       this.selected.setValue(this.tabs.length - 1);
     }
   }
 
   public removeTab(index: number): void {
-    this.tabs.splice(index, 1);
+    if (this.tabs.length > 0) {
+      this.tabs.splice(index, 1);
+      this.activeIndex.update(() => index - 1);
+    }
   }
 
   private getModelTabAnalyse(): ITabFusion {
