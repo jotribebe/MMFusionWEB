@@ -2,7 +2,7 @@
 <p-confirmDialog key="secondary" />
 
 <div class="flex-1 h-full w-full">
-  @if (openCreateQuery) {
+  @if (tabs.length > 0 && openCreateQuery) {
     <div class="flex-1 h-full w-full bg-white">
       <p-tabView [activeIndex]="activeIndex()" (onClose)="onCloseTab($event)">
         @for (tab of tabs; track $index) {

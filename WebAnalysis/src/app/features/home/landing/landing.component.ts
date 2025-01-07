@@ -1,5 +1,6 @@
 import { operators } from './../../../../../node_modules/ajv/lib/compile/codegen/index';
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -38,7 +39,7 @@ import { Subject, takeUntil, tap } from 'rxjs';
   styleUrl: './landing.component.scss',
   providers: [DialogService, ConfirmationService, ToastService],
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, AfterViewInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private dialog = inject(DialogService);
   private destroyRef = inject(DestroyRef);
@@ -74,6 +75,12 @@ export class LandingComponent implements OnInit {
     ];
 
     this.tab = this.tabs[0];
+  }
+
+  ngAfterViewInit(): void {
+    if (this.tabs.length == 0) {
+      this.toggleOpenCreateQuery();
+    }
   }
 
   toggleOpenCreateQuery(): void {
