@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { environment } from '@environments/environment';
-import { ITabFusion } from '@fusion/models/context-app';
+import { IContextApp, ITabFusion } from '@fusion/models/context-app';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DynamicComponent, DynamicIoDirective } from 'ng-dynamic-component';
@@ -67,8 +67,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         selector: LandingComponent,
         inputs: { isActive: true },
         outputs: {
-          openApp: (appName: AppNameService): void => {
-            this.openTab(appName);
+          openApp: (
+            appName: AppNameService,
+            contextApp?: IContextApp,
+          ): void => {
+            this.openTab(appName, contextApp);
+            this.changeDetectorRef.detectChanges();
+          },
+          openSavedApp: (contextApp?: IContextApp): void => {
+            this.openTab(AppNameService.ANALYZE, contextApp);
             this.changeDetectorRef.detectChanges();
           },
         },
@@ -91,12 +98,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-  public openTab(appName: AppNameService): void {
+  public openTab(appName: AppNameService, contextApp?: IContextApp): void {
     let tab: ITabFusion | undefined = undefined;
-    switch (appName) {
-      case AppNameService.ANALYZE:
-        tab = this.getModelTabAnalyse();
-        break;
+    if (
+      contextApp &&
+      this.tabs.some(
+        (p) => p.inputs.context && p.inputs.context.id === contextApp.id,
+      )
+    ) {
+      this.selected.setValue(
+        this.tabs.findIndex(
+          (p) => p.inputs.context && p.inputs.context.id === contextApp.id,
+        ),
+      );
+    } else {
+      switch (appName) {
+        case AppNameService.ANALYZE:
+          tab = this.getModelTabAnalyse();
+          break;
+      }
     }
     if (tab) {
       this.tabs.push(tab);

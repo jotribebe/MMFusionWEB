@@ -6,4 +6,17 @@
     <span class="pi pi-chart-bar text-xl"></span>
     CREATE QUERY
   </button>
+  <!-- <div *ngIf="contextApps.length > 0">
+    <h1 class="text-2xl mb-4">My Last Analysis</h1>
+    <div
+      class="flex gap-4 py-4 overflow-x-auto px-3 justify-start scrollbar-thin scrollbar-thumb-neutral-500 scrollbar-track-neutral-100 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+      <div
+        *ngFor="let contextApp of contextApps; trackBy: trackByContextAppId"
+        (click)="launchSavedApp(contextApp)"
+        (keyup.enter)="launchSavedApp(contextApp)"
+        class="card-last-activities">
+        <span class="mb-2">{{ contextApp.name }}</span>
+      </div>
+    </div>
+  </div> -->
 </div>

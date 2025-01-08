@@ -19,13 +19,10 @@ import { UntypedFormControl } from '@angular/forms';
 import { ITabFusion, AppFusion, IContextApp } from '@fusion/models/context-app';
 import { AppNameService } from '@fusion/models/enums/app-name-service';
 import { ConfirmationService } from '@fusion/services/confirmation.service';
-import {
-  ConfirmationType,
-  PopUpType,
-} from '@fusion/models/enums/component-type';
 import { ToastService } from '@fusion/services/toast.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Subject, takeUntil, tap } from 'rxjs';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-landing',
@@ -36,6 +33,8 @@ import { Subject, takeUntil, tap } from 'rxjs';
     TabViewModule,
     ConfirmDialogModule,
     MonitoringComponent,
+    NgFor,
+    NgIf,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
@@ -51,6 +50,8 @@ export class LandingComponent implements OnInit {
 
   @Output()
   openApp = new EventEmitter<AppNameService>();
+  @Output()
+  openSavedApp = new EventEmitter<IContextApp>();
 
   constructor() {}
 
@@ -58,5 +59,14 @@ export class LandingComponent implements OnInit {
 
   launchAnalyze(): void {
     this.openApp.emit(AppNameService.ANALYZE);
+  }
+
+  launchSavedApp(contextApp: IContextApp): void {
+    // Simulate launching the saved app
+    console.log('Launching saved app:', contextApp);
+    this.openSavedApp.emit(contextApp);
+  }
+  trackByContextAppId(index: number, item: IContextApp): string {
+    return item.id;
   }
 }
