@@ -48,7 +48,7 @@ interface Data {
 })
 export class IpTrafficSummaryComponent
   extends BaseWidgetComponent
-  implements OnInit, AfterViewInit, OnDestroy
+  implements OnInit, OnDestroy
 {
   static override title = environment.widgets.ipTraffic.title;
   static override closable = environment.widgets.ipTraffic.closable;
@@ -66,7 +66,6 @@ export class IpTrafficSummaryComponent
   chartOptions: any;
 
   form: FormGroup;
-
   constructor() {
     super();
     this.form = new FormGroup({
@@ -78,24 +77,22 @@ export class IpTrafficSummaryComponent
   ngOnInit(): void {
     this.data = DATA_CHART;
     this.initializeChartOptions();
-  }
+    this.initializeCharts();
 
-  ngAfterViewInit(): void {
-    this.changeDetectorRef.detectChanges();
-  }
-
-  onButtonClick(): void {
-    const selectedUserId = this.form.get('target')?.value;
-    const selectedDateRange = this.form.get('dateRange')?.value;
-
-    if (selectedUserId !== null) {
-      this.selectedUser =
-        this.data.find((user) => user.id === selectedUserId) || null;
-      if (this.selectedUser) {
-        console.log('Selected Date Range:', selectedDateRange);
-        this.initializeCharts();
+    // Subscribe to target value changes
+    this.form.get('target')?.valueChanges.subscribe((selectedUserId) => {
+      if (selectedUserId !== null) {
+        this.selectedUser =
+          this.data.find((user) => user.id === selectedUserId) || null;
+        if (this.selectedUser) {
+          this.initializeCharts();
+        } else {
+          this.clearCharts();
+        }
+      } else {
+        this.clearCharts();
       }
-    }
+    });
   }
 
   initializeCharts(): void {
@@ -171,6 +168,12 @@ export class IpTrafficSummaryComponent
         },
       },
     };
+  }
+
+  clearCharts(): void {
+    this.mostVisitedChartData = null;
+    this.appUsedChartData = null;
+    this.appUserAgentData = null;
   }
 
   ngOnDestroy(): void {
