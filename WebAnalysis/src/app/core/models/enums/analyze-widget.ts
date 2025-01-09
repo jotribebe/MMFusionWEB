@@ -1,13 +1,13 @@
 export enum WidgetAnalyze {
-  GRID = 0, // chnage to interception
-  PLAYER_AUDIO, //
-  NOTE, //
-  TRANSCRIPTION, //
-  METADATA, //
-  VIEWER_PDF,
-  PLAYER_VIDEO,
-  MAP, //
-  MY_WIDGET, // <- new entry
+  GRID = 0,
   IDENTITIES,
-  // to add IP Traffic Summary
+  IP_TRAFFIC,
+  MAP, //
+  METADATA, //
+  MY_WIDGET,
+  NOTE, //
+  PLAYER_AUDIO, //
+  PLAYER_VIDEO,
+  TRANSCRIPTION, //
+  VIEWER_PDF,
 }

@@ -2,7 +2,8 @@ export const environment = {
   production: true,
   //urlApi: 'https://www.ipt-tanzu.com/api',
   //urlApi: "https://fusion-api.azurewebsites.net/api",
-  urlApi: 'https://localhost:7071/api',
+  // urlApi: 'https://localhost:7071/api',
+  urlApi: 'https://localhost:27071/api',
   routeApi: {
     media: {
       live: 'Media/live',
@@ -45,8 +46,32 @@ export const environment = {
       title: 'Interception',
       closable: false,
     },
+    identities: {
+      title: 'Identities',
+      closable: true,
+    },
+    ipTraffic: {
+      title: 'IP Traffic Summary',
+      closable: true,
+    },
+    map: {
+      title: 'Maps',
+      closable: true,
+    },
     metadata: {
       title: 'Metadata',
+      closable: true,
+    },
+    mywidget: {
+      title: 'My Widget',
+      closable: true,
+    },
+    note: {
+      title: 'Note',
+      closable: true,
+    },
+    pdf: {
+      title: 'Viewer',
       closable: true,
     },
     playerAudio: {
@@ -62,31 +87,11 @@ export const environment = {
       title: 'Video Player',
       closable: true,
     },
-    note: {
-      title: 'Note',
-      closable: true,
-    },
     transcription: {
       title: 'Transcription',
       closable: true,
     },
-    map: {
-      title: 'Maps',
-      closable: true,
-    },
-    pdf: {
-      title: 'Viewer',
-      closable: true,
-    },
-    mywidget: {
-      // To delete
-      title: 'My Widget',
-      closable: true,
-    },
-    identities: {
-      title: 'Identities',
-      closable: true,
-    },
+
     layout: {
       heightToolbar: 32,
     },

@@ -18,6 +18,7 @@ import { WidgetAnalyze } from '@fusion/models/enums/analyze-widget';
 import { GridsterItemFusion } from '@fusion/models/gridster-item-fusion';
 import { NgIf } from '@angular/common';
 import { MetaDataComponent } from '../meta-data/meta-data.component';
+import { IpTrafficSummaryComponent } from '../ip-traffic-summary/ip-traffic-summary.component';
 
 @Component({
   selector: 'app-layout-widget[type][resizeEvent]',
@@ -54,28 +55,28 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
             GridComponent,
           ).instance;
         break;
-      // case WidgetAnalyze.NOTE:
-      //   this.title = NoteComponent.title;
-      //   this.closable = NoteComponent.closable;
+      case WidgetAnalyze.IDENTITIES:
+        this.title = IdentitiesComponent.title;
+        this.closable = IdentitiesComponent.closable;
+        this.childComponent =
+          this.viewContainerRef.createComponent<BaseWidgetComponent>(
+            IdentitiesComponent,
+          ).instance;
+        break;
+      case WidgetAnalyze.IP_TRAFFIC:
+        this.title = IpTrafficSummaryComponent.title;
+        this.closable = IpTrafficSummaryComponent.closable;
+        this.childComponent =
+          this.viewContainerRef.createComponent<BaseWidgetComponent>(
+            IpTrafficSummaryComponent,
+          ).instance;
+        break;
+      // case WidgetAnalyze.MAP:
+      //   this.title = MapComponent.title;
+      //   this.closable = MapComponent.closable;
       //   this.childComponent =
       //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
-      //       NoteComponent
-      //     ).instance;
-      //   break;
-      // case WidgetAnalyze.TRANSCRIPTION:
-      //   this.title = TranscriptionComponent.title;
-      //   this.closable = TranscriptionComponent.closable;
-      //   this.childComponent =
-      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
-      //       TranscriptionComponent
-      //     ).instance;
-      //   break;
-      // case WidgetAnalyze.PLAYER_AUDIO:
-      //   this.title = PlayerComponent.title;
-      //   this.closable = PlayerComponent.closable;
-      //   this.childComponent =
-      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
-      //       PlayerComponent
+      //       MapComponent
       //     ).instance;
       //   break;
       case WidgetAnalyze.METADATA:
@@ -86,22 +87,6 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
             MetaDataComponent,
           ).instance;
         break;
-      // case WidgetAnalyze.VIEWER_PDF:
-      //   this.title = ViewerPdfComponent.title;
-      //   this.closable = ViewerPdfComponent.closable;
-      //   this.childComponent =
-      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
-      //       ViewerPdfComponent
-      //     ).instance;
-      //   break;
-      // case WidgetAnalyze.MAP:
-      //   this.title = MapComponent.title;
-      //   this.closable = MapComponent.closable;
-      //   this.childComponent =
-      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
-      //       MapComponent
-      //     ).instance;
-      //   break;
       // case WidgetAnalyze.MY_WIDGET:
       //   this.title = MyWidgetComponent.title;
       //   this.closable = MyWidgetComponent.closable;
@@ -110,14 +95,41 @@ export class LayoutWidgetComponent implements OnInit, OnDestroy {
       //       MyWidgetComponent
       //     ).instance;
       //   break;
-      case WidgetAnalyze.IDENTITIES:
-        this.title = IdentitiesComponent.title;
-        this.closable = IdentitiesComponent.closable;
-        this.childComponent =
-          this.viewContainerRef.createComponent<BaseWidgetComponent>(
-            IdentitiesComponent,
-          ).instance;
-        break;
+      // case WidgetAnalyze.NOTE:
+      //   this.title = NoteComponent.title;
+      //   this.closable = NoteComponent.closable;
+      //   this.childComponent =
+      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
+      //       NoteComponent
+      //     ).instance;
+      //   break;
+      // case WidgetAnalyze.PLAYER_AUDIO:
+      //   this.title = PlayerComponent.title;
+      //   this.closable = PlayerComponent.closable;
+      //   this.childComponent =
+      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
+      //       PlayerComponent
+      //     ).instance;
+      //   break;
+
+      // INSERT PLAYER_VIDEO
+
+      // case WidgetAnalyze.TRANSCRIPTION:
+      //   this.title = TranscriptionComponent.title;
+      //   this.closable = TranscriptionComponent.closable;
+      //   this.childComponent =
+      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
+      //       TranscriptionComponent
+      //     ).instance;
+      //   break;
+      // case WidgetAnalyze.VIEWER_PDF:
+      //   this.title = ViewerPdfComponent.title;
+      //   this.closable = ViewerPdfComponent.closable;
+      //   this.childComponent =
+      //     this.viewContainerRef.createComponent<BaseWidgetComponent>(
+      //       ViewerPdfComponent
+      //     ).instance;
+      //   break;
     }
 
     this.resizeEvent

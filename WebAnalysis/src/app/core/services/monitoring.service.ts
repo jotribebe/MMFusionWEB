@@ -227,6 +227,60 @@ export class MonitoringService implements OnDestroy {
       (w) => w.type === WidgetAnalyze.PLAYER_AUDIO,
     );
     switch (widget) {
+      case WidgetAnalyze.IDENTITIES:
+        widgets.push({
+          cols: 4,
+          rows: 4,
+          y: widgetPlayer ? widgetPlayer.y + widgetPlayer.rows : 0,
+          x: widgetPlayer
+            ? widgets
+                .filter((w) => w.y === widgetPlayer.y + widgetPlayer.rows)
+                .reduce((acc, wid) => {
+                  return acc + wid.cols;
+                }, 0)
+            : 0,
+          type: widget,
+        });
+        this._widgets.next(widgets);
+        break;
+
+      case WidgetAnalyze.IP_TRAFFIC:
+        widgets.push({
+          cols: 8,
+          rows: 4,
+          y: widgetPlayer ? widgetPlayer.y + widgetPlayer.rows : 0,
+          x: widgetPlayer
+            ? widgets
+                .filter((w) => w.y === widgetPlayer.y + widgetPlayer.rows)
+                .reduce((acc, wid) => {
+                  return acc + wid.cols;
+                }, 0)
+            : 0,
+          type: widget,
+        });
+        this._widgets.next(widgets);
+        break;
+
+      // case WidgetAnalyze.MAP:
+      // widgets.push({
+      //   cols: 6,
+      //   rows: 5,
+      //   y:
+      //     widgetPlayer && widgetPlayer.x === 0
+      //       ? widgetPlayer.y + widgetPlayer.rows
+      //       : 0,
+      //   x:
+      //     widgetPlayer && widgetPlayer.x === 0
+      //       ? widgets
+      //           .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
+      //           .reduce((acc, wid) => {
+      //             return acc + wid.cols;
+      //           }, 0)
+      //       : 0,
+      //   type: widget,
+      // });
+      // this._widgets.next(widgets);
+      // break;
       case WidgetAnalyze.METADATA:
         widgets.push({
           cols: 3,
@@ -241,16 +295,22 @@ export class MonitoringService implements OnDestroy {
         });
         this._widgets.next(widgets);
         break;
-      // case WidgetAnalyze.VIEWER_PDF:
+      // case WidgetAnalyze.MY_WIDGET:
       //   widgets.push({
-      //     cols: 3,
-      //     rows: 5,
-      //     y: 0,
-      //     x: widgets
-      //       .filter(w => w.y === 0)
-      //       .reduce((acc, wid) => {
-      //         return acc + wid.cols;
-      //       }, 0),
+      //     cols: 4,
+      //     rows: 3,
+      //     y:
+      //       widgetPlayer && widgetPlayer.x === 0
+      //         ? widgetPlayer.y + widgetPlayer.rows
+      //         : 0,
+      //     x:
+      //       widgetPlayer && widgetPlayer.x === 0
+      //         ? widgets
+      //             .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
+      //             .reduce((acc, wid) => {
+      //               return acc + wid.cols;
+      //             }, 0)
+      //         : 0,
       //     type: widget,
       //   });
       //   this._widgets.next(widgets);
@@ -288,58 +348,17 @@ export class MonitoringService implements OnDestroy {
       //   });
       //   this._widgets.next(widgets);
       //   break;
-      // case WidgetAnalyze.MAP:
-      // widgets.push({
-      //   cols: 6,
-      //   rows: 5,
-      //   y:
-      //     widgetPlayer && widgetPlayer.x === 0
-      //       ? widgetPlayer.y + widgetPlayer.rows
-      //       : 0,
-      //   x:
-      //     widgetPlayer && widgetPlayer.x === 0
-      //       ? widgets
-      //           .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
-      //           .reduce((acc, wid) => {
-      //             return acc + wid.cols;
-      //           }, 0)
-      //       : 0,
-      //   type: widget,
-      // });
-      // this._widgets.next(widgets);
-      // break;
-      case WidgetAnalyze.IDENTITIES:
-        widgets.push({
-          cols: 4,
-          rows: 4,
-          y: widgetPlayer ? widgetPlayer.y + widgetPlayer.rows : 0,
-          x: widgetPlayer
-            ? widgets
-                .filter((w) => w.y === widgetPlayer.y + widgetPlayer.rows)
-                .reduce((acc, wid) => {
-                  return acc + wid.cols;
-                }, 0)
-            : 0,
-          type: widget,
-        });
-        this._widgets.next(widgets);
-        break;
-      // case WidgetAnalyze.MY_WIDGET:
+
+      // case WidgetAnalyze.VIEWER_PDF:
       //   widgets.push({
-      //     cols: 4,
-      //     rows: 3,
-      //     y:
-      //       widgetPlayer && widgetPlayer.x === 0
-      //         ? widgetPlayer.y + widgetPlayer.rows
-      //         : 0,
-      //     x:
-      //       widgetPlayer && widgetPlayer.x === 0
-      //         ? widgets
-      //             .filter(w => w.y === widgetPlayer.y + widgetPlayer.rows)
-      //             .reduce((acc, wid) => {
-      //               return acc + wid.cols;
-      //             }, 0)
-      //         : 0,
+      //     cols: 3,
+      //     rows: 5,
+      //     y: 0,
+      //     x: widgets
+      //       .filter(w => w.y === 0)
+      //       .reduce((acc, wid) => {
+      //         return acc + wid.cols;
+      //       }, 0),
       //     type: widget,
       //   });
       //   this._widgets.next(widgets);

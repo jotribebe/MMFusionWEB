@@ -1,6 +1,4 @@
-import { operators } from './../../../../../node_modules/ajv/lib/compile/codegen/index';
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   DestroyRef,
@@ -8,33 +6,27 @@ import {
   inject,
   OnInit,
   Output,
-  signal,
 } from '@angular/core';
-import { environment } from '@environments/environment';
 import { DialogService } from 'primeng/dynamicdialog';
-import { MonitoringComponent } from '../../applications/monitoring/monitoring.component';
-import { DynamicIoDirective, DynamicComponent } from 'ng-dynamic-component';
 import { TabViewCloseEvent, TabViewModule } from 'primeng/tabview';
-import { UntypedFormControl } from '@angular/forms';
-import { ITabFusion, AppFusion, IContextApp } from '@fusion/models/context-app';
+import { IContextApp } from '@fusion/models/context-app';
 import { AppNameService } from '@fusion/models/enums/app-name-service';
 import { ConfirmationService } from '@fusion/services/confirmation.service';
 import { ToastService } from '@fusion/services/toast.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { NgFor, NgIf } from '@angular/common';
+import { IpTrafficSummaryComponent } from '../../applications/widgets/ip-traffic-summary/ip-traffic-summary.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
   imports: [
-    DynamicIoDirective,
-    DynamicComponent,
     TabViewModule,
     ConfirmDialogModule,
-    MonitoringComponent,
     NgFor,
     NgIf,
+    IpTrafficSummaryComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',

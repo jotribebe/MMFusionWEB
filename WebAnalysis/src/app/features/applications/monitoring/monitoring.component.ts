@@ -128,6 +128,8 @@ export class MonitoringComponent
     return false;
   }
 
+  openQueryDialog(): void {}
+
   showQueryDialog(): void {
     const ref = this.dialogService.open(TargetsModalComponent, {
       header: 'CREATE QUERY',

@@ -1,4 +1,4 @@
-<div class="h-full flex">
+<div class="flex h-screen">
   <div class="w-[75px] bg-teal-400 border-r border-gray-700">
     <ng-container
       *ngIf="{
@@ -25,12 +25,12 @@
             </span>
           </button>
         </li>
-        <li class="border-b-white border-b pb-2">
+        <li #openQuery class="leading-none">
           <button
             class="outline-none"
-            (click)="showQueryDialog()"
+            (click)="openQueryDialog()"
             pInputText
-            pTooltip="CREATE QUERY"
+            pTooltip="OPEN SAVED QUERIES"
             tooltipPosition="right"
           >
             <span
@@ -39,7 +39,95 @@
             </span>
           </button>
         </li>
-        <li class="leading-none">
+        <li #createQuery class="border-b-lime-300 border-b pb-2">
+          <button
+            class="outline-none"
+            (click)="showQueryDialog()"
+            pInputText
+            pTooltip="CREATE QUERY"
+            tooltipPosition="right"
+          >
+            <span
+              class="pi pi-plus w-7 h-7 text-2xl text-white hover:scale-110 duration-150 place-content-center"
+            >
+            </span>
+          </button>
+        </li>
+        <li #widgetIdentities class="leading-none">
+          <button
+            class="outline-none"
+            (click)="openWidget(widgetAnalyze.IDENTITIES)"
+            pInputText
+            pTooltip="IDENTITIES"
+            tooltipPosition="right"
+          >
+            <span
+              class="pi pi-id-card w-7 h-7 text-2xl place-content-center"
+              [ngClass]="
+                isWidgetActive(analyzeData.widgets, widgetAnalyze.IDENTITIES)
+                  ? 'text-orange-500 cursor-default hover:transform-none'
+                  : 'text-white hover:scale-110 duration-150'
+              "
+            >
+            </span>
+          </button>
+        </li>
+        <li #widgetIpTraffic class="leading-none">
+          <button
+            class="outline-none"
+            (click)="openWidget(widgetAnalyze.IP_TRAFFIC)"
+            pInputText
+            pTooltip="IP TRAFFIC SUMMARY"
+            tooltipPosition="right"
+          >
+            <svg
+              class="w-7 h-7 hover:scale-110 duration-150 transform"
+              [ngClass]="{
+                'cursor-default hover:transform-none': isWidgetActive(
+                  analyzeData.widgets,
+                  widgetAnalyze.IP_TRAFFIC
+                ),
+                'fill-orange-500': isWidgetActive(
+                  analyzeData.widgets,
+                  widgetAnalyze.IP_TRAFFIC
+                ),
+                'fill-white': !isWidgetActive(
+                  analyzeData.widgets,
+                  widgetAnalyze.IP_TRAFFIC
+                ),
+              }"
+              width="26px"
+              height="26px"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g>
+                <path
+                  d="M26.7,2.3c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4c3.5,3.5,3.5,9.1,0,12.6c-0.4,0.4-0.4,1,0,1.4c0.2,0.2,0.5,0.3,0.7,0.3
+              s0.5-0.1,0.7-0.3C31,13.5,31,6.5,26.7,2.3z"
+                />
+                <path
+                  d="M22,12.6c-0.4,0.4-0.4,1,0,1.4c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3c1.1-1.1,1.7-2.5,1.6-4.1c0-1.5-0.7-3-1.8-4.1
+              c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4C23.3,8.7,23.4,11.2,22,12.6z"
+                />
+                <path
+                  d="M6.7,16.3c-3.5-3.5-3.5-9.1,0-12.6c0.4-0.4,0.4-1,0-1.4s-1-0.4-1.4,0C1,6.5,1,13.5,5.3,17.7C5.5,17.9,5.7,18,6,18
+              s0.5-0.1,0.7-0.3C7.1,17.3,7.1,16.7,6.7,16.3z"
+                />
+                <path
+                  d="M8.8,14.2c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3c0.4-0.4,0.4-1,0-1.4c-1.5-1.5-1.6-4-0.2-5.4c0.4-0.4,0.4-1,0-1.4
+              S9,5.6,8.6,6C7.5,7.1,7,8.5,7,10.1C7,11.6,7.7,13.1,8.8,14.2z"
+                />
+                <path
+                  d="M24,28h-2.2l-4-15.6C18.5,11.9,19,11,19,10c0-1.7-1.3-3-3-3s-3,1.3-3,3c0,1,0.5,1.9,1.3,2.4l-4,15.6H8c-0.6,0-1,0.4-1,1
+              s0.4,1,1,1h16c0.6,0,1-0.4,1-1S24.6,28,24,28z M17.6,20h-3.3l1.6-6.3L17.6,20z M13.9,22c0,0,0.1,0,0.1,0h4c0.1,0,0.1,0,0.1,0l1.6,6
+              h-7.4L13.9,22z"
+                />
+              </g>
+            </svg>
+          </button>
+        </li>
+        <li #widgetMap class="leading-none">
           <button
             class="outline-none"
             (click)="openWidget(widgetAnalyze.MAP)"
@@ -58,7 +146,26 @@
             </span>
           </button>
         </li>
-        <li class="leading-none">
+        <li #widgetMetadata class="leading-none">
+          <button
+            class="outline-none"
+            (click)="openWidget(widgetAnalyze.METADATA)"
+            pInputText
+            pTooltip="METADATA"
+            tooltipPosition="right"
+          >
+            <span
+              class="pi pi-database w-7 h-7 text-2xl place-content-center"
+              [ngClass]="
+                isWidgetActive(analyzeData.widgets, widgetAnalyze.METADATA)
+                  ? 'text-orange-500 cursor-default hover:transform-none'
+                  : 'text-white hover:scale-110 duration-150'
+              "
+            >
+            </span>
+          </button>
+        </li>
+        <li #widgetNote class="leading-none">
           <button
             class="outline-none"
             (click)="openWidget(widgetAnalyze.NOTE)"
@@ -77,26 +184,7 @@
             </span>
           </button>
         </li>
-        <li class="leading-none">
-          <button
-            class="outline-none"
-            (click)="openWidget(widgetAnalyze.TRANSCRIPTION)"
-            pInputText
-            pTooltip="TRANSCRIPTION"
-            tooltipPosition="right"
-          >
-            <span
-              class="pi pi-clipboard w-7 h-7 text-2xl place-content-center"
-              [ngClass]="
-                isWidgetActive(analyzeData.widgets, widgetAnalyze.TRANSCRIPTION)
-                  ? 'text-orange-500 cursor-default hover:transform-none'
-                  : 'text-white hover:scale-110 duration-150'
-              "
-            >
-            </span>
-          </button>
-        </li>
-        <li class="leading-none">
+        <li #widgetPlayerAudio class="leading-none">
           <button
             class="outline-none"
             (click)="openWidget(widgetAnalyze.PLAYER_AUDIO)"
@@ -115,7 +203,7 @@
             </span>
           </button>
         </li>
-        <li class="leading-none">
+        <li #widgetPlayerVideo class="leading-none">
           <button
             class="outline-none"
             (click)="openWidget(widgetAnalyze.PLAYER_VIDEO)"
@@ -153,18 +241,18 @@
             </svg>
           </button>
         </li>
-        <li class="leading-none">
+        <li #widgetTranscription class="leading-none">
           <button
             class="outline-none"
-            (click)="openWidget(widgetAnalyze.METADATA)"
+            (click)="openWidget(widgetAnalyze.TRANSCRIPTION)"
             pInputText
-            pTooltip="METADATA"
+            pTooltip="TRANSCRIPTION"
             tooltipPosition="right"
           >
             <span
-              class="pi pi-database w-7 h-7 text-2xl place-content-center"
+              class="pi pi-clipboard w-7 h-7 text-2xl place-content-center"
               [ngClass]="
-                isWidgetActive(analyzeData.widgets, widgetAnalyze.METADATA)
+                isWidgetActive(analyzeData.widgets, widgetAnalyze.TRANSCRIPTION)
                   ? 'text-orange-500 cursor-default hover:transform-none'
                   : 'text-white hover:scale-110 duration-150'
               "
@@ -172,7 +260,8 @@
             </span>
           </button>
         </li>
-        <li class="leading-none">
+
+        <!-- <li #widgetViewerPDF class="leading-none">
           <button
             class="outline-none"
             (click)="openWidget(widgetAnalyze.VIEWER_PDF)"
@@ -190,8 +279,8 @@
             >
             </span>
           </button>
-        </li>
-        <li class="leading-none">
+        </li> -->
+        <!-- <li #widgetmy class="leading-none">
           <button
             class="outline-none"
             (click)="openWidget(widgetAnalyze.MY_WIDGET)"
@@ -209,26 +298,7 @@
             >
             </span>
           </button>
-        </li>
-        <li class="leading-none">
-          <button
-            class="outline-none"
-            (click)="openWidget(widgetAnalyze.IDENTITIES)"
-            pInputText
-            pTooltip="IDENTITIES"
-            tooltipPosition="right"
-          >
-            <span
-              class="pi pi-id-card w-7 h-7 text-2xl place-content-center"
-              [ngClass]="
-                isWidgetActive(analyzeData.widgets, widgetAnalyze.IDENTITIES)
-                  ? 'text-orange-500 cursor-default hover:transform-none'
-                  : 'text-white hover:scale-110 duration-150'
-              "
-            >
-            </span>
-          </button>
-        </li>
+        </li> -->
       </ul>
     </ng-container>
   </div>

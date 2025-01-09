@@ -1,0 +1,19 @@
+.container {
+  display: flex; /* Enables Flexbox */
+  flex-direction: column; /* Stacks the charts vertically */
+  justify-content: center; /* Centers content vertically */
+  align-items: center; /* Centers content horizontally */
+  min-height: 100vh; /* Full viewport height */
+  padding: 20px; /* Optional padding for spacing */
+  background-color: #f9fafb; /* Light background for better contrast */
+}
+
+.chart-section {
+  width: 100%;
+  max-width: 800px; /* Limit the width of the chart */
+  text-align: center; /* Center-align text */
+}
+
+h3 {
+  color: #1f2937; /* Dark gray for headings */
+}

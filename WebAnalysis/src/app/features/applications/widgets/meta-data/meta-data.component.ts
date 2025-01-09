@@ -56,7 +56,6 @@ export class MetaDataComponent
   }
 
   ngOnDestroy(): void {
-    // console.log('[DESTROY]: Metadata Component');
     this.destroy$.next();
     this.destroy$.unsubscribe();
   }
