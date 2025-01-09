@@ -3,7 +3,6 @@
     class="flex flex-row items-center gap-4 w-full max-w-4xl mx-auto"
     [formGroup]="form"
   >
-    <!-- User Dropdown -->
     <div class="flex-1 flex flex-col">
       <label for="target" class="block text-sm font-medium text-gray-700 mb-2">
         Target
@@ -20,7 +19,6 @@
       ></p-dropdown>
     </div>
 
-    <!-- Date Range Picker -->
     <div class="flex-1 flex flex-col">
       <label
         for="dateRange"
@@ -30,46 +28,43 @@
       <p-calendar
         formControlName="dateRange"
         selectionMode="range"
+        [iconDisplay]="'input'"
         [showIcon]="true"
         placeholder="Select Date Range"
-        class="w-full p-0 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-sm"
         styleClass="w-full"
       ></p-calendar>
     </div>
   </div>
 
   <!-- Charts -->
-  <div *ngIf="selectedUser">
-    <!-- Most Visited Sites -->
-    <div class="chart-section mt-8">
-      <h3 class="text-lg font-bold mb-4">Most Visited</h3>
+  <div *ngIf="selectedUser" class="flex flex-col gap-4 p-2">
+    <div class="flex flex-col flex-grow">
+      <h3 class="text-lg font-bold text-center">Most Visited</h3>
       <p-chart
         type="bar"
         [data]="mostVisitedChartData"
         [options]="chartOptions"
-        styleClass="custom-chart"
+        class="flex-grow w-full"
       ></p-chart>
     </div>
 
-    <!-- App Used -->
-    <div class="chart-section mt-8">
-      <h3 class="text-lg font-bold mb-4">App Used</h3>
+    <div class="flex flex-col flex-grow">
+      <h3 class="text-lg font-bold text-center">App Used</h3>
       <p-chart
         type="bar"
         [data]="appUsedChartData"
         [options]="chartOptions"
-        styleClass="custom-chart"
+        class="flex-grow w-full"
       ></p-chart>
     </div>
 
-    <!-- User Agent -->
-    <div class="chart-section mt-8">
-      <h3 class="text-lg font-bold mb-4">User Agent</h3>
+    <div class="flex flex-col flex-grow">
+      <h3 class="text-lg font-bold text-center">User Agent</h3>
       <p-chart
         type="bar"
         [data]="appUserAgentData"
         [options]="chartOptions"
-        styleClass="custom-chart"
+        class="flex-grow w-full"
       ></p-chart>
     </div>
   </div>

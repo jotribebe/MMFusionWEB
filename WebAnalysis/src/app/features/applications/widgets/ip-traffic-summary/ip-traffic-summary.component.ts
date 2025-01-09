@@ -151,6 +151,7 @@ export class IpTrafficSummaryComponent
     this.chartOptions = {
       indexAxis: 'y',
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
         tooltip: {

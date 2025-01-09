@@ -246,8 +246,8 @@ export class MonitoringService implements OnDestroy {
 
       case WidgetAnalyze.IP_TRAFFIC:
         widgets.push({
-          cols: 8,
-          rows: 4,
+          cols: 5,
+          rows: 5,
           y: widgetPlayer ? widgetPlayer.y + widgetPlayer.rows : 0,
           x: widgetPlayer
             ? widgets
