@@ -9,11 +9,18 @@ import {
 import { CommonModule } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { DATA_CHART } from 'src/assets/mock-data-chart';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { BaseWidgetComponent } from '@fusion/components/base-widget/basewidget.component';
 import { environment } from '@environments/environment';
 import { Subject } from 'rxjs';
+import { DropdownModule } from 'primeng/dropdown';
 
 interface Data {
   id: number;
@@ -28,7 +35,14 @@ interface Data {
 @Component({
   selector: 'app-ip-traffic-summary',
   standalone: true,
-  imports: [CommonModule, ChartModule, FormsModule, CalendarModule],
+  imports: [
+    CommonModule,
+    ChartModule,
+    CalendarModule,
+    DropdownModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './ip-traffic-summary.component.html',
   styleUrls: ['./ip-traffic-summary.component.scss'],
 })
@@ -43,17 +57,22 @@ export class IpTrafficSummaryComponent
   public changeDetectorRef = inject(ChangeDetectorRef);
 
   data: Array<Data> = DATA_CHART;
-  selectedUserId: string = '';
-  selectedUser: any = null;
-  selectedDateRange: Date[] = [];
+  selectedUser: Data | null = null;
+  // selectedDateRange: Date[] = [];
 
   mostVisitedChartData: any;
   appUsedChartData: any;
   appUserAgentData: any;
   chartOptions: any;
 
+  form: FormGroup;
+
   constructor() {
     super();
+    this.form = new FormGroup({
+      target: new FormControl<number | null>(null, [Validators.required]),
+      dateRange: new FormControl<Date[] | null>(null),
+    });
   }
 
   ngOnInit(): void {
@@ -66,10 +85,16 @@ export class IpTrafficSummaryComponent
   }
 
   onButtonClick(): void {
-    if (this.selectedUserId) {
-      const userId = +this.selectedUserId;
-      this.selectedUser = this.data.find((user) => user.id === userId);
-      this.initializeCharts();
+    const selectedUserId = this.form.get('target')?.value;
+    const selectedDateRange = this.form.get('dateRange')?.value;
+
+    if (selectedUserId !== null) {
+      this.selectedUser =
+        this.data.find((user) => user.id === selectedUserId) || null;
+      if (this.selectedUser) {
+        console.log('Selected Date Range:', selectedDateRange);
+        this.initializeCharts();
+      }
     }
   }
 
@@ -77,13 +102,13 @@ export class IpTrafficSummaryComponent
     if (this.selectedUser) {
       this.mostVisitedChartData = {
         labels: this.selectedUser.charts.topVisitedSites.map(
-          (site: { site: any }) => site.site,
+          (site) => site.site,
         ),
         datasets: [
           {
             label: 'Visits',
             data: this.selectedUser.charts.topVisitedSites.map(
-              (site: { visits: any }) => site.visits,
+              (site) => site.visits,
             ),
             backgroundColor: '#3b82f6',
             borderRadius: 10,
@@ -93,13 +118,13 @@ export class IpTrafficSummaryComponent
 
       this.appUsedChartData = {
         labels: this.selectedUser.charts.topBrowserApps.map(
-          (app: { browser: any }) => app.browser,
+          (app) => app.browser,
         ),
         datasets: [
           {
             label: 'Usage (%)',
             data: this.selectedUser.charts.topBrowserApps.map(
-              (app: { percentage: any }) => app.percentage,
+              (app) => app.percentage,
             ),
             backgroundColor: '#10b981',
             borderRadius: 10,
@@ -109,13 +134,13 @@ export class IpTrafficSummaryComponent
 
       this.appUserAgentData = {
         labels: this.selectedUser.charts.topUserAgents.map(
-          (agent: { agent: any }) => agent.agent,
+          (agent) => agent.agent,
         ),
         datasets: [
           {
             label: 'Usage (%)',
             data: this.selectedUser.charts.topUserAgents.map(
-              (agent: { percentage: any }) => agent.percentage,
+              (agent) => agent.percentage,
             ),
             backgroundColor: '#ffff00',
             borderRadius: 10,

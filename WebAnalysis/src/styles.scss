@@ -170,7 +170,7 @@ h5 {
   }
 
   button.btn-primary-small {
-    @apply my-2 bg-teal-400 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-teal-500 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
+    @apply my-2 bg-teal-400 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-teal-500 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-green-300 gap-x-2;
   }
 
   button.btn-dialog-primary {
@@ -195,6 +195,10 @@ h5 {
     @apply my-2 bg-onyx-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
+  button.btn-inverse-small {
+    @apply my-2 bg-white text-onyx-600 px-4 py-2 flex items-center justify-center rounded-lg border border-black text-sm/tight font-bold hover:bg-gray-100 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-100 gap-x-2;
+  }
+
   button.btn-secondary {
     @apply bg-onyx-600 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
@@ -204,7 +208,7 @@ h5 {
   }
 
   button.btn-danger-small {
-    @apply bg-red-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
+    @apply my-2 bg-red-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.btn-danger {
@@ -630,7 +634,7 @@ app-provisioning2 {
 }
 
 ul.p-treenode-children {
-  padding-left: 15px;
+  padding-left: 25px;
 }
 
 .p-treenode-content.p-treenode-selectable.p-highlight {
