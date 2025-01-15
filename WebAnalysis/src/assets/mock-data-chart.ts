@@ -1,7 +1,7 @@
 export const DATA_CHART = [
   {
     id: 1,
-    name: 'Alice',
+    targetCode: 'TC001',
     charts: {
       topVisitedSites: [
         { site: 'google.com', visits: 120 },
@@ -24,11 +24,22 @@ export const DATA_CHART = [
         { agent: 'iOS', percentage: 3 },
         { agent: 'Android', percentage: 2 },
       ],
+      protocolUsed: [
+        { type: 'HTTP', minutes: 320, percentage: 100 },
+        { type: 'HTTPS', minutes: 135, percentage: 74 },
+        { type: 'VPN', minutes: 80, percentage: 45 },
+      ],
+      portUsed: [
+        { type: '443 (https)', minutes: 220, percentage: 100 },
+        { type: '80 (http)', minutes: 105, percentage: 89 },
+        { type: '25 (smfp)', minutes: 55, percentage: 40 },
+        { type: '68', minutes: 40, percentage: 18 },
+      ],
     },
   },
   {
     id: 2,
-    name: 'Bob',
+    targetCode: 'TC002',
     charts: {
       topVisitedSites: [
         { site: 'bing.com', visits: 100 },
@@ -51,11 +62,22 @@ export const DATA_CHART = [
         { agent: 'Android', percentage: 3 },
         { agent: 'iOS', percentage: 2 },
       ],
+      protocolUsed: [
+        { type: 'HTTP', minutes: 120, percentage: 100 },
+        { type: 'HTTPS', minutes: 35, percentage: 96 },
+        { type: 'VPN', minutes: 180, percentage: 66 },
+      ],
+      portUsed: [
+        { type: '443 (https)', minutes: 230, percentage: 100 },
+        { type: '80 (http)', minutes: 124, percentage: 47 },
+        { type: '25 (smfp)', minutes: 45, percentage: 40 },
+        { type: '68', minutes: 41, percentage: 28 },
+      ],
     },
   },
   {
     id: 3,
-    name: 'Charlie',
+    targetCode: 'TC003',
     charts: {
       topVisitedSites: [
         { site: 'netflix.com', visits: 150 },
@@ -78,11 +100,22 @@ export const DATA_CHART = [
         { agent: 'Android', percentage: 5 },
         { agent: 'Linux', percentage: 5 },
       ],
+      protocolUsed: [
+        { type: 'HTTP', minutes: 234, percentage: 100 },
+        { type: 'HTTPS', minutes: 190, percentage: 55 },
+        { type: 'VPN', minutes: 36, percentage: 12 },
+      ],
+      portUsed: [
+        { type: '443 (https)', minutes: 99, percentage: 100 },
+        { type: '80 (http)', minutes: 88, percentage: 54 },
+        { type: '25 (smfp)', minutes: 44, percentage: 32 },
+        { type: '68', minutes: 33, percentage: 12 },
+      ],
     },
   },
   {
     id: 4,
-    name: 'Diana',
+    targetCode: 'TC004',
     charts: {
       topVisitedSites: [
         { site: 'pinterest.com', visits: 110 },
@@ -105,11 +138,22 @@ export const DATA_CHART = [
         { agent: 'Android', percentage: 7 },
         { agent: 'Linux', percentage: 3 },
       ],
+      protocolUsed: [
+        { type: 'HTTP', minutes: 267, percentage: 100 },
+        { type: 'HTTPS', minutes: 188, percentage: 78 },
+        { type: 'VPN', minutes: 87, percentage: 35 },
+      ],
+      portUsed: [
+        { type: '443 (https)', minutes: 190, percentage: 100 },
+        { type: '80 (http)', minutes: 134, percentage: 84 },
+        { type: '25 (smfp)', minutes: 127, percentage: 79 },
+        { type: '68', minutes: 80, percentage: 65 },
+      ],
     },
   },
   {
     id: 5,
-    name: 'Eve',
+    targetCode: 'TC005',
     charts: {
       topVisitedSites: [
         { site: 'stackoverflow.com', visits: 130 },
@@ -131,6 +175,17 @@ export const DATA_CHART = [
         { agent: 'MacOS', percentage: 15 },
         { agent: 'Android', percentage: 3 },
         { agent: 'iOS', percentage: 2 },
+      ],
+      protocolUsed: [
+        { type: 'HTTP', minutes: 233, percentage: 100 },
+        { type: 'HTTPS', minutes: 210, percentage: 87 },
+        { type: 'VPN', minutes: 190, percentage: 75 },
+      ],
+      portUsed: [
+        { type: '443 (https)', minutes: 167, percentage: 100 },
+        { type: '80 (http)', minutes: 139, percentage: 89 },
+        { type: '25 (smfp)', minutes: 120, percentage: 77 },
+        { type: '68', minutes: 40, percentage: 66 },
       ],
     },
   },

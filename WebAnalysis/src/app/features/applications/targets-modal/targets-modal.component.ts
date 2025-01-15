@@ -79,6 +79,32 @@ export class TargetsModalComponent implements OnInit {
       transcriptionLang: 'es-ES',
       transcriptionActive: true,
     },
+    {
+      id: '4',
+      liid: 'LI004',
+      targetCode: 'TC004',
+      requestor: 'Requestor 4',
+      from: '2024-06-01T00:00:00Z',
+      to: '2024-12-01T23:59:59Z',
+      comment: 'Routine surveillance.',
+      description: 'Monitoring for suspicious activities.',
+      transcriptionLang: 'fr-FR',
+      transcriptionActive: false,
+    },
+    {
+      id: '5',
+      liid: 'LI005',
+      targetCode: 'TC005',
+      requestor: 'Requestor 4',
+      from: '2024-03-15T08:00:00Z',
+      to: '2024-09-15T18:00:00Z',
+      comment: 'Low activity observed.',
+      description: 'Background investigation for verification.',
+      monitoredNumber: '+6598765432',
+      subscriber: 'Jane Smith',
+      transcriptionLang: 'es-ES',
+      transcriptionActive: true,
+    },
   ];
 
   gridOptions = {

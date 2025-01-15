@@ -4,12 +4,12 @@
     [formGroup]="form"
   >
     <div class="flex-1 flex flex-col">
-      <label for="target">Target</label>
+      <label for="target">Target Code</label>
       <p-dropdown
         [options]="data"
         [loading]="!data.length"
         formControlName="target"
-        optionLabel="name"
+        optionLabel="targetCode"
         optionValue="id"
         placeholder="Select a Target"
         inputId="target"
@@ -42,19 +42,19 @@
     </div>
 
     <div class="flex flex-col flex-grow">
-      <h3 class="text-lg font-bold text-center">App Used</h3>
+      <h3 class="text-lg font-bold text-center">Protocols Used</h3>
       <p-chart
         type="bar"
-        [data]="appUsedChartData"
+        [data]="appProtocolUsedData"
         [options]="chartOptions"
       ></p-chart>
     </div>
 
     <div class="flex flex-col flex-grow">
-      <h3 class="text-lg font-bold text-center">User Agent</h3>
+      <h3 class="text-lg font-bold text-center">Ports Used</h3>
       <p-chart
         type="bar"
-        [data]="appUserAgentData"
+        [data]="appPortUsedData"
         [options]="chartOptions"
       ></p-chart>
     </div>

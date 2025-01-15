@@ -21,14 +21,18 @@ import { BaseWidgetComponent } from '@fusion/components/base-widget/basewidget.c
 import { environment } from '@environments/environment';
 import { Subject } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
+import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 interface Data {
   id: number;
-  name: string;
+  targetCode: string;
   charts: {
     topVisitedSites: { site: string; visits: number }[];
     topBrowserApps: { browser: string; percentage: number }[];
     topUserAgents: { agent: string; percentage: number }[];
+    protocolUsed: { type: string; minutes: number; percentage: number }[];
+    portUsed: { type: string; minutes: number; percentage: number }[];
   };
 }
 
@@ -58,14 +62,14 @@ export class IpTrafficSummaryComponent
 
   data: Array<Data> = DATA_CHART;
   selectedUser: Data | null = null;
-  // selectedDateRange: Date[] = [];
 
   mostVisitedChartData: any;
-  appUsedChartData: any;
-  appUserAgentData: any;
+  appProtocolUsedData: any;
+  appPortUsedData: any;
   chartOptions: any;
 
   form: FormGroup;
+
   constructor() {
     super();
     this.form = new FormGroup({
@@ -75,11 +79,12 @@ export class IpTrafficSummaryComponent
   }
 
   ngOnInit(): void {
+    Chart.register(ChartDataLabels);
+
     this.data = DATA_CHART;
     this.initializeChartOptions();
     this.initializeCharts();
 
-    // Subscribe to target value changes
     this.form.get('target')?.valueChanges.subscribe((selectedUserId) => {
       if (selectedUserId !== null) {
         this.selectedUser =
@@ -107,40 +112,58 @@ export class IpTrafficSummaryComponent
             data: this.selectedUser.charts.topVisitedSites.map(
               (site) => site.visits,
             ),
-            backgroundColor: '#3b82f6',
+            backgroundColor: '#986801',
             borderRadius: 10,
+            datalabels: {
+              color: '#fff',
+              anchor: 'center',
+              align: 'center',
+              formatter: this.selectedUser.charts.topVisitedSites.map(
+                (site) => `${site.visits}`,
+              ),
+            },
           },
         ],
       };
 
-      this.appUsedChartData = {
-        labels: this.selectedUser.charts.topBrowserApps.map(
-          (app) => app.browser,
+      this.appProtocolUsedData = {
+        labels: this.selectedUser.charts.protocolUsed.map(
+          (protocol) => protocol.type,
         ),
         datasets: [
           {
-            label: 'Usage (%)',
-            data: this.selectedUser.charts.topBrowserApps.map(
-              (app) => app.percentage,
+            label: 'Protocols Used',
+            data: this.selectedUser.charts.protocolUsed.map(
+              (protocol) => protocol.percentage,
             ),
-            backgroundColor: '#10b981',
+            backgroundColor: '#ff9800',
             borderRadius: 10,
+            datalabels: {
+              color: '#fff',
+              anchor: 'center',
+              align: 'center',
+              formatter: (value: any) => `${value}%`,
+            },
           },
         ],
       };
 
-      this.appUserAgentData = {
-        labels: this.selectedUser.charts.topUserAgents.map(
-          (agent) => agent.agent,
-        ),
+      this.appPortUsedData = {
+        labels: this.selectedUser.charts.portUsed.map((port) => port.type),
         datasets: [
           {
-            label: 'Usage (%)',
-            data: this.selectedUser.charts.topUserAgents.map(
-              (agent) => agent.percentage,
+            label: 'Ports Used',
+            data: this.selectedUser.charts.portUsed.map(
+              (port) => port.percentage,
             ),
-            backgroundColor: '#ffff00',
+            backgroundColor: '#1b7db1',
             borderRadius: 10,
+            datalabels: {
+              color: '#fff',
+              anchor: 'center',
+              align: 'center',
+              formatter: (value: any) => `${value}%`,
+            },
           },
         ],
       };
@@ -156,7 +179,28 @@ export class IpTrafficSummaryComponent
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: (context: any) => `${context.raw} %`,
+            label: (context: any) => {
+              const datasetLabel = context.dataset.label || '';
+              const dataIndex = context.dataIndex;
+
+              if (datasetLabel === 'Visits') {
+                const visits =
+                  this.selectedUser?.charts.topVisitedSites[dataIndex].visits ||
+                  0;
+                return `${visits} visits`;
+              } else if (datasetLabel === 'Protocols Used') {
+                const minutes =
+                  this.selectedUser?.charts.protocolUsed[dataIndex].minutes ||
+                  0;
+                return `${minutes} minutes`;
+              } else if (datasetLabel === 'Ports Used') {
+                const minutes =
+                  this.selectedUser?.charts.portUsed[dataIndex].minutes || 0;
+                return `${minutes} minutes`;
+              }
+
+              return '';
+            },
           },
         },
       },
@@ -164,7 +208,7 @@ export class IpTrafficSummaryComponent
         x: { display: false },
         y: {
           beginAtZero: true,
-          ticks: { color: '#666' },
+          ticks: { color: '#363636' },
           grid: { display: false },
         },
       },
@@ -173,8 +217,8 @@ export class IpTrafficSummaryComponent
 
   clearCharts(): void {
     this.mostVisitedChartData = null;
-    this.appUsedChartData = null;
-    this.appUserAgentData = null;
+    this.appProtocolUsedData = null;
+    this.appPortUsedData = null;
   }
 
   ngOnDestroy(): void {
