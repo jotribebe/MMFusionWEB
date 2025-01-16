@@ -68,6 +68,7 @@ export class MonitoringComponent
     this.options = {
       gridType: GridType.Fixed,
       displayGrid: DisplayGrid.OnDragAndResize,
+      setGridSize: false,
       compactType: 'compactLeft&Up',
       fixedColWidth: environment.gridster.fixedColWidth,
       fixedRowHeight: environment.gridster.fixedRowHeight,
