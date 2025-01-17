@@ -98,6 +98,7 @@ export class IpTrafficSummaryComponent
     this.initializeChartOptions();
     this.initializeCharts();
     this.processDataToTreeNodes();
+    console.log(this.treeData);
 
     this.form.get('target')?.valueChanges.subscribe((selectedUserId) => {
       if (selectedUserId !== null) {
@@ -206,31 +207,42 @@ export class IpTrafficSummaryComponent
     this.portUsedData = null;
   }
 
-  processDataToTreeNodes() {
-    const groupedByDestination = this.groupByDestination(
-      this.selectedUser?.charts.uniqueIP || [],
+  processDataToTreeNodes(): void {
+    const groupedData = this.selectedUser?.charts.uniqueIP.reduce(
+      (acc, item) => {
+        const group = acc[item.destination] || { count: 0, sources: [] };
+        group.count += 1;
+        group.sources.push(item);
+        acc[item.destination] = group;
+        return acc;
+      },
+      {} as Record<
+        string,
+        { count: number; sources: { source: string; destination: string }[] }
+      >,
     );
 
-    this.treeData = Object.keys(groupedByDestination).map((destination) => {
-      const items = groupedByDestination[destination];
-      return {
-        label: `${destination} (found ${items.length})`,
-        children: items.map((item: { source: any; destination: any }) => ({
-          label: `source: ${item.source} ; destination: ${item.destination}`,
-        })),
-      };
-    });
+    this.treeData = Object.entries(groupedData || {}).map(
+      ([destination, group], index) => ({
+        key: `group-${index}`,
+        label: `${destination} (found ${group.count})`,
+        children: [
+          {
+            key: `table-${index}`,
+            label: null, // No label for the table row placeholder
+            data: group.sources, // Pass the entire group for rendering the table
+          },
+        ],
+      }),
+    );
   }
 
-  groupByDestination(data: any[]) {
-    return data.reduce((acc, curr) => {
-      const destination = curr.destination;
-      if (!acc[destination]) {
-        acc[destination] = [];
-      }
-      acc[destination].push(curr);
-      return acc;
-    }, {});
+  onNodeExpand(event: any) {
+    event.node.expanded = true; // Mark the node as expanded
+  }
+
+  onNodeCollapse(event: any) {
+    event.node.expanded = false; // Mark the node as collapsed
   }
 
   ngOnDestroy(): void {
