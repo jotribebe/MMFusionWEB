@@ -32,31 +32,32 @@
 
   <!-- Charts -->
   <div *ngIf="selectedUser" class="flex flex-col gap-4 p-2">
-    <div class="flex flex-col flex-grow">
+    <div class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md">
       <h3 class="text-lg font-bold text-center">URLs Found</h3>
-      <!-- <p-chart
-        type="bar"
-        [data]="mostVisitedChartData"
-        [options]="chartOptions"
-      ></p-chart> -->
+      <p-tree
+        [value]="treeData"
+        [style]="{ 'max-height': '400px', 'overflow-y': 'auto' }"
+        class="text-gray-800"
+      >
+      </p-tree>
     </div>
 
-    <div class="flex flex-col flex-grow">
+    <div class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md">
       <h3 class="text-lg font-bold text-center">Protocols Used</h3>
       <p>percentage of active minutes</p>
       <p-chart
         type="bar"
-        [data]="appProtocolUsedData"
+        [data]="protocolUsedData"
         [options]="chartOptions"
       ></p-chart>
     </div>
 
-    <div class="flex flex-col flex-grow">
+    <div class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md">
       <h3 class="text-lg font-bold text-center">Ports Used</h3>
       <p>percentage of active minutes</p>
       <p-chart
         type="bar"
-        [data]="appPortUsedData"
+        [data]="portUsedData"
         [options]="chartOptions"
       ></p-chart>
     </div>

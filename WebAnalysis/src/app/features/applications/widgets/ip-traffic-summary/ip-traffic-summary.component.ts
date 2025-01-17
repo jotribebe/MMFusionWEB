@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   inject,
@@ -23,14 +22,18 @@ import { Subject } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { TreeModule } from 'primeng/tree';
+import { TableModule } from 'primeng/table';
 
 interface Data {
   id: number;
   targetCode: string;
   charts: {
-    topVisitedSites: { site: string; visits: number }[];
+    urlFound: { site: string; visits: number; urlItems: Array<string> }[];
     browserApps: { browser: string; percentage: number }[];
     userAgents: { agent: string; percentage: number }[];
+    uniqueIP: { source: string; destination: string }[];
+    dns: { name: string; value: number }[];
     protocolUsed: { type: string; minutes: number; percentage: number }[];
     portUsed: { type: string; minutes: number; percentage: number }[];
   };
@@ -46,6 +49,8 @@ interface Data {
     DropdownModule,
     FormsModule,
     ReactiveFormsModule,
+    TreeModule,
+    TableModule,
   ],
   templateUrl: './ip-traffic-summary.component.html',
   styleUrls: ['./ip-traffic-summary.component.scss'],
@@ -61,11 +66,16 @@ export class IpTrafficSummaryComponent
   public changeDetectorRef = inject(ChangeDetectorRef);
 
   data: Array<Data> = DATA_CHART;
+  treeData: any[] = [];
   selectedUser: Data | null = null;
 
-  mostVisitedChartData: any;
-  appProtocolUsedData: any;
-  appPortUsedData: any;
+  // TODO: create interfaces
+  userAgentData: any; // list
+  dnaData: any; // list
+  uniqueIPData: any; // list toggle
+  urlFoundData: any; // list toggle
+  protocolUsedData: any; // chart
+  portUsedData: any; // chart
   chartOptions: any;
 
   form: FormGroup;
@@ -73,7 +83,9 @@ export class IpTrafficSummaryComponent
   constructor() {
     super();
     this.form = new FormGroup({
-      target: new FormControl<number | null>(null, [Validators.required]),
+      target: new FormControl<string | null>(this.data[0].targetCode, [
+        Validators.required,
+      ]),
       dateRange: new FormControl<Date[] | null>(null),
     });
   }
@@ -82,8 +94,10 @@ export class IpTrafficSummaryComponent
     Chart.register(ChartDataLabels);
 
     this.data = DATA_CHART;
+    this.selectedUser = this.data[0];
     this.initializeChartOptions();
     this.initializeCharts();
+    this.processDataToTreeNodes();
 
     this.form.get('target')?.valueChanges.subscribe((selectedUserId) => {
       if (selectedUserId !== null) {
@@ -91,6 +105,7 @@ export class IpTrafficSummaryComponent
           this.data.find((user) => user.id === selectedUserId) || null;
         if (this.selectedUser) {
           this.initializeCharts();
+          this.processDataToTreeNodes();
         } else {
           this.clearCharts();
         }
@@ -102,31 +117,7 @@ export class IpTrafficSummaryComponent
 
   initializeCharts(): void {
     if (this.selectedUser) {
-      this.mostVisitedChartData = {
-        labels: this.selectedUser.charts.topVisitedSites.map(
-          (site) => site.site,
-        ),
-        datasets: [
-          {
-            label: 'Visits',
-            data: this.selectedUser.charts.topVisitedSites.map(
-              (site) => site.visits,
-            ),
-            backgroundColor: '#986801',
-            borderRadius: 10,
-            datalabels: {
-              color: '#fff',
-              anchor: 'center',
-              align: 'center',
-              formatter: this.selectedUser.charts.topVisitedSites.map(
-                (site) => `${site.visits}`,
-              ),
-            },
-          },
-        ],
-      };
-
-      this.appProtocolUsedData = {
+      this.protocolUsedData = {
         labels: this.selectedUser.charts.protocolUsed.map(
           (protocol) => protocol.type,
         ),
@@ -148,7 +139,7 @@ export class IpTrafficSummaryComponent
         ],
       };
 
-      this.appPortUsedData = {
+      this.portUsedData = {
         labels: this.selectedUser.charts.portUsed.map((port) => port.type),
         datasets: [
           {
@@ -183,12 +174,7 @@ export class IpTrafficSummaryComponent
               const datasetLabel = context.dataset.label || '';
               const dataIndex = context.dataIndex;
 
-              if (datasetLabel === 'Visits') {
-                const visits =
-                  this.selectedUser?.charts.topVisitedSites[dataIndex].visits ||
-                  0;
-                return `${visits} visits`;
-              } else if (datasetLabel === 'Protocols Used') {
+              if (datasetLabel === 'Protocols Used') {
                 const minutes =
                   this.selectedUser?.charts.protocolUsed[dataIndex].minutes ||
                   0;
@@ -216,9 +202,35 @@ export class IpTrafficSummaryComponent
   }
 
   clearCharts(): void {
-    this.mostVisitedChartData = null;
-    this.appProtocolUsedData = null;
-    this.appPortUsedData = null;
+    this.protocolUsedData = null;
+    this.portUsedData = null;
+  }
+
+  processDataToTreeNodes() {
+    const groupedByDestination = this.groupByDestination(
+      this.selectedUser?.charts.uniqueIP || [],
+    );
+
+    this.treeData = Object.keys(groupedByDestination).map((destination) => {
+      const items = groupedByDestination[destination];
+      return {
+        label: `${destination} (found ${items.length})`,
+        children: items.map((item: { source: any; destination: any }) => ({
+          label: `source: ${item.source} ; destination: ${item.destination}`,
+        })),
+      };
+    });
+  }
+
+  groupByDestination(data: any[]) {
+    return data.reduce((acc, curr) => {
+      const destination = curr.destination;
+      if (!acc[destination]) {
+        acc[destination] = [];
+      }
+      acc[destination].push(curr);
+      return acc;
+    }, {});
   }
 
   ngOnDestroy(): void {
