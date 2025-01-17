@@ -33,16 +33,17 @@
   <!-- Charts -->
   <div *ngIf="selectedUser" class="flex flex-col gap-4 p-2">
     <div class="flex flex-col flex-grow">
-      <h3 class="text-lg font-bold text-center">Most Visited</h3>
-      <p-chart
+      <h3 class="text-lg font-bold text-center">URLs Found</h3>
+      <!-- <p-chart
         type="bar"
         [data]="mostVisitedChartData"
         [options]="chartOptions"
-      ></p-chart>
+      ></p-chart> -->
     </div>
 
     <div class="flex flex-col flex-grow">
       <h3 class="text-lg font-bold text-center">Protocols Used</h3>
+      <p>percentage of active minutes</p>
       <p-chart
         type="bar"
         [data]="appProtocolUsedData"
@@ -52,6 +53,7 @@
 
     <div class="flex flex-col flex-grow">
       <h3 class="text-lg font-bold text-center">Ports Used</h3>
+      <p>percentage of active minutes</p>
       <p-chart
         type="bar"
         [data]="appPortUsedData"

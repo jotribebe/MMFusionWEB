@@ -29,8 +29,8 @@ interface Data {
   targetCode: string;
   charts: {
     topVisitedSites: { site: string; visits: number }[];
-    topBrowserApps: { browser: string; percentage: number }[];
-    topUserAgents: { agent: string; percentage: number }[];
+    browserApps: { browser: string; percentage: number }[];
+    userAgents: { agent: string; percentage: number }[];
     protocolUsed: { type: string; minutes: number; percentage: number }[];
     portUsed: { type: string; minutes: number; percentage: number }[];
   };
