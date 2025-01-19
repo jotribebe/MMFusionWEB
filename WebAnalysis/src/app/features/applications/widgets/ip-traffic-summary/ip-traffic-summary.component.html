@@ -32,7 +32,7 @@
 
   <div *ngIf="selectedUser" class="flex flex-col gap-4 p-2">
     <div class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md">
-      <h3 class="text-lg font-bold text-center">URLs Found</h3>
+      <h3 class="text-lg font-bold">URLs Found</h3>
       <p-tree
         [value]="treeData"
         [style]="{ 'max-height': '400px', 'overflow-y': 'auto' }"
@@ -40,7 +40,7 @@
       >
         <ng-template let-node pTemplate="default">
           <div *ngIf="!node.data">
-            <div class="font-semibold text-lg">{{ node.label }}</div>
+            <div class="font-semibold text-sm">{{ node.label }}</div>
           </div>
 
           <div *ngIf="node.data && node.parent?.expanded" class="mt-2">
@@ -49,14 +49,14 @@
             >
               <thead>
                 <tr class="bg-gray-200">
-                  <th class="border px-4 py-2 text-left">Source</th>
-                  <th class="border px-4 py-2 text-left">Destination</th>
+                  <th class="border p-1 text-left text-xs">Source</th>
+                  <th class="border p-1 text-left text-xs">Destination</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of node.data">
-                  <td class="border px-4 py-2">{{ item.source }}</td>
-                  <td class="border px-4 py-2">{{ item.destination }}</td>
+                  <td class="border p-1 text-xs">{{ item.source }}</td>
+                  <td class="border p-1 text-xs">{{ item.destination }}</td>
                 </tr>
               </tbody>
             </table>
@@ -66,8 +66,10 @@
     </div>
 
     <div class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md">
-      <h3 class="text-lg font-bold text-center">Protocols Used</h3>
-      <p>percentage of active minutes</p>
+      <div class="flex flex-row items-center gap-x-2">
+        <h3 class="text-lg font-bold">Protocols Used</h3>
+        <p>(percentage of active minutes)</p>
+      </div>
       <p-chart
         type="bar"
         [data]="protocolUsedData"
@@ -76,8 +78,10 @@
     </div>
 
     <div class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md">
-      <h3 class="text-lg font-bold text-center">Ports Used</h3>
-      <p>percentage of active minutes</p>
+      <div class="flex flex-row items-center gap-x-2">
+        <h3 class="text-lg font-bold">Ports Used</h3>
+        <p>(percentage of active minutes)</p>
+      </div>
       <p-chart
         type="bar"
         [data]="portUsedData"
