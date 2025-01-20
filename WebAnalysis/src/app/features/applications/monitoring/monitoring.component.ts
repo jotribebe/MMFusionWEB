@@ -171,6 +171,16 @@ export class MonitoringComponent
     );
   }
 
+  // TODO: Update click function
+  saveQuery(): void {
+    this.toastService.showSuccessMessage(
+      'Success',
+      'Query Saved Successfully',
+      false,
+    );
+  }
+
+  // TODO: Update click function
   saveLayout(): void {
     this.confirmationService.confirm(
       'Would you like to save this layout as the default layout?',

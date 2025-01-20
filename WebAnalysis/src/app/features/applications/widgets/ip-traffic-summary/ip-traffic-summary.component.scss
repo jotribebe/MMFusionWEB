@@ -17,3 +17,15 @@
 h3 {
   color: #1f2937; /* Dark gray for headings */
 }
+
+::ng-deep .p-accordion-header-link {
+  font-size: 1rem !important;
+  font-weight: bold;
+  background-color: #eeefe2 !important;
+  border: 1px solid #c5c6c7;
+  padding: 10px;
+}
+
+::ng-deep .p-accordion-content {
+  @apply border border-slate-300 p-0 text-sm;
+}

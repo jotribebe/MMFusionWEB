@@ -26,67 +26,102 @@
         [showIcon]="true"
         placeholder="Select Date Range"
         styleClass="w-full"
+        dateFormat="dd-mm-yy"
       ></p-calendar>
     </div>
   </div>
 
   <div *ngIf="selectedUser" class="flex flex-col gap-4 p-2">
-    <div class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md">
-      <h3 class="text-lg font-bold">URLs Found</h3>
-      <p-tree
-        [value]="treeData"
-        [style]="{ 'max-height': '400px', 'overflow-y': 'auto' }"
-        class="text-gray-800"
-      >
-        <ng-template let-node pTemplate="default">
-          <div *ngIf="!node.data">
-            <div class="font-semibold text-sm">{{ node.label }}</div>
-          </div>
+    <p-accordion [multiple]="true" [activeIndex]="[0]">
+      <p-accordionTab header="User Agent">
+        <div
+          class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md"
+        >
+          @for (item of selectedUser.charts.userAgents; track $index) {
+            <li>{{ item.agent }}</li>
+          }
+        </div>
+      </p-accordionTab>
 
-          <div *ngIf="node.data && node.parent?.expanded" class="mt-2">
-            <table
-              class="table-auto w-full border-collapse border border-gray-300"
-            >
-              <thead>
-                <tr class="bg-gray-200">
-                  <th class="border p-1 text-left text-xs">Source</th>
-                  <th class="border p-1 text-left text-xs">Destination</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of node.data">
-                  <td class="border p-1 text-xs">{{ item.source }}</td>
-                  <td class="border p-1 text-xs">{{ item.destination }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </ng-template>
-      </p-tree>
-    </div>
+      <p-accordionTab header="DNS">
+        <div
+          class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md"
+        >
+          @for (item of selectedUser.charts.dns; track $index) {
+            <li>{{ item.name }} ({{ item.value }})</li>
+          }
+        </div>
+      </p-accordionTab>
 
-    <div class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md">
-      <div class="flex flex-row items-center gap-x-2">
-        <h3 class="text-lg font-bold">Protocols Used</h3>
-        <p>(percentage of active minutes)</p>
-      </div>
-      <p-chart
-        type="bar"
-        [data]="protocolUsedData"
-        [options]="chartOptions"
-      ></p-chart>
-    </div>
+      <p-accordionTab header="Unique IPs">
+        <div class="flex flex-col flex-grow bg-gray-50 rounded-lg shadow-md">
+          <p-tree
+            [value]="uniqueIpTreeData"
+            [style]="{ 'max-height': '400px', 'overflow-y': 'auto' }"
+          >
+            <ng-template let-node pTemplate="default">
+              <div *ngIf="!node.data">
+                <div>{{ node.label }}</div>
+              </div>
 
-    <div class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md">
-      <div class="flex flex-row items-center gap-x-2">
-        <h3 class="text-lg font-bold">Ports Used</h3>
-        <p>(percentage of active minutes)</p>
-      </div>
-      <p-chart
-        type="bar"
-        [data]="portUsedData"
-        [options]="chartOptions"
-      ></p-chart>
-    </div>
+              <div *ngIf="node.data && node.parent?.expanded" class="mt-2">
+                <table
+                  class="table-auto w-full border-collapse border border-gray-300"
+                >
+                  <thead>
+                    <tr class="bg-gray-200">
+                      <th class="border p-1 text-left">Source</th>
+                      <th class="border p-1 text-left">Destination</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of node.data">
+                      <td class="border p-1">{{ item.source }}</td>
+                      <td class="border p-1">{{ item.destination }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-template>
+          </p-tree>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="URLs Found">
+        <div class="flex flex-col flex-grow bg-gray-50 rounded-lg shadow-md">
+          <p-tree
+            [value]="urlFoundTreeData"
+            [style]="{ 'max-height': '400px', 'overflow-y': 'auto' }"
+          >
+          </p-tree>
+        </div>
+      </p-accordionTab>
+
+      <!-- <p-accordionTab header="Apps Used"> </p-accordionTab> -->
+
+      <p-accordionTab header="Protocols Used (percentage of active minutes)">
+        <div
+          class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md"
+        >
+          <p-chart
+            type="bar"
+            [data]="protocolUsedData"
+            [options]="chartOptions"
+          ></p-chart>
+        </div>
+      </p-accordionTab>
+
+      <p-accordionTab header="Ports Used (percentage of active minutes)">
+        <div
+          class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md"
+        >
+          <p-chart
+            type="bar"
+            [data]="portUsedData"
+            [options]="chartOptions"
+          ></p-chart>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
   </div>
 </div>

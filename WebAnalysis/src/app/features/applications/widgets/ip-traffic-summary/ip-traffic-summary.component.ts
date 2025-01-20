@@ -22,6 +22,7 @@ import { Subject } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { AccordionModule } from 'primeng/accordion';
 import { TreeModule } from 'primeng/tree';
 import { TableModule } from 'primeng/table';
 
@@ -43,6 +44,7 @@ interface Data {
   selector: 'app-ip-traffic-summary',
   standalone: true,
   imports: [
+    AccordionModule,
     CommonModule,
     ChartModule,
     CalendarModule,
@@ -66,7 +68,8 @@ export class IpTrafficSummaryComponent
   public changeDetectorRef = inject(ChangeDetectorRef);
 
   data: Array<Data> = DATA_CHART;
-  treeData: any[] = [];
+  urlFoundTreeData: any[] = [];
+  uniqueIpTreeData: any[] = [];
   selectedUser: Data | null = null;
 
   // TODO: create interfaces
@@ -98,7 +101,6 @@ export class IpTrafficSummaryComponent
     this.initializeChartOptions();
     this.initializeCharts();
     this.processDataToTreeNodes();
-    console.log(this.treeData);
 
     this.form.get('target')?.valueChanges.subscribe((selectedUserId) => {
       if (selectedUserId !== null) {
@@ -208,7 +210,7 @@ export class IpTrafficSummaryComponent
   }
 
   processDataToTreeNodes(): void {
-    const groupedData = this.selectedUser?.charts.uniqueIP.reduce(
+    const groupedUniqueIpData = this.selectedUser?.charts.uniqueIP.reduce(
       (acc, item) => {
         const group = acc[item.destination] || { count: 0, sources: [] };
         group.count += 1;
@@ -222,27 +224,41 @@ export class IpTrafficSummaryComponent
       >,
     );
 
-    this.treeData = Object.entries(groupedData || {}).map(
+    this.uniqueIpTreeData = Object.entries(groupedUniqueIpData || {}).map(
       ([destination, group], index) => ({
         key: `group-${index}`,
         label: `${destination} (found ${group.count})`,
         children: [
           {
             key: `table-${index}`,
-            label: null, // No label for the table row placeholder
-            data: group.sources, // Pass the entire group for rendering the table
+            label: null,
+            data: group.sources,
           },
         ],
       }),
     );
-  }
 
-  onNodeExpand(event: any) {
-    event.node.expanded = true; // Mark the node as expanded
-  }
+    const groupedUrlData = this.selectedUser?.charts.urlFound.reduce(
+      (acc, item) => {
+        const group = acc[item.site] || { count: 0, urls: [] };
+        group.count += item.visits;
+        group.urls.push(...item.urlItems);
+        acc[item.site] = group;
+        return acc;
+      },
+      {} as Record<string, { count: number; urls: string[] }>,
+    );
 
-  onNodeCollapse(event: any) {
-    event.node.expanded = false; // Mark the node as collapsed
+    this.urlFoundTreeData = Object.entries(groupedUrlData || {}).map(
+      ([site, group], index) => ({
+        key: `group-${index}`,
+        label: `${site} (${group.count} URLs identified)`,
+        children: group.urls.map((url, idx) => ({
+          key: `url-${idx}`,
+          label: url,
+        })),
+      }),
+    );
   }
 
   ngOnDestroy(): void {
