@@ -4,6 +4,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  inject,
   ViewEncapsulation,
 } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -26,6 +27,13 @@ import { AgGridModule } from 'ag-grid-angular';
 import { LayoutWidgetComponent } from '../widgets/layout-widget/layout-widget.component';
 import { AppNameService } from '@fusion/models/enums/app-name-service';
 import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmationService } from '@fusion/services/confirmation.service';
+import {
+  ConfirmationType,
+  PopUpType,
+} from '@fusion/models/enums/component-type';
+import { ToastService } from '@fusion/services/toast.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-monitoring',
@@ -41,13 +49,23 @@ import { TooltipModule } from 'primeng/tooltip';
     GridsterModule,
     LayoutWidgetComponent,
     TooltipModule,
+    ConfirmDialogModule,
   ],
-  providers: [MonitoringService, DialogService],
+  providers: [
+    MonitoringService,
+    DialogService,
+    ConfirmationService,
+    ToastService,
+  ],
 })
 export class MonitoringComponent
   extends BaseAppComponent
   implements OnInit, OnDestroy
 {
+  monitoringService = inject(MonitoringService);
+  dialogService = inject(DialogService);
+  private confirmationService = inject(ConfirmationService);
+  private toastService = inject(ToastService);
   @Output()
   openApp = new EventEmitter<AppNameService>();
 
@@ -59,10 +77,7 @@ export class MonitoringComponent
 
   // TODO: add hostlistener codes
 
-  public constructor(
-    public monitoringService: MonitoringService,
-    private dialogService: DialogService,
-  ) {
+  public constructor() {
     super();
     console.log('CONSTRUCTOR', this.context);
     this.options = {
@@ -152,6 +167,25 @@ export class MonitoringComponent
             this.closeApp.emit(true);
           }
         }
+      },
+    );
+  }
+
+  saveLayout(): void {
+    this.confirmationService.confirm(
+      'Would you like to save this layout as the default layout?',
+      '',
+      PopUpType.WARN,
+      ConfirmationType.PRIMARY,
+      () => {
+        this.toastService.showSuccessMessage('Default layout saved', '', false);
+      },
+      () => {
+        this.toastService.showWarningMessage(
+          'Default layout saving has been cancelled.',
+          '',
+          false,
+        );
       },
     );
   }

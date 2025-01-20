@@ -1,3 +1,5 @@
+<p-confirmDialog key="primary" />
+<p-confirmDialog key="secondary" />
 <div class="flex h-full">
   <div
     class="flex flex-col w-[75px] bg-teal-400 border-r border-white gap-8 justify-between"
@@ -321,9 +323,9 @@
           <!-- todo: update click function -->
           <button
             class="outline-none"
-            (click)="monitoringService.toggleSearch()"
+            (click)="saveLayout()"
             pInputText
-            pTooltip="SAVE AS NEW DEFAULT TEMPLATE"
+            pTooltip="SAVE AS NEW DEFAULT LAYOUT"
             tooltipPosition="right"
           >
             <span
