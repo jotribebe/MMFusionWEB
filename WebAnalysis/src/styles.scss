@@ -166,53 +166,53 @@ h5 {
   }
 
   button.cfm-btn-primary-small {
-    @apply bg-teal-400 text-gray-50 px-8 py-2 inline-flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-teal-500 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500;
+    @apply bg-teal-400 text-gray-50 px-8 py-2 inline-flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-teal-500 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500;
   }
 
   button.btn-primary-small {
-    @apply my-2 bg-teal-400 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-teal-500 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-green-300 gap-x-2;
+    @apply my-2 bg-teal-400 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-teal-500 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-green-300 gap-x-2;
   }
 
   button.btn-dialog-primary {
     @apply bg-teal-400 text-gray-50 w-full h-10 flex items-center justify-center rounded-lg text-sm/tight font-bold min-h-[36px]
-    hover:bg-teal-300 hover:text-white cursor-pointer select-none shadow-md uppercase 
+    hover:bg-teal-300 hover:text-white cursor-pointer select-none shadow-md 
     disabled:bg-white disabled:text-teal-400 disabled:border-teal-400 disabled:border disabled:cursor-not-allowed 
     disabled:hover:text-teal-400 disabled:hover:bg-white gap-x-2;
   }
 
   button.btn-dialog-secondary {
     @apply border-red-600 bg-white text-red-600 w-full h-10 flex items-center justify-center rounded-lg text-sm/tight font-bold 
-    hover:bg-red-600 hover:text-white select-none shadow-md uppercase 
+    hover:bg-red-600 hover:text-white select-none shadow-md 
     disabled:bg-white disabled:text-red-600 disabled:border-red-600 disabled:border disabled:cursor-not-allowed 
     disabled:hover:text-red-600 disabled:hover:bg-white gap-x-2;
   }
 
   button.btn-primary {
-    @apply bg-teal-400 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-teal-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
+    @apply bg-teal-400 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-teal-300 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.btn-secondary-small {
-    @apply my-2 bg-onyx-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
+    @apply my-2 bg-onyx-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.btn-inverse-small {
-    @apply my-2 bg-white text-onyx-600 px-4 py-2 flex items-center justify-center rounded-lg border border-black text-sm/tight font-bold hover:bg-gray-100 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-100 gap-x-2;
+    @apply my-2 bg-white text-onyx-600 px-4 py-2 flex items-center justify-center rounded-lg border border-black text-sm/tight font-bold hover:bg-gray-100 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-100 gap-x-2;
   }
 
   button.btn-secondary {
-    @apply bg-onyx-600 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
+    @apply bg-onyx-600 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-onyx-300 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.cfm-btn-danger-small {
-    @apply bg-red-600 text-gray-50 px-8 py-2 inline-flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500;
+    @apply bg-red-600 text-gray-50 px-8 py-2 inline-flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500;
   }
 
   button.btn-danger-small {
-    @apply my-2 bg-red-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
+    @apply my-2 bg-red-600 text-gray-50 px-4 py-2 flex items-center justify-center rounded-lg text-sm/tight font-bold hover:bg-red-700 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   button.btn-danger {
-    @apply bg-red-600 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-red-700 cursor-pointer select-none shadow-md uppercase disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
+    @apply bg-red-600 text-gray-50 px-6 py-4 flex items-center justify-center rounded-lg text-lg font-bold hover:bg-red-700 cursor-pointer select-none shadow-md disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:bg-gray-500 gap-x-2;
   }
 
   span.badge-success {

@@ -1,9 +1,9 @@
 <div class="flex flex-col bg-100 p-4">
   <div
-    class="flex flex-row items-center gap-4 w-full max-w-4xl mx-auto"
+    class="flex lg:flex-wrap justify-start items-start gap-4 w-full sticky top-0 bg-white p-2 z-10"
     [formGroup]="form"
   >
-    <div class="flex-1 flex flex-col">
+    <div class="flex flex-1 flex-col">
       <label for="target">Target Code</label>
       <p-dropdown
         [options]="data"
@@ -16,24 +16,56 @@
         class="w-full"
       ></p-dropdown>
     </div>
-
-    <div class="flex-1 flex flex-col">
-      <label for="dateRange">Date</label>
-      <p-calendar
-        formControlName="dateRange"
-        selectionMode="range"
-        [iconDisplay]="'input'"
-        [showIcon]="true"
-        placeholder="Select Date Range"
-        styleClass="w-full"
-        dateFormat="dd-mm-yy"
-      ></p-calendar>
+    <div class="flex flex-row gap-x-4">
+      <div class="flex flex-1 flex-col">
+        <label for="dateRange">Start Datetime</label>
+        <p-calendar
+          formControlName="startDateTime"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          placeholder="Start Date Time"
+          styleClass="w-full"
+          dateFormat="dd-mm-yy"
+          [showTime]="true"
+          hourFormat="24"
+          [hideOnDateTimeSelect]="false"
+        ></p-calendar>
+      </div>
+      <div class="flex flex-1 flex-col">
+        <label for="dateRange">End Datetime</label>
+        <p-calendar
+          formControlName="endDateTime"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          placeholder="End Date Time"
+          styleClass="w-full"
+          dateFormat="dd-mm-yy"
+          [showTime]="true"
+          hourFormat="24"
+          [hideOnDateTimeSelect]="false"
+        ></p-calendar>
+      </div>
+      <button class="mr-12" (click)="isExpanded = !isExpanded">
+        @if (isExpanded) {
+          <img
+            src="/assets/icons/collapse-all.svg"
+            alt="Collapse all"
+            class="w-6 h-6 mt-6"
+          />
+        } @else {
+          <img
+            src="/assets/icons/expand-all.svg"
+            alt="Expand all"
+            class="w-6 h-6 mt-6"
+          />
+        }
+      </button>
     </div>
   </div>
 
   <div *ngIf="selectedUser" class="flex flex-col gap-4 p-2">
     <p-accordion [multiple]="true" [activeIndex]="[0]">
-      <p-accordionTab header="User Agent">
+      <p-accordionTab header="User Agent" [selected]="isExpanded">
         <div
           class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md"
         >
@@ -43,7 +75,7 @@
         </div>
       </p-accordionTab>
 
-      <p-accordionTab header="DNS">
+      <p-accordionTab header="DNS" [selected]="isExpanded">
         <div
           class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md"
         >
@@ -53,7 +85,7 @@
         </div>
       </p-accordionTab>
 
-      <p-accordionTab header="Unique IPs">
+      <p-accordionTab header="Unique IPs" [selected]="isExpanded">
         <div class="flex flex-col flex-grow bg-gray-50 rounded-lg shadow-md">
           <p-tree
             [value]="uniqueIpTreeData"
@@ -87,7 +119,7 @@
         </div>
       </p-accordionTab>
 
-      <p-accordionTab header="URLs Found">
+      <p-accordionTab header="URLs Found" [selected]="isExpanded">
         <div class="flex flex-col flex-grow bg-gray-50 rounded-lg shadow-md">
           <p-tree
             [value]="urlFoundTreeData"
@@ -97,9 +129,10 @@
         </div>
       </p-accordionTab>
 
-      <!-- <p-accordionTab header="Apps Used"> </p-accordionTab> -->
-
-      <p-accordionTab header="Protocols Used (percentage of active minutes)">
+      <p-accordionTab
+        header="Protocols Used (percentage of active minutes)"
+        [selected]="isExpanded"
+      >
         <div
           class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md"
         >
@@ -111,7 +144,10 @@
         </div>
       </p-accordionTab>
 
-      <p-accordionTab header="Ports Used (percentage of active minutes)">
+      <p-accordionTab
+        header="Ports Used (percentage of active minutes)"
+        [selected]="isExpanded"
+      >
         <div
           class="flex flex-col flex-grow p-4 bg-gray-50 rounded-lg shadow-md"
         >

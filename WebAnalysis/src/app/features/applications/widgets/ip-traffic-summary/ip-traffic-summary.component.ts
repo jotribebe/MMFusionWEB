@@ -72,6 +72,8 @@ export class IpTrafficSummaryComponent
   uniqueIpTreeData: any[] = [];
   selectedUser: Data | null = null;
 
+  isExpanded: boolean = false;
+
   // TODO: create interfaces
   userAgentData: any; // list
   dnaData: any; // list
@@ -89,7 +91,8 @@ export class IpTrafficSummaryComponent
       target: new FormControl<string | null>(this.data[0].targetCode, [
         Validators.required,
       ]),
-      dateRange: new FormControl<Date[] | null>(null),
+      startDateTime: new FormControl<Date | null>(null),
+      endDateTime: new FormControl<Date | null>(null),
     });
   }
 

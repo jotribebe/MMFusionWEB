@@ -71,36 +71,6 @@ export class GridComponent
         suppressAndOrCondition: true,
       },
     },
-    // {
-    //   field: 'labels',
-    //   headerName: 'Labels',
-    //   colId: 'labels',
-    //   minWidth: 180,
-    //   cellEditor: LabelCellEditorComponent,
-    //   cellEditorPopup: true,
-    //   editable: true,
-    //   floatingFilter: true,
-    //   cellRenderer: LabelCellRendererComponent,
-    //   filter: 'agSetColumnFilter',
-    //   filterParams: {
-    //     values: async (params: SetFilterValuesFuncParams) => {
-    //       /*const t = await this.labelsSrv.cachedApi$.asObservable().toPromise();
-    //       params.success(t!.map(p => p.id));*/
-    //       this.labelsSrv.cachedApi$
-    //         .asObservable()
-    //         .pipe(
-    //           take(1),
-    //           tap(data => params.success(data.map(p => p.id)))
-    //         )
-    //         .subscribe();
-    //     },
-    //     valueFormatter: (params: ValueFormatterParams<ILabel>): string => {
-    //       const labels = this.labelsSrv.getValueSync();
-    //       return labels.find(p => p.id === params.value)?.name || '';
-    //     },
-    //     refreshValuesOnOpen: true,
-    //   },
-    // },
     {
       field: 'liid',
       headerName: 'LIID',

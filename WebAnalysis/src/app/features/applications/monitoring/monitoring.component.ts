@@ -183,8 +183,8 @@ export class MonitoringComponent
   // TODO: Update click function
   saveLayout(): void {
     this.confirmationService.confirm(
+      'Confirmation',
       'Would you like to save this layout as the default layout?',
-      '',
       PopUpType.WARN,
       ConfirmationType.PRIMARY,
       () => {

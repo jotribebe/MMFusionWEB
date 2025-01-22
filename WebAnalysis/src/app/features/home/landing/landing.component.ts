@@ -17,6 +17,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { NgFor, NgIf } from '@angular/common';
 import { IpTrafficSummaryComponent } from '../../applications/widgets/ip-traffic-summary/ip-traffic-summary.component';
+import { GridsterItemFusion } from '@fusion/models/gridster-item-fusion';
+import { WidgetAnalyze } from '@fusion/models/enums/analyze-widget';
+import { MonitoringService } from '@fusion/services/monitoring.service';
 
 @Component({
   selector: 'app-landing',
@@ -53,11 +56,13 @@ export class LandingComponent implements OnInit {
     this.openApp.emit(AppNameService.ANALYZE);
   }
 
-  launchSavedApp(contextApp: IContextApp): void {
-    // Simulate launching the saved app
-    console.log('Launching saved app:', contextApp);
-    this.openSavedApp.emit(contextApp);
+  launchSavedApp(): void {
+    // launchSavedApp(contextApp: IContextApp): void {
+    // console.log('Launching saved app:', contextApp);
+    // this.openSavedApp.emit(contextApp);
+    this.openSavedApp.emit();
   }
+
   trackByContextAppId(index: number, item: IContextApp): string {
     return item.id;
   }
