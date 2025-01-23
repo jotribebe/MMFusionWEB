@@ -1,69 +1,60 @@
-<div class="flex flex-col bg-100 p-4">
-  <div
-    class="flex lg:flex-wrap justify-start items-start gap-4 w-full sticky top-0 bg-white p-2 z-10"
-    [formGroup]="form"
-  >
-    <div class="flex flex-1 flex-col">
-      <label for="target">Target Code</label>
-      <p-dropdown
-        [options]="data"
-        [loading]="!data.length"
-        formControlName="target"
-        optionLabel="targetCode"
-        optionValue="id"
-        placeholder="Select a Target"
-        inputId="target"
-        class="w-full"
-      ></p-dropdown>
+<div class="flex flex-col bg-100">
+  <div class="sticky top-0 z-10 bg-[#f8f8f8] shadow-md p-4">
+    <div
+      class="flex flex-wrap justify-start items-start gap-4 w-full"
+      [formGroup]="form"
+    >
+      <div class="flex flex-1 flex-col">
+        <label for="target">Target Code</label>
+        <p-dropdown
+          [options]="data"
+          [loading]="!data.length"
+          formControlName="target"
+          optionLabel="targetCode"
+          optionValue="id"
+          placeholder="Select a Target"
+          inputId="target"
+          class="w-full"
+        ></p-dropdown>
+      </div>
+      <div class="flex flex-row gap-x-4">
+        <div class="flex flex-1 flex-col">
+          <label for="dateRange">Start Datetime</label>
+          <p-calendar
+            formControlName="startDateTime"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            placeholder="Start Date Time"
+            styleClass="w-full"
+            dateFormat="dd-mm-yy"
+            [showTime]="true"
+            hourFormat="24"
+            [hideOnDateTimeSelect]="false"
+          ></p-calendar>
+        </div>
+        <div class="flex flex-1 flex-col mr-24">
+          <label for="dateRange">End Datetime</label>
+          <p-calendar
+            formControlName="endDateTime"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            placeholder="End Date Time"
+            styleClass="w-full"
+            dateFormat="dd-mm-yy"
+            [showTime]="true"
+            hourFormat="24"
+            [hideOnDateTimeSelect]="false"
+          ></p-calendar>
+        </div>
+      </div>
     </div>
-    <div class="flex flex-row gap-x-4">
-      <div class="flex flex-1 flex-col">
-        <label for="dateRange">Start Datetime</label>
-        <p-calendar
-          formControlName="startDateTime"
-          [iconDisplay]="'input'"
-          [showIcon]="true"
-          placeholder="Start Date Time"
-          styleClass="w-full"
-          dateFormat="dd-mm-yy"
-          [showTime]="true"
-          hourFormat="24"
-          [hideOnDateTimeSelect]="false"
-        ></p-calendar>
-      </div>
-      <div class="flex flex-1 flex-col">
-        <label for="dateRange">End Datetime</label>
-        <p-calendar
-          formControlName="endDateTime"
-          [iconDisplay]="'input'"
-          [showIcon]="true"
-          placeholder="End Date Time"
-          styleClass="w-full"
-          dateFormat="dd-mm-yy"
-          [showTime]="true"
-          hourFormat="24"
-          [hideOnDateTimeSelect]="false"
-        ></p-calendar>
-      </div>
-      <button class="mr-12" (click)="isExpanded = !isExpanded">
-        @if (isExpanded) {
-          <img
-            src="/assets/icons/collapse-all.svg"
-            alt="Collapse all"
-            class="w-6 h-6 mt-6"
-          />
-        } @else {
-          <img
-            src="/assets/icons/expand-all.svg"
-            alt="Expand all"
-            class="w-6 h-6 mt-6"
-          />
-        }
+    <div class="justify-self-end">
+      <button class="text-blue-500 mr-2" (click)="isExpanded = !isExpanded">
+        {{ isExpanded ? "Collapse All" : "Expand All" }}
       </button>
     </div>
   </div>
-
-  <div *ngIf="selectedUser" class="flex flex-col gap-4 p-2">
+  <div *ngIf="selectedUser" class="flex flex-col gap-4 p-4">
     <p-accordion [multiple]="true" [activeIndex]="[0]">
       <p-accordionTab header="User Agent" [selected]="isExpanded">
         <div
