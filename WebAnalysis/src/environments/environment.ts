@@ -2,8 +2,8 @@ export const environment = {
   production: true,
   //urlApi: 'https://www.ipt-tanzu.com/api',
   //urlApi: "https://fusion-api.azurewebsites.net/api",
-  // urlApi: 'https://localhost:7071/api',
-  urlApi: 'https://localhost:27071/api',
+  urlApi: 'https://localhost:7071/api',
+  // urlApi: 'https://localhost:27071/api',
   routeApi: {
     media: {
       live: 'Media/live',

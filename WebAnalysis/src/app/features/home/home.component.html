@@ -32,7 +32,6 @@
       <!-- <app-breadcrumb></app-breadcrumb> -->
       <div class="flex-1 h-full w-full bg-white">
         <p-tabView [activeIndex]="activeIndex()" (onClose)="onCloseTab($event)">
-          <!-- <p-tabView (onClose)="onCloseTab($event)"> -->
           @for (tab of tabs; track $index) {
             <p-tabPanel>
               <ng-template pTemplate="header">
@@ -68,3 +67,25 @@
   </button>
 </footer> -->
 </div>
+
+<!-- <main class="h-full flex w-full overflow-hidden" id="main">
+  <p-tabView
+    [activeIndex]="activeIndex()"
+    (onClose)="onCloseTab($event)"
+    class="w-full h-full"
+  >
+    @for (tab of tabs; track tab) {
+    <p-tabPanel
+      [header]="tab.tabName"
+      [closable]="$index !== 0"
+      (click)="setSelectedTabIndex($index)"
+    >
+      <ndc-dynamic
+        [ndcDynamicComponent]="tab!.selector"
+        [ndcDynamicInputs]="tab!.inputs"
+        [ndcDynamicOutputs]="tab!.outputs"
+      ></ndc-dynamic>
+    </p-tabPanel>
+    }
+  </p-tabView>
+</main> -->

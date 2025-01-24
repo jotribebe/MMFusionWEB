@@ -23,7 +23,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ChipModule } from 'primeng/chip';
 import { AppNameService } from '@fusion/models/enums/app-name-service';
 import { MonitoringComponent } from '../applications/monitoring/monitoring.component';
-import { LandingComponent } from './landing/landing.component';
+import { MonitoringLandingComponent } from './monitoring-landing/monitoring-landing.component';
 
 @Component({
   selector: 'app-home',
@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.tabs = [
       {
         tabName: 'Home',
-        selector: LandingComponent,
+        selector: MonitoringLandingComponent,
         inputs: { isActive: true },
         outputs: {
           openApp: (
@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.activeIndex.update(() => this.tabs.length - 1);
       }, 5);
-      this.selected.setValue(this.tabs.length - 1);
+      // this.selected.setValue(this.tabs.length - 1);
     }
   }
 

@@ -31,11 +31,11 @@ import { MonitoringService } from '@fusion/services/monitoring.service';
     NgIf,
     IpTrafficSummaryComponent,
   ],
-  templateUrl: './landing.component.html',
-  styleUrl: './landing.component.scss',
+  templateUrl: './monitoring-landing.component.html',
+  styleUrl: './monitoring-landing.component.scss',
   providers: [DialogService, ConfirmationService, ToastService],
 })
-export class LandingComponent implements OnInit {
+export class MonitoringLandingComponent implements OnInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
   private dialog = inject(DialogService);
   private destroyRef = inject(DestroyRef);
